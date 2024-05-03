@@ -11,6 +11,7 @@ let elapsedTime = 0;
 let wordsPerMinute = 0;
 let chars = [""];
 let originalChars = [""];
+let soundPath = "./click.mp3";
 function startStopwatch() {
     if (!isRunning) {
         isRunning = true;
@@ -21,7 +22,7 @@ function startStopwatch() {
 }
 function updateWordsPerMinute() {
     // use elapsedTime variable
-    const correctlyTypedChars = chars.filter((char) => char.includes('<span style="color: blue">')).length;
+    const correctlyTypedChars = chars.filter((char) => char.includes('<span style="color: green">')).length;
     const wpm = correctlyTypedChars / 5 / (elapsedTime / 60000);
     wordsPerMinute = wpm;
     const wpmElement = document.getElementById("words-per-minute");
@@ -61,13 +62,46 @@ function resetStopwatch() {
     elapsedTime = 0;
     displayTime(elapsedTime);
 }
+window.addEventListener("DOMContentLoaded", function () {
+    const body = document.querySelector("body");
+    const defaultTheme = document.querySelector("#default-theme");
+    const matrixTheme = document.querySelector("#matrix-theme");
+    const pinkTheme = document.querySelector("#pink-theme");
+    defaultTheme.addEventListener("click", function () {
+        body === null || body === void 0 ? void 0 : body.classList.remove("matrix-theme");
+        body === null || body === void 0 ? void 0 : body.classList.remove("pink-theme");
+        body === null || body === void 0 ? void 0 : body.classList.add("default-theme");
+    });
+    pinkTheme.addEventListener("click", function () {
+        body === null || body === void 0 ? void 0 : body.classList.remove("default-theme");
+        body === null || body === void 0 ? void 0 : body.classList.remove("matrix-theme");
+        body === null || body === void 0 ? void 0 : body.classList.add("pink-theme");
+    });
+    matrixTheme.addEventListener("click", function () {
+        body === null || body === void 0 ? void 0 : body.classList.remove("default-theme");
+        body === null || body === void 0 ? void 0 : body.classList.remove("pink-theme");
+        body === null || body === void 0 ? void 0 : body.classList.add("matrix-theme");
+    });
+});
 window.addEventListener("DOMContentLoaded", () => {
-    let audio = new Audio("./click.mp3");
     const test = document.querySelector("#test-1");
     let i = 0;
+    const standard = document.querySelector("#standard-click");
+    const mechanical = document.querySelector("#mechanical-click");
+    const pop = document.querySelector("#pop-click");
+    standard.addEventListener("click", () => {
+        soundPath = "./click.mp3";
+    });
+    mechanical.addEventListener("click", () => {
+        soundPath = "./click-mechanical.wav";
+    });
+    pop.addEventListener("click", () => {
+        soundPath = "./pop.wav";
+    });
     if (test) {
+        test.style.fontSize = "20px";
         test.innerText =
-            "The quick brown fox jumps over the lazy dog.";
+            "Bran thought about it. 'Can a man still be brave if he's afraid?' 'That is the only time a man can be brave,' his father told him.";
         originalChars = test.innerText.split("");
         chars = [...originalChars];
         test.innerHTML = chars.join("");
@@ -93,10 +127,10 @@ window.addEventListener("DOMContentLoaded", () => {
             return;
         }
         if (test && i < originalChars.length && event.key === originalChars[i]) {
-            chars[i] = '<span style="color: blue">' + originalChars[i] + "</span>";
+            chars[i] = '<span style="color: green">' + originalChars[i] + "</span>";
             test.innerHTML = chars.join("");
             i++;
-            new Audio("./pop.wav")
+            new Audio(soundPath)
                 .play()
                 .catch((error) => console.log(error));
         }
@@ -105,7 +139,7 @@ window.addEventListener("DOMContentLoaded", () => {
             event.key !== originalChars[i]) {
             chars[i] = '<span style="color: red">' + originalChars[i] + "</span>";
             test.innerHTML = chars.join("");
-            new Audio("./pop.wav")
+            new Audio(soundPath)
                 .play()
                 .catch((error) => console.log(error));
         }

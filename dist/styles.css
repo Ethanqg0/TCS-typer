@@ -1,16 +1,70 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Syne:wght@400..800&display=swap');
 
+.default-theme {
+  --background-color: white;
+  --logo-color: black;
+  --text-color: black;
+  --title-text-color: black;
+  --subtitle-text-color: rgb(62, 62, 62);
+  --button-background-color: rgb(41, 113, 201);
+  --test-background-color: white;
+  --test-font-color: black;
+  --box-shadow-color: black;
+}
+
+#default-theme {
+  background-color: white;
+  color: rgb(41,113,201);
+  border: 2px solid black;
+}
+
+#matrix-theme {
+  background-color: black;
+  color: green;
+  border: 2px solid black;
+}
+
+#pink-theme {
+  background-color: white;
+  color: rgb(247, 114, 136);
+  border: 2px solid black;
+}
+
+.matrix-theme {
+  --background-color: rgb(17, 17, 17);
+  --logo-color: green;
+  --text-color: green;
+  --title-text-color: darkgreen;
+  --subtitle-text-color: green;
+  --button-background-color: green;
+  --test-background-color: black;
+  --test-font-color: rgb(132, 132, 132);
+  --box-shadow-color: gray;
+}
+
+.pink-theme {
+  --background-color: white;
+  --logo-color: black;
+  --text-color: rgb(255, 156, 172);
+  --title-text-color: rgb(152, 51, 68);
+  --subtitle-text-color: rgb(206, 106, 124);
+  --button-background-color: pink;
+  --test-background-color: rgb(252, 220, 225);
+  --test-font-color: black;
+  --box-shadow-color: black;
+}
+
 * {
   font-family: "DM Sans", sans-serif;
   font-weight: 550;
   letter-spacing: -0.015em;
-  color: black;
+  color: var(--text-color);
   margin: 0;
   padding: 0;
 }
 
 body {
-  background-color: #fffafa;
+  background-color: var(--background-color);
   width: 100vw;
   display: flex;
   flex-direction: column;
@@ -26,11 +80,16 @@ html {
 #title {
   font-size: 90px;
   font-weight: 700;
+  color: var(--title-text-color);
+}
+
+#logo {
+  color: var(--logo-color);
 }
 
 #subtitle {
   font-size: 40px;
-  color: #575757;
+  color: var(--subtitle-text-color);
 }
 
 #container {
@@ -44,40 +103,56 @@ html {
   gap: 30px;
 }
 
-input {
-  margin-top: 20px;
-  background-color: black;
-  padding-left: 35px;
-  padding-top: 20px;
-  padding-bottom: 20px;
-  border: 1px solid black;
-  border-radius: 20px;
-  color: white;
-  width: 15rem;
-}
-
 button {
   margin-top: 20px;
-  background-color: black;
-  padding-left: 15px;
-  padding-right: 15px;
-  padding-top: 20px;
-  padding-bottom: 20px;
-  border: 1px solid black;
+  background-color: var(--button-background-color);
+  border: 0px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
   border-radius: 20px;
   color: white;
   cursor: pointer;
-  display: inline-block !important;
-  width: auto !important;
 }
 
-input::placeholder {
-  color: #c2c2c2;
+#accuracy-display {
+  display: flex;
+  gap: 10px;
 }
 
 nav {
   width: 100vw;
- 
+  height: 10vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0px 0px 3px var(--box-shadow-color);
+}
+
+nav div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  padding-right: 20px;
+}
+
+nav div button {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  padding-right: 20px;
+  padding-left: 20px;
+  border: 0px;
+  background-color: var(--button-background-color);
+  color: white;
+  cursor: pointer;
+  font-size: 18px;
+  margin-bottom: 15px;
+}
+
+nav div button:hover {
+  background-color: rgb(10, 65, 160);
 }
 
 nav p {
@@ -98,7 +173,7 @@ nav p {
   margin-top: 50px;
   display: flex;
   flex-direction: column;
-  gap: 50px;
+  gap: 30px;
 }
 
 img {
@@ -112,6 +187,9 @@ img:hover {
 #test-1 {
     border: 2px solid gray;
     padding: 25px;
+    background-color: var(--test-background-color);
+    color: var(--test-font-color);
+    border-radius: 20px;
 }
 
 i {

@@ -1,9 +1,3 @@
-/*
-    Split() method divides a string into an an array of substring. If the parameter is empty, the array will contain each character of the string.
-
-    We have our text as a string, split it into characters and store it in an array. Chars keeps track of the texts with the color added and originalChars keeps track of the original text.
-*/
-
 let timer: NodeJS.Timeout | null = null; // To store the interval timer
 let isRunning: boolean = false;
 let startTime: number = 0;
@@ -11,6 +5,7 @@ let elapsedTime: number = 0;
 let wordsPerMinute: number = 0;
 let chars: string[] = [""];
 let originalChars: string[] = [""];
+let soundPath: string = "./click.mp3";
 
 function startStopwatch(): void {
   if (!isRunning) {
@@ -24,7 +19,7 @@ function startStopwatch(): void {
 function updateWordsPerMinute(): void {
     // use elapsedTime variable
     const correctlyTypedChars = chars.filter((char) =>
-    char.includes('<span style="color: blue">')
+    char.includes('<span style="color: green">')
     ).length;
     const wpm: number = correctlyTypedChars / 5 / (elapsedTime / 60000);
 
@@ -77,15 +72,58 @@ function resetStopwatch(): void {
   displayTime(elapsedTime);
 }
 
+window.addEventListener("DOMContentLoaded", function() {
+  const body = document.querySelector("body")
+  const defaultTheme = document.querySelector("#default-theme") as HTMLElement;
+  const matrixTheme = document.querySelector("#matrix-theme") as HTMLElement;
+  const pinkTheme = document.querySelector("#pink-theme") as HTMLElement;
+
+  defaultTheme.addEventListener("click", function () {
+    body?.classList.remove("matrix-theme");
+    body?.classList.remove("pink-theme");
+    body?.classList.add("default-theme");
+  });
+  
+  pinkTheme.addEventListener("click", function() {
+    body?.classList.remove("default-theme");
+    body?.classList.remove("matrix-theme");
+    body?.classList.add("pink-theme");
+  })
+
+  matrixTheme.addEventListener("click", function () {
+    body?.classList.remove("default-theme");
+    body?.classList.remove("pink-theme");
+    body?.classList.add("matrix-theme");
+  }); 
+
+
+})
+
 
 window.addEventListener("DOMContentLoaded", () => {
-  let audio = new Audio("./click.mp3");
   const test: HTMLElement = document.querySelector("#test-1") as HTMLElement;
   let i: number = 0;
 
+  const standard: HTMLElement = document.querySelector("#standard-click") as HTMLElement;
+  const mechanical: HTMLElement = document.querySelector("#mechanical-click") as HTMLElement;
+  const pop: HTMLElement = document.querySelector("#pop-click") as HTMLElement;  
+
+  standard.addEventListener("click", () => {
+    soundPath = "./click.mp3";
+  });
+
+  mechanical.addEventListener("click", () => {
+    soundPath = "./click-mechanical.wav";
+  });
+
+  pop.addEventListener("click", () => {
+    soundPath = "./pop.wav";
+  });
+
   if (test) {
+    test.style.fontSize = "20px";
     test.innerText =
-      "The quick brown fox jumps over the lazy dog.";
+      "Bran thought about it. 'Can a man still be brave if he's afraid?' 'That is the only time a man can be brave,' his father told him.";
     originalChars = test.innerText.split("");
     chars = [...originalChars];
     test.innerHTML = chars.join("");
@@ -113,10 +151,10 @@ window.addEventListener("DOMContentLoaded", () => {
       return;
     }
     if (test && i < originalChars.length && event.key === originalChars[i]) {
-      chars[i] = '<span style="color: blue">' + originalChars[i] + "</span>";
+      chars[i] = '<span style="color: green">' + originalChars[i] + "</span>";
       test.innerHTML = chars.join("");
       i++;
-        new Audio("./pop.wav")
+        new Audio(soundPath)
           .play()
           .catch((error) => console.log(error));
     } else if (
@@ -126,7 +164,7 @@ window.addEventListener("DOMContentLoaded", () => {
     ) {
       chars[i] = '<span style="color: red">' + originalChars[i] + "</span>";
       test.innerHTML = chars.join("");
-        new Audio("./pop.wav")
+        new Audio(soundPath)
           .play()
           .catch((error) => console.log(error));
     }

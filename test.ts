@@ -79,6 +79,7 @@ function resetStopwatch(): void {
 
 
 window.addEventListener("DOMContentLoaded", () => {
+  let audio = new Audio("./click.mp3");
   const test: HTMLElement = document.querySelector("#test-1") as HTMLElement;
   let i: number = 0;
 
@@ -115,6 +116,9 @@ window.addEventListener("DOMContentLoaded", () => {
       chars[i] = '<span style="color: blue">' + originalChars[i] + "</span>";
       test.innerHTML = chars.join("");
       i++;
+        new Audio("./pop.wav")
+          .play()
+          .catch((error) => console.log(error));
     } else if (
       test &&
       i < originalChars.length &&
@@ -122,6 +126,9 @@ window.addEventListener("DOMContentLoaded", () => {
     ) {
       chars[i] = '<span style="color: red">' + originalChars[i] + "</span>";
       test.innerHTML = chars.join("");
+        new Audio("./pop.wav")
+          .play()
+          .catch((error) => console.log(error));
     }
 
     if (i === originalChars.length) {

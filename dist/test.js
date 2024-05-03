@@ -62,6 +62,7 @@ function resetStopwatch() {
     displayTime(elapsedTime);
 }
 window.addEventListener("DOMContentLoaded", () => {
+    let audio = new Audio("./click.mp3");
     const test = document.querySelector("#test-1");
     let i = 0;
     if (test) {
@@ -95,15 +96,20 @@ window.addEventListener("DOMContentLoaded", () => {
             chars[i] = '<span style="color: blue">' + originalChars[i] + "</span>";
             test.innerHTML = chars.join("");
             i++;
+            new Audio("./pop.wav")
+                .play()
+                .catch((error) => console.log(error));
         }
         else if (test &&
             i < originalChars.length &&
             event.key !== originalChars[i]) {
             chars[i] = '<span style="color: red">' + originalChars[i] + "</span>";
             test.innerHTML = chars.join("");
+            new Audio("./pop.wav")
+                .play()
+                .catch((error) => console.log(error));
         }
         if (i === originalChars.length) {
-            alert("You have successfully typed the sentence.");
             stopStopwatch();
         }
     });

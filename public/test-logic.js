@@ -96,6 +96,7 @@ function generateQuote() {
 // Test Logic
 window.addEventListener("DOMContentLoaded", () => __awaiter(void 0, void 0, void 0, function* () {
     const test = document.querySelector("#test-1");
+    const restartButton = document.querySelector("#restart-button");
     let i = 0;
     if (test) {
         test.style.fontSize = "25px";
@@ -112,6 +113,21 @@ window.addEventListener("DOMContentLoaded", () => __awaiter(void 0, void 0, void
             console.error("Failed to fetch quote:", error);
         }
     }
+    restartButton.addEventListener("click", () => {
+        //  Generate new quote
+        generateQuote().then((quote) => {
+            test.innerText = quote;
+            originalChars = test.innerText.split("");
+            resetStopwatch();
+            i = 0;
+            chars = [...originalChars];
+            test.innerHTML = chars.join("");
+        });
+        resetStopwatch();
+        i = 0;
+        chars = [...originalChars];
+        test.innerHTML = chars.join("");
+    });
     document.addEventListener("keydown", (event) => {
         if (isRunning === false) {
             startStopwatch();
@@ -119,6 +135,15 @@ window.addEventListener("DOMContentLoaded", () => __awaiter(void 0, void 0, void
         if (event.key === "Shift")
             return;
         if (event.key === "Tab") { // shoudl restart the test
+            //  Generate new quote
+            generateQuote().then((quote) => {
+                test.innerText = quote;
+                originalChars = test.innerText.split("");
+                resetStopwatch();
+                i = 0;
+                chars = [...originalChars];
+                test.innerHTML = chars.join("");
+            });
             resetStopwatch();
             i = 0;
             chars = [...originalChars];

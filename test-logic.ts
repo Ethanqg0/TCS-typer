@@ -107,6 +107,7 @@ async function generateQuote(): Promise<string> {
 // Test Logic
 window.addEventListener("DOMContentLoaded", async () => {
   const test: HTMLElement = document.querySelector("#test-1") as HTMLElement;
+  const restartButton: HTMLElement = document.querySelector("#restart-button") as HTMLElement;
   let i: number = 0;
 
   if (test) {
@@ -123,8 +124,24 @@ window.addEventListener("DOMContentLoaded", async () => {
     } catch (error) {
        console.error("Failed to fetch quote:", error);
     }
-
   }
+
+  restartButton.addEventListener("click", () => {
+    //  Generate new quote
+    generateQuote().then((quote) => {
+        test.innerText = quote;
+        originalChars = test.innerText.split("");
+        resetStopwatch();
+        i = 0;
+        chars = [...originalChars];
+        test.innerHTML = chars.join("");
+    });
+
+    resetStopwatch();
+    i = 0;
+    chars = [...originalChars];
+    test.innerHTML = chars.join("");
+  });
 
   document.addEventListener("keydown", (event) => {
     if (isRunning === false) {
@@ -132,6 +149,16 @@ window.addEventListener("DOMContentLoaded", async () => {
     }
     if (event.key === "Shift") return;
     if (event.key === "Tab") { // shoudl restart the test
+        //  Generate new quote
+        generateQuote().then((quote) => {
+            test.innerText = quote;
+            originalChars = test.innerText.split("");
+            resetStopwatch();
+            i = 0;
+            chars = [...originalChars];
+            test.innerHTML = chars.join("");
+        });
+
         resetStopwatch();
         i = 0;
         chars = [...originalChars];

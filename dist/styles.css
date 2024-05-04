@@ -12,7 +12,6 @@
   --box-shadow-color: black;
 }
 
-
 .matrix-theme {
   --background-color: rgb(17, 17, 17);
   --logo-color: green;
@@ -95,6 +94,7 @@ html {
 }
 
 #container {
+  margin-top: 60px;
   width: 80vw;
   padding: 60px;
 }
@@ -126,6 +126,10 @@ button {
 nav {
   width: 100vw;
   height: 10vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: var(--background-color);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -210,4 +214,8 @@ i {
   display: flex;
   flex-direction: row;
   gap: 10px;
+}
+
+#restart-button {
+  cursor: pointer;
 }

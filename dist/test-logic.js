@@ -68,7 +68,6 @@ function resetStopwatch() {
     displayTime(elapsedTime);
 }
 // Load Random Quote from quotes.json
-// Load Random Quote from quotes.json
 function generateQuote() {
     return __awaiter(this, void 0, void 0, function* () {
         try {

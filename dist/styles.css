@@ -12,6 +12,31 @@
   --box-shadow-color: black;
 }
 
+
+.matrix-theme {
+  --background-color: rgb(17, 17, 17);
+  --logo-color: green;
+  --text-color: green;
+  --title-text-color: darkgreen;
+  --subtitle-text-color: green;
+  --button-background-color: green;
+  --test-background-color: black;
+  --test-font-color: rgb(132, 132, 132);
+  --box-shadow-color: gray;
+}
+
+.pink-theme {
+  --background-color: white;
+  --logo-color: rgb(246,85,112);
+  --text-color: rgb(248, 124, 145);
+  --title-text-color: rgb(246, 85, 112);
+  --subtitle-text-color: rgb(238, 109, 133);
+  --button-background-color: pink;
+  --test-background-color: rgb(252, 220, 225);
+  --test-font-color: rgb(240,80,110);
+  --box-shadow-color: black;
+}
+
 #default-theme {
   background-color: white;
   color: rgb(41,113,201);
@@ -30,29 +55,6 @@
   border: 2px solid black;
 }
 
-.matrix-theme {
-  --background-color: rgb(17, 17, 17);
-  --logo-color: green;
-  --text-color: green;
-  --title-text-color: darkgreen;
-  --subtitle-text-color: green;
-  --button-background-color: green;
-  --test-background-color: black;
-  --test-font-color: rgb(132, 132, 132);
-  --box-shadow-color: gray;
-}
-
-.pink-theme {
-  --background-color: white;
-  --logo-color: black;
-  --text-color: rgb(255, 156, 172);
-  --title-text-color: rgb(152, 51, 68);
-  --subtitle-text-color: rgb(206, 106, 124);
-  --button-background-color: pink;
-  --test-background-color: rgb(252, 220, 225);
-  --test-font-color: black;
-  --box-shadow-color: black;
-}
 
 * {
   font-family: "DM Sans", sans-serif;

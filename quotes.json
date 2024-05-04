@@ -1,12 +1,37 @@
 [
     {
-        "text": "Bran thought about it. 'Can a man still be brave if he's afraid?' 'That is the only time a man can be brave,' his father told him.",
-        "source": "Ned Stark, A Game of Thrones",
-        "length": -1
+        "text": "Bran thought about it. 'Can a man still be brave if he's afraid?' 'That is the only time a man can be brave,' his father told him. -Ned Stark, A Game of Thrones",
+        "length": -1,
+        "category": "Game of Thrones"
     },
     {
-        "text": "Death is so terribly final, while life is full of possibilities.",
-        "source": "Tyrion Lannister, A Game of Thrones",
-        "length": -1
+        "text": "Death is so terribly final, while life is full of possibilities. -Tyrion Lannister, A Game of Thrones",
+        "length": -1,
+        "category": "Game of Thrones"
+    },
+    {
+        "text": "What do we say to the Lord of Death? Not today. -Syrio Forel, A Game of Thrones",
+        "length": -1,
+        "category": "Game of Thrones"
+    },
+    {
+        "text": "We don't rise to the level of our expectations, we fall to the level of our training -Archilochus",
+        "length": -1,
+        "category": "Motivational"
+    },
+    {
+        "text": "Be yourself; everyone else is taken. -Oscar Wilde",
+        "length": -1,
+        "category": "Motivational"
+    },
+    {
+        "text": "When you arise in the morning, think of what a precious privilege it is to be alive - to breathe, to think, to enjoy, to love. -Marcus Aurelius",
+        "length": -1,
+        "category": "Philosophical"
+    },
+    {
+        "text": "When you arise in the morning, think of what a precious privilege it is to be alive - to breathe, to think, to enjoy, to love. -Marcus Aurelius",
+        "length": -1,
+        "category": "Philosophical"
     }
 ]

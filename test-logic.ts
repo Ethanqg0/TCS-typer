@@ -1,11 +1,13 @@
-let timer: NodeJS.Timeout | null = null; // To store the interval timer
+// Timer
+let timer: NodeJS.Timeout | null = null;
 let isRunning: boolean = false;
 let startTime: number = 0;
 let elapsedTime: number = 0;
 let wordsPerMinute: number = 0;
+
+// Quote Arrays
 let chars: string[] = [""];
 let originalChars: string[] = [""];
-let soundPath: string = "./click.mp3";
 
 function startStopwatch(): void {
   if (!isRunning) {
@@ -72,61 +74,56 @@ function resetStopwatch(): void {
   displayTime(elapsedTime);
 }
 
-window.addEventListener("DOMContentLoaded", function() {
-  const body = document.querySelector("body")
-  const defaultTheme = document.querySelector("#default-theme") as HTMLElement;
-  const matrixTheme = document.querySelector("#matrix-theme") as HTMLElement;
-  const pinkTheme = document.querySelector("#pink-theme") as HTMLElement;
+// Load Random Quote from quotes.json
+async function generateQuote(): Promise<string> {
+  try {
+    const response = await fetch("quotes.json");
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    const data = await response.json();
 
-  defaultTheme.addEventListener("click", function () {
-    body?.classList.remove("matrix-theme");
-    body?.classList.remove("pink-theme");
-    body?.classList.add("default-theme");
-  });
-  
-  pinkTheme.addEventListener("click", function() {
-    body?.classList.remove("default-theme");
-    body?.classList.remove("matrix-theme");
-    body?.classList.add("pink-theme");
-  })
+    if (!Array.isArray(data) || data.length === 0) {
+      throw new Error("Invalid quote data format");
+    }
 
-  matrixTheme.addEventListener("click", function () {
-    body?.classList.remove("default-theme");
-    body?.classList.remove("pink-theme");
-    body?.classList.add("matrix-theme");
-  }); 
+    // Get a random quote from the array
+    const randomIndex = Math.floor(Math.random() * data.length);
+    const randomQuote = data[randomIndex];
 
+    if (!randomQuote || !randomQuote.text) {
+      throw new Error("Invalid quote data");
+    }
 
-})
+    return randomQuote.text;
+  } catch (error) {
+    console.error("Error fetching quote:", error);
+    throw error; // Propagate the error for proper handling
+  }
+}
 
 
-window.addEventListener("DOMContentLoaded", () => {
+
+// Test Logic
+window.addEventListener("DOMContentLoaded", async () => {
   const test: HTMLElement = document.querySelector("#test-1") as HTMLElement;
   let i: number = 0;
 
-  const standard: HTMLElement = document.querySelector("#standard-click") as HTMLElement;
-  const mechanical: HTMLElement = document.querySelector("#mechanical-click") as HTMLElement;
-  const pop: HTMLElement = document.querySelector("#pop-click") as HTMLElement;  
-
-  standard.addEventListener("click", () => {
-    soundPath = "./click.mp3";
-  });
-
-  mechanical.addEventListener("click", () => {
-    soundPath = "./click-mechanical.wav";
-  });
-
-  pop.addEventListener("click", () => {
-    soundPath = "./pop.wav";
-  });
-
   if (test) {
-    test.style.fontSize = "20px";
-    test.innerText =
-      "Bran thought about it. 'Can a man still be brave if he's afraid?' 'That is the only time a man can be brave,' his father told him.";
-    originalChars = test.innerText.split("");
-    chars = [...originalChars];
-    test.innerHTML = chars.join("");
+    test.style.fontSize = "25px";
+
+    try {
+      const quotePromise = generateQuote(); // Start fetching the quote
+      const quote = await quotePromise; // Wait for the quote to be fetched
+      console.log(quote);
+      test.innerText = quote;
+      originalChars = test.innerText.split("");
+      chars = [...originalChars];
+      test.innerHTML = chars.join("");
+    } catch (error) {
+       console.error("Failed to fetch quote:", error);
+    }
+
   }
 
   document.addEventListener("keydown", (event) => {
@@ -154,9 +151,6 @@ window.addEventListener("DOMContentLoaded", () => {
       chars[i] = '<span style="color: green">' + originalChars[i] + "</span>";
       test.innerHTML = chars.join("");
       i++;
-        new Audio(soundPath)
-          .play()
-          .catch((error) => console.log(error));
     } else if (
       test &&
       i < originalChars.length &&
@@ -164,9 +158,6 @@ window.addEventListener("DOMContentLoaded", () => {
     ) {
       chars[i] = '<span style="color: red">' + originalChars[i] + "</span>";
       test.innerHTML = chars.join("");
-        new Audio(soundPath)
-          .play()
-          .catch((error) => console.log(error));
     }
 
     if (i === originalChars.length) {

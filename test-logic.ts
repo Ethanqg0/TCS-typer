@@ -102,8 +102,6 @@ async function generateQuote(): Promise<string> {
   }
 }
 
-
-
 // Test Logic
 window.addEventListener("DOMContentLoaded", async () => {
   const test: HTMLElement = document.querySelector("#test-1") as HTMLElement;

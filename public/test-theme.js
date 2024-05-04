@@ -16,6 +16,9 @@ window.addEventListener("DOMContentLoaded", function () {
     else if (currentTheme === "pink-theme") {
         body === null || body === void 0 ? void 0 : body.classList.add("pink-theme");
     }
+    else if (currentTheme === "discord-theme") {
+        body === null || body === void 0 ? void 0 : body.classList.add("discord-theme");
+    }
     else {
         // If currentTheme is "default-theme" or null/undefined, set to "default-theme"
         localStorage.setItem("theme", "default-theme");
@@ -26,6 +29,7 @@ window.addEventListener("DOMContentLoaded", function () {
     const defaultTheme = document.querySelector("#default-theme");
     const matrixTheme = document.querySelector("#matrix-theme");
     const pinkTheme = document.querySelector("#pink-theme");
+    const discordTheme = document.querySelector("#discord-theme");
     defaultTheme.addEventListener("click", function () {
         changeTheme("default-theme");
     });
@@ -34,5 +38,8 @@ window.addEventListener("DOMContentLoaded", function () {
     });
     matrixTheme.addEventListener("click", function () {
         changeTheme("matrix-theme");
+    });
+    discordTheme.addEventListener("click", function () {
+        changeTheme("discord-theme");
     });
 });

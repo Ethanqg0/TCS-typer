@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Syne:wght@400..800&display=swap');
 
+/* Themes */
 .default-theme {
   --background-color: white;
   --logo-color: black;
@@ -36,6 +37,19 @@
   --box-shadow-color: black;
 }
 
+.discord-theme {
+  --background-color: rgb(44, 47, 51);
+  --logo-color: rgb(114, 137, 218);
+  --text-color: rgb(220, 221, 222);
+  --title-text-color: rgb(114, 137, 218);
+  --subtitle-text-color: rgb(153, 170, 181);
+  --button-background-color: rgb(114, 137, 218);
+  --test-background-color: rgb(35, 39, 42);
+  --test-font-color: rgb(220, 221, 222);
+  --box-shadow-color: black;
+}
+
+/* Buttons */
 #default-theme {
   background-color: white;
   color: rgb(41,113,201);
@@ -54,6 +68,11 @@
   border: 2px solid black;
 }
 
+#discord-theme {
+  background-color: rgb(36, 36, 36);
+  color: rgb(114, 137, 218);
+  border: 2px solid black;
+}
 
 * {
   font-family: "DM Sans", sans-serif;

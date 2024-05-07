@@ -49,6 +49,18 @@
   --box-shadow-color: black;
 }
 
+.blueberry-theme {
+  --background-color: #eaf4fc; /* Soft sky blue background */
+  --logo-color: #3b5998;       /* Deep ocean blue for logo */
+  --text-color: #24578a;       /* Dark blue for text */
+  --title-text-color: #0b4f6c; /* Rich sea blue for titles */
+  --subtitle-text-color: #4ca1af; /* Aquamarine for subtitles */
+  --button-background-color: #3b5998; /* Deep ocean blue for buttons */
+  --test-background-color: #ffffff; /* White for test areas */
+  --test-font-color: #24578a;   /* Dark blue for test text */
+  --box-shadow-color: rgba(59, 89, 152, 0.3);
+}
+
 /* Buttons */
 #default-theme {
   background-color: white;

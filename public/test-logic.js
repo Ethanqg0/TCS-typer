@@ -146,20 +146,6 @@ function shuffleArray(array) {
     }
     return array;
 }
-window.addEventListener("DOMContentLoaded", () => __awaiter(void 0, void 0, void 0, function* () {
-    const wordsButton = document.querySelector("#words-settings");
-    const quotesButton = document.querySelector("#quotes-settings");
-    wordsButton.addEventListener("click", () => {
-        mode = "words";
-        console.log("DEBUG: Mode set to words");
-        resetStopwatch();
-    });
-    quotesButton.addEventListener("click", () => {
-        mode = "quotes";
-        console.log("DEBUG: Mode set to quotes");
-        resetStopwatch();
-    });
-}));
 // Test Logic
 window.addEventListener("DOMContentLoaded", () => __awaiter(void 0, void 0, void 0, function* () {
     const test = document.querySelector("#test-1");
@@ -180,6 +166,42 @@ window.addEventListener("DOMContentLoaded", () => __awaiter(void 0, void 0, void
             console.error("Failed to fetch content:", error);
         }
     }
+    const wordsButton = document.querySelector("#words-settings");
+    const quotesButton = document.querySelector("#quotes-settings");
+    wordsButton.addEventListener("click", () => {
+        mode = "words";
+        console.log("DEBUG: Mode set to words");
+        resetStopwatch();
+        generateContent().then((quote) => {
+            test.innerText = quote;
+            originalChars = test.innerText.split("");
+            resetStopwatch();
+            i = 0;
+            chars = [...originalChars];
+            test.innerHTML = chars.join("");
+        });
+        resetStopwatch();
+        i = 0;
+        chars = [...originalChars];
+        test.innerHTML = chars.join("");
+    });
+    quotesButton.addEventListener("click", () => {
+        mode = "quotes";
+        console.log("DEBUG: Mode set to quotes");
+        resetStopwatch();
+        generateContent().then((quote) => {
+            test.innerText = quote;
+            originalChars = test.innerText.split("");
+            resetStopwatch();
+            i = 0;
+            chars = [...originalChars];
+            test.innerHTML = chars.join("");
+        });
+        resetStopwatch();
+        i = 0;
+        chars = [...originalChars];
+        test.innerHTML = chars.join("");
+    });
     restartButton.addEventListener("click", () => {
         generateContent().then((content) => {
             test.innerText = content;
@@ -200,7 +222,7 @@ window.addEventListener("DOMContentLoaded", () => __awaiter(void 0, void 0, void
         }
         if (event.key === "Shift")
             return;
-        if (event.key === "Tab") { // shoudl restart the test
+        if (event.key === "Tab") {
             //  Generate new quote
             generateContent().then((quote) => {
                 test.innerText = quote;

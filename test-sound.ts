@@ -13,7 +13,7 @@ window.addEventListener("DOMContentLoaded", () => {
   const pop: HTMLElement = document.querySelector("#pop-click") as HTMLElement;
 
   standard.addEventListener("click", () => {
-    soundPath = "./click.mp3";
+    soundPath = "./pop.mp3";
   });
 
   mechanical.addEventListener("click", () => {
@@ -30,6 +30,9 @@ window.addEventListener("DOMContentLoaded", () => {
       new Audio(soundPath).play().catch((error) => console.log(error));
     }
     if (i === originalChars.length) {
+      i = 0;
+    }
+    if (event.key === "tab") {
       i = 0;
     }
   });

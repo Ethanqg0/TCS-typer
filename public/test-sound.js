@@ -7,7 +7,7 @@ window.addEventListener("DOMContentLoaded", () => {
     const mechanical = document.querySelector("#mechanical-click");
     const pop = document.querySelector("#pop-click");
     standard.addEventListener("click", () => {
-        soundPath = "./click.mp3";
+        soundPath = "./pop.mp3";
     });
     mechanical.addEventListener("click", () => {
         soundPath = "./click-mechanical.wav";
@@ -21,6 +21,9 @@ window.addEventListener("DOMContentLoaded", () => {
             new Audio(soundPath).play().catch((error) => console.log(error));
         }
         if (i === originalChars.length) {
+            i = 0;
+        }
+        if (event.key === "tab") {
             i = 0;
         }
     });

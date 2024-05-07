@@ -40,6 +40,8 @@
         "category": "Love"
     },
     {
-        "text": ""
+        "text": "A bug is never just a mistake. It represents something bigger. An error of thinking that makes you who you are. -Elliot, Mr. Robot",
+        "length": -1,
+        "category": "Programming"
     }
 ]

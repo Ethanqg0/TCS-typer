@@ -20,5 +20,8 @@ window.addEventListener("DOMContentLoaded", () => {
             i++;
             new Audio(soundPath).play().catch((error) => console.log(error));
         }
+        if (i === originalChars.length) {
+            i = 0;
+        }
     });
 });

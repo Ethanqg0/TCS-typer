@@ -14,6 +14,8 @@ let isRunning = false;
 let startTime = 0;
 let elapsedTime = 0;
 let wordsPerMinute = 0;
+// Mode
+let mode = "words";
 // Quote Arrays
 let chars = [""];
 let originalChars = [""];
@@ -68,31 +70,96 @@ function resetStopwatch() {
     displayTime(elapsedTime);
 }
 // Load Random Quote from quotes.json
+function generateContent() {
+    return __awaiter(this, void 0, void 0, function* () {
+        if (mode === "words") {
+            console.log("DEBUG: Generating words");
+            return generateWords();
+        }
+        else if (mode === "quotes") {
+            console.log("DEBUG: Generating quotes");
+            return generateQuote();
+        }
+        else {
+            throw new Error("Invalid mode");
+        }
+    });
+}
 function generateQuote() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const response = yield fetch("quotes.json");
             if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
+                throw new Error(`Failed to fetch quotes. HTTP status: ${response.status}`);
             }
             const data = yield response.json();
             if (!Array.isArray(data) || data.length === 0) {
-                throw new Error("Invalid quote data format");
+                throw new Error("Invalid quote data format: Quotes array is empty or not an array");
             }
-            // Get a random quote from the array
             const randomIndex = Math.floor(Math.random() * data.length);
             const randomQuote = data[randomIndex];
             if (!randomQuote || !randomQuote.text) {
-                throw new Error("Invalid quote data");
+                throw new Error("Invalid quote data: Missing text in the quote object");
             }
             return randomQuote.text;
         }
         catch (error) {
-            console.error("Error fetching quote:", error);
-            throw error; // Propagate the error for proper handling
+            if (error instanceof TypeError) {
+                console.error("CRITICAL ERROR: Processing quotes data threw TypeError:", error.message);
+                throw new Error("CRITICAL ERROR: Processing quotes data threw TypeError.");
+            }
+            else if (error instanceof SyntaxError) {
+                console.error("CRITICAL ERROR: Processing quotes data threw SyntaxError. This typically means invalid JSON format in quotes data:", error);
+                throw new Error("CRITICAL ERROR: Processing quotes data threw SyntaxError. This typically means invalid JSON format in quotes data.");
+            }
+            else {
+                console.error("CRITICAL ERROR: Unexpected/unknown error when fetching quotes. Try reconnecting your internet connection.", error);
+                throw new Error("CRITICAL ERROR: Unexpected/unknown error when fetching quotes. Try reconnecting your internet connection.");
+            }
         }
     });
 }
+function generateWords() {
+    return __awaiter(this, void 0, void 0, function* () {
+        const response = yield fetch("words.txt");
+        try {
+            let data = yield response.text();
+            // Split the data into an array of words (assuming words are separated by spaces or new lines)
+            let wordsArray = data.split(/\s+/);
+            // Shuffle the array of words
+            wordsArray = shuffleArray(wordsArray);
+            // Take the first 20 words from the shuffled array
+            let first20Words = wordsArray.slice(0, 15);
+            // Join the first 20 shuffled words back into a string
+            let shuffledQuote = first20Words.join(" ");
+            return shuffledQuote;
+        }
+        catch (_a) {
+            throw new Error("Failed to parse data");
+        }
+    });
+}
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
+window.addEventListener("DOMContentLoaded", () => __awaiter(void 0, void 0, void 0, function* () {
+    const wordsButton = document.querySelector("#words-settings");
+    const quotesButton = document.querySelector("#quotes-settings");
+    wordsButton.addEventListener("click", () => {
+        mode = "words";
+        console.log("DEBUG: Mode set to words");
+        resetStopwatch();
+    });
+    quotesButton.addEventListener("click", () => {
+        mode = "quotes";
+        console.log("DEBUG: Mode set to quotes");
+        resetStopwatch();
+    });
+}));
 // Test Logic
 window.addEventListener("DOMContentLoaded", () => __awaiter(void 0, void 0, void 0, function* () {
     const test = document.querySelector("#test-1");
@@ -101,22 +168,21 @@ window.addEventListener("DOMContentLoaded", () => __awaiter(void 0, void 0, void
     if (test) {
         test.style.fontSize = "25px";
         try {
-            const quotePromise = generateQuote(); // Start fetching the quote
-            const quote = yield quotePromise; // Wait for the quote to be fetched
-            console.log(quote);
-            test.innerText = quote;
+            const contentPromise = generateContent(); // Start fetching the content based on mode
+            const content = yield contentPromise; // Wait for the content to be fetched
+            console.log(content);
+            test.innerText = content;
             originalChars = test.innerText.split("");
             chars = [...originalChars];
             test.innerHTML = chars.join("");
         }
         catch (error) {
-            console.error("Failed to fetch quote:", error);
+            console.error("Failed to fetch content:", error);
         }
     }
     restartButton.addEventListener("click", () => {
-        //  Generate new quote
-        generateQuote().then((quote) => {
-            test.innerText = quote;
+        generateContent().then((content) => {
+            test.innerText = content;
             originalChars = test.innerText.split("");
             resetStopwatch();
             i = 0;
@@ -136,7 +202,7 @@ window.addEventListener("DOMContentLoaded", () => __awaiter(void 0, void 0, void
             return;
         if (event.key === "Tab") { // shoudl restart the test
             //  Generate new quote
-            generateQuote().then((quote) => {
+            generateContent().then((quote) => {
                 test.innerText = quote;
                 originalChars = test.innerText.split("");
                 resetStopwatch();

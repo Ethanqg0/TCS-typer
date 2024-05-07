@@ -23,3 +23,6 @@ window.addEventListener("DOMContentLoaded", function () {
     body?.classList.add("default-theme");
   }
 });
+```
+
+### Learned about error propogation

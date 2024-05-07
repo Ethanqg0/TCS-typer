@@ -81,10 +81,8 @@ function resetStopwatch(): void {
 
 async function generateContent(): Promise<string> {
   if (mode === "words") {
-    console.log("DEBUG: Generating words")
     return generateWords();
   } else if (mode === "quotes") {
-    console.log("DEBUG: Generating quotes")
     return generateQuote();
   } else {
     throw new Error("Invalid mode");

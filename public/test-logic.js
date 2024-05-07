@@ -73,11 +73,9 @@ function resetStopwatch() {
 function generateContent() {
     return __awaiter(this, void 0, void 0, function* () {
         if (mode === "words") {
-            console.log("DEBUG: Generating words");
             return generateWords();
         }
         else if (mode === "quotes") {
-            console.log("DEBUG: Generating quotes");
             return generateQuote();
         }
         else {
@@ -88,7 +86,7 @@ function generateContent() {
 function generateQuote() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const response = yield fetch("quotes.json");
+            const response = yield fetch("qute.json");
             if (!response.ok) {
                 throw new Error(`Failed to fetch quotes. HTTP status: ${response.status}`);
             }

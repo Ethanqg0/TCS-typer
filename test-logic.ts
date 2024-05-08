@@ -117,19 +117,19 @@ async function generateQuote(): Promise<string> {
     return randomQuote.text;
   } catch (error: unknown) {
     if (error instanceof TypeError) {
-      console.error("CRITICAL ERROR: Processing quotes data threw TypeError:", error.message);
-      throw new Error("CRITICAL ERROR: Processing quotes data threw TypeError.");
+      console.error("Processing quotes data threw TypeError:", error.message);
+      throw new Error("Processing quotes data threw TypeError.");
     } 
     else if (error instanceof SyntaxError) {
-      console.error("CRITICAL ERROR: Processing quotes data threw SyntaxError. This typically means invalid JSON format in quotes data:", error);
+      console.error("Processing quotes data threw SyntaxError. This typically means invalid JSON format in quotes data:", error);
       throw new Error(
-        "CRITICAL ERROR: Processing quotes data threw SyntaxError. This typically means invalid JSON format in quotes data."
+        "Processing quotes data threw SyntaxError. This typically means invalid JSON format in quotes data."
       );
     }
     else {
-      console.error("CRITICAL ERROR: Unexpected/unknown error when fetching quotes. Try reconnecting your internet connection.", error);
+      console.error("Unexpected/unknown error when fetching quotes. Try reconnecting your internet connection.", error);
       throw new Error(
-        "CRITICAL ERROR: Unexpected/unknown error when fetching quotes. Try reconnecting your internet connection."
+        "Unexpected/unknown error when fetching quotes. Try reconnecting your internet connection."
       );
     }
   }

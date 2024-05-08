@@ -86,6 +86,12 @@
   border: 2px solid black;
 }
 
+#blueberry-theme {
+  background-color: #c0e2fe;
+  color: #3b5998;
+  border: 2px solid black;
+}
+
 * {
   font-family: "DM Sans", sans-serif;
   font-weight: 550;

@@ -86,7 +86,7 @@ function generateContent() {
 function generateQuote() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const response = yield fetch("qute.json");
+            const response = yield fetch("quotes.json");
             if (!response.ok) {
                 throw new Error(`Failed to fetch quotes. HTTP status: ${response.status}`);
             }
@@ -103,16 +103,16 @@ function generateQuote() {
         }
         catch (error) {
             if (error instanceof TypeError) {
-                console.error("CRITICAL ERROR: Processing quotes data threw TypeError:", error.message);
-                throw new Error("CRITICAL ERROR: Processing quotes data threw TypeError.");
+                console.error("Processing quotes data threw TypeError:", error.message);
+                throw new Error("Processing quotes data threw TypeError.");
             }
             else if (error instanceof SyntaxError) {
-                console.error("CRITICAL ERROR: Processing quotes data threw SyntaxError. This typically means invalid JSON format in quotes data:", error);
-                throw new Error("CRITICAL ERROR: Processing quotes data threw SyntaxError. This typically means invalid JSON format in quotes data.");
+                console.error("Processing quotes data threw SyntaxError. This typically means invalid JSON format in quotes data:", error);
+                throw new Error("Processing quotes data threw SyntaxError. This typically means invalid JSON format in quotes data.");
             }
             else {
-                console.error("CRITICAL ERROR: Unexpected/unknown error when fetching quotes. Try reconnecting your internet connection.", error);
-                throw new Error("CRITICAL ERROR: Unexpected/unknown error when fetching quotes. Try reconnecting your internet connection.");
+                console.error("Unexpected/unknown error when fetching quotes. Try reconnecting your internet connection.", error);
+                throw new Error("Unexpected/unknown error when fetching quotes. Try reconnecting your internet connection.");
             }
         }
     });

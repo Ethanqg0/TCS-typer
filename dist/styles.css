@@ -227,12 +227,13 @@ img:hover {
   height: 300px;
 }
 
-#test-1 {
+#test-1, #test-2 {
     border: 2px solid gray;
     padding: 25px;
     background-color: var(--test-background-color);
     color: var(--test-font-color);
     border-radius: 20px;
+    font-size: 1.5rem;
 }
 
 i {

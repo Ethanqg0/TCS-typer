@@ -1,3 +1,4 @@
+/*
 // Timer
 let timer: NodeJS.Timeout | null = null;
 let isRunning: boolean = false;
@@ -11,15 +12,6 @@ let mode: string = "words";
 // Quote Arrays
 let chars: string[] = [""];
 let originalChars: string[] = [""];
-
-function startStopwatch(): void {
-  if (!isRunning) {
-    isRunning = true;
-    startTime = Date.now() - elapsedTime;
-    timer = setInterval(updateTime, 10); // Update time every 10 milliseconds
-    setInterval(updateWordsPerMinute, 10);
-  }
-}
 
 function updateWordsPerMinute(): void {
     // use elapsedTime variable
@@ -159,14 +151,6 @@ async function generateWords(): Promise<string> {
   }
 }
 
-function shuffleArray(array: any[]): any[] {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-  return array;
-}
-
 // Test Logic
 window.addEventListener("DOMContentLoaded", async () => {
   const test: HTMLElement = document.querySelector("#test-1") as HTMLElement;
@@ -301,3 +285,4 @@ window.addEventListener("DOMContentLoaded", async () => {
     }
   });
 });
+*/

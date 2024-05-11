@@ -129,7 +129,7 @@ class TypingTest {
     generateQuote() {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const response = yield fetch("quotes.json");
+                const response = yield fetch("../../data/quotes.json");
                 if (!response.ok) {
                     throw new Error(`Failed to fetch quotes. HTTP status: ${response.status}`);
                 }
@@ -153,18 +153,18 @@ class TypingTest {
 }
 // Define a mapping of pathname to test configuration
 const pathToTestMap = {
-    "/index.html": {
+    "/src/index.html": {
         id: "test1",
         elementId: "test-1",
         stopwatchId: "stopwatch-1",
     },
-    "/test.html": {
+    "/src/pages/test.html": {
         id: "test-2",
         elementId: "test-2",
         stopwatchId: "stopwatch-2",
     },
 };
-let soundPath = "./assets/sounds/standard-click.wav";
+let soundPath = "../assets/sounds/standard-click.wav";
 let soundVolume = 1.0;
 window.addEventListener("DOMContentLoaded", () => {
     const standard = document.querySelector("#standard-click");
@@ -173,23 +173,23 @@ window.addEventListener("DOMContentLoaded", () => {
     const clacky = document.querySelector("#clacky-click");
     const cap = document.querySelector("#cap-click");
     standard.addEventListener("click", () => {
-        soundPath = "./assets/sounds/standard-click.wav";
+        soundPath = "../assets/sounds/standard-click.wav";
         soundVolume = 1;
     });
     mechanical.addEventListener("click", () => {
-        soundPath = "./assets/sounds/typewriter.wav";
+        soundPath = "../assets/sounds/typewriter.wav";
         soundVolume = 0.3;
     });
     pop.addEventListener("click", () => {
-        soundPath = "./assets/sounds/pop.mp3";
+        soundPath = "../assets/sounds/pop.mp3";
         soundVolume = 0.3;
     });
     clacky.addEventListener("click", () => {
-        soundPath = "./assets/sounds/clacky.mp3";
+        soundPath = "../assets/sounds/clacky.mp3";
         soundVolume = 0.3;
     });
     cap.addEventListener("click", () => {
-        soundPath = "./assets/sounds/popcapoff.wav";
+        soundPath = "../assets/sounds/popcapoff.wav";
         soundVolume = 0.3;
     });
 });

@@ -183,7 +183,9 @@ class TypingTest implements Test {
    */
   async generateQuote(): Promise<string> {
     try {
-      const response = await fetch("quotes.json");
+      const response = await fetch(
+        "../../data/quotes.json"
+      );
       if (!response.ok) {
         throw new Error(`Failed to fetch quotes. HTTP status: ${response.status}`);
       }
@@ -217,19 +219,19 @@ type TestConfig = {
 
 // Define a mapping of pathname to test configuration
 const pathToTestMap: Record<string, TestConfig> = {
-  "/index.html": {
+  "/src/index.html": {
     id: "test1",
     elementId: "test-1",
     stopwatchId: "stopwatch-1",
   },
-  "/test.html": {
+  "/src/pages/test.html": {
     id: "test-2",
     elementId: "test-2",
     stopwatchId: "stopwatch-2",
   },
 };
 
-let soundPath: string = "./assets/sounds/standard-click.wav";
+let soundPath: string = "../assets/sounds/standard-click.wav";
 let soundVolume: number = 1.0;
 
 window.addEventListener("DOMContentLoaded", () => {
@@ -246,27 +248,27 @@ window.addEventListener("DOMContentLoaded", () => {
   const cap: HTMLElement = document.querySelector("#cap-click") as HTMLElement;
 
   standard.addEventListener("click", () => {
-    soundPath = "./assets/sounds/standard-click.wav";
+    soundPath = "../assets/sounds/standard-click.wav";
     soundVolume = 1;
   });
 
   mechanical.addEventListener("click", () => {
-    soundPath = "./assets/sounds/typewriter.wav";
+    soundPath = "../assets/sounds/typewriter.wav";
     soundVolume = 0.3;
   });
 
   pop.addEventListener("click", () => {
-    soundPath = "./assets/sounds/pop.mp3";
+    soundPath = "../assets/sounds/pop.mp3";
     soundVolume = 0.3;
   });
 
   clacky.addEventListener("click", () => {
-    soundPath = "./assets/sounds/clacky.mp3";
+    soundPath = "../assets/sounds/clacky.mp3";
     soundVolume = 0.3;
   });
 
   cap.addEventListener("click", () => {
-    soundPath = "./assets/sounds/popcapoff.wav";
+    soundPath = "../assets/sounds/popcapoff.wav";
     soundVolume = 0.3;
   });
 });

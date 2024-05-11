@@ -175,6 +175,7 @@ class TypingTest implements Test {
     this.quoteData.chars = quotes.split("");
     this.quoteData.originalChars = quotes.split("");
     this.textBox.innerHTML = quotes;
+    console.error("LOGGED: ", this.quoteData.chars);
   }
 
   /**
@@ -229,48 +230,32 @@ const pathToTestMap: Record<string, TestConfig> = {
     elementId: "test-2",
     stopwatchId: "stopwatch-2",
   },
+  "/src/pages/settings.html": {
+    id:"test-settings",
+    elementId: "test-settings",
+    stopwatchId: "stopwatch-2"
+  }
 };
 
 let soundPath: string = "../assets/sounds/standard-click.wav";
 let soundVolume: number = 1.0;
 
 window.addEventListener("DOMContentLoaded", () => {
-  const standard: HTMLElement = document.querySelector(
-    "#standard-click"
-  ) as HTMLElement;
-  const mechanical: HTMLElement = document.querySelector(
-    "#mechanical-click"
-  ) as HTMLElement;
-  const pop: HTMLElement = document.querySelector("#pop-click") as HTMLElement;
-  const clacky: HTMLElement = document.querySelector(
-    "#clacky-click"
-  ) as HTMLElement;
-  const cap: HTMLElement = document.querySelector("#cap-click") as HTMLElement;
+  let click = localStorage.getItem("sound");
 
-  standard.addEventListener("click", () => {
-    soundPath = "../assets/sounds/standard-click.wav";
-    soundVolume = 1;
-  });
-
-  mechanical.addEventListener("click", () => {
-    soundPath = "../assets/sounds/typewriter.wav";
-    soundVolume = 0.3;
-  });
-
-  pop.addEventListener("click", () => {
-    soundPath = "../assets/sounds/pop.mp3";
-    soundVolume = 0.3;
-  });
-
-  clacky.addEventListener("click", () => {
-    soundPath = "../assets/sounds/clacky.mp3";
-    soundVolume = 0.3;
-  });
-
-  cap.addEventListener("click", () => {
-    soundPath = "../assets/sounds/popcapoff.wav";
-    soundVolume = 0.3;
-  });
+  if (click === "standard-click") {
+    soundPath = "../../assets/sounds/standard-click.wav";
+  } else if (click === "mechanical-click") {
+    soundPath = "../../assets/sounds/typewriter.wav";
+  } else if (click === "pop-click") {
+    soundPath = "../../assets/sounds/pop.mp3";
+  } else if (click === "clacky-click") {
+    soundPath = "../../assets/sounds/clacky.mp3";
+  } else if (click === "cap-click") {
+    soundPath = "../../../assets/sounds/popcapoff.wav";
+  } else {
+    localStorage.setItem("sound", "standard-click");
+  }
 });
 
 
@@ -312,6 +297,9 @@ window.addEventListener("DOMContentLoaded", () => {
         currentTest.quoteData.chars[currentTest.i] =
           '<span style="color: red">' + currentTest.quoteData.originalChars[currentTest.i] + "</span>";
         currentTest.textBox.innerHTML = currentTest.quoteData.chars.join("");
+        let audio = new Audio(soundPath);
+        audio.volume = soundVolume;
+        audio.play().catch((error) => console.log(error));
       }
 
       if (currentTest.i === currentTest.quoteData.originalChars.length) {

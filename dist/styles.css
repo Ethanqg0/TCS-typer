@@ -68,6 +68,10 @@
   border: 2px solid black;
 }
 
+#standard-theme {
+  background-color: blue;
+}
+
 #matrix-theme {
   background-color: black;
   color: green;
@@ -116,7 +120,7 @@ html {
 }
 
 #title {
-  font-size: 90px;
+  font-size: 80px;
   font-weight: 700;
   color: var(--title-text-color);
 }
@@ -126,7 +130,7 @@ html {
 }
 
 #subtitle {
-  font-size: 40px;
+  font-size: 35px;
   color: var(--subtitle-text-color);
 }
 
@@ -142,16 +146,20 @@ html {
   gap: 30px;
 }
 
+#standard-click, #mechanical-click, #pop-click, #clacky-click, #cap-click {
+  background-color: var(--button-background-color);
+}
+
 button {
   margin-top: 20px;
-  background-color: var(--button-background-color);
-  border: 0px;
+  background-color: var(--background-color);
+  border: 2px solid black;
   padding-left: 20px;
   padding-right: 20px;
   padding-top: 10px;
   padding-bottom: 10px;
   border-radius: 20px;
-  color: white;
+  color: black;
   cursor: pointer;
 }
 
@@ -227,7 +235,7 @@ img:hover {
   height: 300px;
 }
 
-#test-1, #test-2 {
+#test-1, #test-2, #test-settings {
     border: 2px solid gray;
     padding: 25px;
     background-color: var(--test-background-color);
@@ -257,4 +265,8 @@ i {
 
 #restart-button {
   cursor: pointer;
+}
+
+a {
+  text-decoration: none;
 }

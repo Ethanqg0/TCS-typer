@@ -1,15 +1,75 @@
+let colorThemes = ["default-theme", "matrix-theme", "pink-theme", "discord-theme", "blueberry-theme"];
+let soundThemes = ["standard-click", "mechanical-click", "pop-click", "clacky-click", "cap-click"];
+
 function changeTheme(theme: string) {
   const body = document.querySelector("body");
   if (body) {
-    body.className = ""; // remove all other themes
+    // Remove all other color themes from body's class list
+    body.classList.remove(...colorThemes.filter((t) => t !== theme));
+    // Add the new theme class to body
+    body.classList.add(theme);
+    // Save the selected theme to localStorage
+    localStorage.setItem("theme", theme);
   }
-  body?.classList.add(theme);
-  localStorage.setItem("theme", theme);
 }
+
+function changeClick(sound: string) {
+  const body = document.querySelector("body");
+  if (body) {
+    body.classList.remove(...soundThemes.filter((t) => t !== sound));
+    body.classList.add(sound);
+    localStorage.setItem("sound", sound);
+  }
+}
+
+window.addEventListener("DOMContentLoaded", function () {
+  const standardClick = document.querySelector("#standard-click") as HTMLElement;
+  const mechanicalClick = document.querySelector("#mechanical-click") as HTMLElement;
+  const popClick = document.querySelector("#pop-click") as HTMLElement;
+  const clackyClick = document.querySelector("#clacky-click") as HTMLElement;
+  const capClick = document.querySelector("#cap-click") as HTMLElement;
+
+  standardClick.addEventListener("click", function () {
+    changeClick("standard-click");
+  });
+
+  mechanicalClick.addEventListener("click", function () {
+    changeClick("mechanical-click");
+  });
+
+  popClick.addEventListener("click", function () {
+    changeClick("pop-click");
+  });
+
+  clackyClick.addEventListener("click", function () {
+    changeClick("clacky-click");
+  });
+
+  capClick.addEventListener("click", function () {
+    changeClick("cap-click");
+  });
+});
+
 
 window.addEventListener("DOMContentLoaded", function () {
   const body: HTMLElement | null = document.querySelector("body");
   let currentTheme: string | null = localStorage.getItem("theme");
+  let currentSound: string | null = localStorage.getItem("sound");
+
+  if (currentSound === "standard-click") {
+    body?.classList.add("standard-click");
+  } else if (currentSound === "mechanical-click") {
+    body?.classList.add("mechanical-click");
+  } else if (currentSound === "pop-click") {
+    body?.classList.add("pop-click");
+  } else if (currentSound === "clacky-click") {
+    body?.classList.add("clacky-click");
+  } else if (currentSound === "cap-click") {
+    body?.classList.add("cap-click");
+  } else {
+    localStorage.setItem("sound", "standard-click");
+    body?.classList.add("standard-click");
+  }
 
   if (currentTheme === "matrix-theme") {
     body?.classList.add("matrix-theme");

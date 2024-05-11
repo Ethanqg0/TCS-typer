@@ -240,7 +240,7 @@ const pathToTestMap: Record<string, TestConfig> = {
 let soundPath: string = "../assets/sounds/standard-click.wav";
 let soundVolume: number = 1.0;
 
-window.addEventListener("DOMContentLoaded", () => {
+function updateSoundPath() {
   let click = localStorage.getItem("sound");
 
   if (click === "standard-click") {
@@ -255,7 +255,12 @@ window.addEventListener("DOMContentLoaded", () => {
     soundPath = "../../../assets/sounds/popcapoff.wav";
   } else {
     localStorage.setItem("sound", "standard-click");
+    soundPath = "../../assets/sounds/standard-click.wav"; // Ensure soundPath is set correctly after updating localStorage
   }
+}
+
+window.addEventListener("DOMContentLoaded", () => {
+  updateSoundPath();
 });
 
 
@@ -290,6 +295,7 @@ window.addEventListener("DOMContentLoaded", () => {
           '<span style="color: green">' + currentTest.quoteData.originalChars[currentTest.i] + "</span>";
         currentTest.textBox.innerHTML = currentTest.quoteData.chars.join("");
         currentTest.i++;
+        updateSoundPath();
         let audio = new Audio(soundPath);
         audio.volume = soundVolume;
         audio.play().catch((error) => console.log(error));
@@ -297,6 +303,7 @@ window.addEventListener("DOMContentLoaded", () => {
         currentTest.quoteData.chars[currentTest.i] =
           '<span style="color: red">' + currentTest.quoteData.originalChars[currentTest.i] + "</span>";
         currentTest.textBox.innerHTML = currentTest.quoteData.chars.join("");
+        updateSoundPath();
         let audio = new Audio(soundPath);
         audio.volume = soundVolume;
         audio.play().catch((error) => console.log(error));

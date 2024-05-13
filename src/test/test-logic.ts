@@ -49,6 +49,7 @@ interface Test {
  * - updateTime(): void
  * - displayTime(time: number): void
  * - resetStopwatch(): void
+ * - stopStopwatch(): void
  * - initializeTest(): Promise<void>
  * - generateQuote(): Promise<string>
  */
@@ -163,6 +164,17 @@ class TypingTest implements Test {
     }
     this.stopwatch.isRunning = false;
     this.stopwatch.elapsedTime = 0;
+    this.displayTime(this.stopwatch.elapsedTime);
+  }
+
+  /**
+   * Stops the stopwatch and displays the elapsed time.
+   */
+  stopStopwatch(): void {
+    if (this.stopwatch.timer) {
+      clearInterval(this.stopwatch.timer);
+    }
+    this.stopwatch.isRunning = false;
     this.displayTime(this.stopwatch.elapsedTime);
   }
 
@@ -287,6 +299,7 @@ window.addEventListener("DOMContentLoaded", () => {
       }
 
       if (event.key === "Shift") {
+
         return;
       }
 

@@ -19,35 +19,23 @@
     </div>
   </nav>
   
-  <div id="container">
-    <div id="section1">
-      <div>
-      <p id="title">Your favorite typing test.</p>
-      <p id="subtitle">Customizable key clicks, themes, and more.</p>
-      </div>
-    </div>
+  <main id="container">
+    <header id="section1">
+        <p id="title">Your favorite typing test.</p>
+        <p id="subtitle">Customizable key clicks, themes, and more.</p>
+    </header>
 
-    <div id="section2">
-        <h2 style="margin-bottom: -20px;">Stats</h2>
-        <div style="display: flex; gap: 20px; align-items: center;">
-            <div id="stats">
-                <i class="fa-solid fa-clock"></i>
-                <div id="stopwatch-1">00:00:00</div>
-            </div>
-            <div id="wpm-display">
-                <p>WPM:</p>
-                <p id="wpm-1"></p>
-            </div>
+    <section id="section2">
+        <i id="restart-button" class="fa-solid fa-rotate-right"></i>
+        <div id="stats">
+            <i class="fa-solid fa-clock"></i>
+            <div id="stopwatch-1">00:00:00</div>
         </div>
+    </section>
 
-        <div style="display: flex; flex-direction: column; gap: 20px;">
-        <div style="display: flex; gap: 10px;">
-            <i id="restart-button" style="font-size: 25px;" class="fa-solid fa-rotate-right"></i>
-        </div>
+    <section id="section3">
         <div id="test-1"></div>
-        <br>
-        <br>
-    </div>
-    </div>
+    </section>
+  </main> 
 </body>
 </html>

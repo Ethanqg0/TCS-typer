@@ -56,7 +56,7 @@
   --title-text-color: #0b4f6c; /* Rich sea blue for titles */
   --subtitle-text-color: #4ca1af; /* Aquamarine for subtitles */
   --button-background-color: #3b5998; /* Deep ocean blue for buttons */
-  --test-background-color: #ffffff; /* White for test areas */
+  --test-background-color: black; /* White for test areas */
   --test-font-color: #24578a;   /* Dark blue for test text */
   --box-shadow-color: rgba(59, 89, 152, 0.3);
 }
@@ -138,12 +138,14 @@ html {
   margin-top: 60px;
   width: 80vw;
   padding: 60px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
 }
 
 #section1 {
   display: flex;
   flex-direction: column;
-  gap: 30px;
 }
 
 #standard-click, #mechanical-click, #pop-click, #clacky-click, #cap-click {
@@ -221,10 +223,11 @@ nav p {
 }
 
 #section2 {
-  margin-top: 50px;
+  margin-top: 30px;
   display: flex;
-  flex-direction: column;
-  gap: 30px;
+  flex-direction: row;
+  gap: 20px;
+  align-items: center;
 }
 
 img {
@@ -258,13 +261,14 @@ i {
 }
 
 #wpm-display {
-  display: flex;
+  display: hidden;
   flex-direction: row;
   gap: 10px;
 }
 
 #restart-button {
   cursor: pointer;
+  font-size: 30px;
 }
 
 a {

@@ -183,7 +183,7 @@ class TypingTest implements Test {
    * @returns {Promise<void>} A Promise that resolves when the test is initialized.
    */
   async initializeTest(): Promise<void> {
-    let quotes = await this.generateQuote();
+    let quotes = await this.generateWords();
     this.quoteData.chars = quotes.split("");
     this.quoteData.originalChars = quotes.split("");
     this.textBox.innerHTML = quotes;
@@ -220,6 +220,42 @@ class TypingTest implements Test {
       console.error("Error fetching or processing quote data:", error);
       throw new Error("Failed to fetch or process quote data");
     }
+  }
+
+  /**
+   * Generates a shuffled quote by fetching words from a text file and shuffling them.
+   * @returns A promise that resolves to a string representing the shuffled quote.
+   * @throws An error if there is an issue fetching or processing the word data.
+   */
+  async generateWords(): Promise<string> {
+    const response = await fetch("../../data/words.txt");
+
+    try {
+      let data = await response.text();
+
+      // Split the data into an array of words (assuming words are separated by spaces or new lines)
+      let wordsArray = data.split(/\s+/);
+
+      // Shuffle the array of words
+      wordsArray = shuffleArray(wordsArray);
+
+      // Take the first 20 words from the shuffled array
+      let first20Words = wordsArray.slice(0, 15);
+
+      // Join the first 20 shuffled words back into a string
+      let shuffledQuote = first20Words.join(" ");
+
+      return shuffledQuote;
+    } catch (error) {
+      console.error("Error fetching or processing word data:", error);
+      throw new Error("Failed to fetch or process word data");
+    }
+  }
+
+  async generateContent(): Promise<string> {
+    // TODO;
+
+    return "";
   }
 }
 

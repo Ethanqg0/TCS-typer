@@ -127,7 +127,7 @@ class TypingTest {
      */
     initializeTest() {
         return __awaiter(this, void 0, void 0, function* () {
-            let quotes = yield this.generateQuote();
+            let quotes = yield this.generateWords();
             this.quoteData.chars = quotes.split("");
             this.quoteData.originalChars = quotes.split("");
             this.textBox.innerHTML = quotes;
@@ -159,6 +159,27 @@ class TypingTest {
             catch (error) {
                 console.error("Error fetching or processing quote data:", error);
                 throw new Error("Failed to fetch or process quote data");
+            }
+        });
+    }
+    generateWords() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const response = yield fetch("../../data/words.txt");
+            try {
+                let data = yield response.text();
+                // Split the data into an array of words (assuming words are separated by spaces or new lines)
+                let wordsArray = data.split(/\s+/);
+                // Shuffle the array of words
+                wordsArray = shuffleArray(wordsArray);
+                // Take the first 20 words from the shuffled array
+                let first20Words = wordsArray.slice(0, 15);
+                // Join the first 20 shuffled words back into a string
+                let shuffledQuote = first20Words.join(" ");
+                return shuffledQuote;
+            }
+            catch (error) {
+                console.error("Error fetching or processing word data:", error);
+                throw new Error("Failed to fetch or process word data");
             }
         });
     }
@@ -226,7 +247,6 @@ window.addEventListener("DOMContentLoaded", () => {
             currentTest.startStopwatch();
         }
         if (event.key === "Shift") {
-            currentTest.stopStopwatch();
             return;
         }
         if (currentTest && currentTest.i < currentTest.quoteData.originalChars.length && event.key === currentTest.quoteData.originalChars[currentTest.i]) {

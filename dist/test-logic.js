@@ -44,7 +44,7 @@ class TypingTest {
      * @param {string} id - The ID of the text input box.
      * @param {string} stopwatchId - The ID of the stopwatch display element.
      */
-    constructor(id, stopwatchId) {
+    constructor(id, stopwatchId, restartButtonId) {
         /**
          * Keeps track of the current character index.
          * @type {number}
@@ -52,6 +52,7 @@ class TypingTest {
         this.i = 0;
         this.textBox = document.querySelector(`#${id}`);
         this.stopwatchDisplay = document.querySelector(`#${stopwatchId}`);
+        this.restartButton = document.querySelector(`#${restartButtonId}`);
         this.stopwatch = {
             timer: null,
             isRunning: false,
@@ -134,6 +135,16 @@ class TypingTest {
             console.error("LOGGED: ", this.quoteData.chars);
         });
     }
+    restartTest() {
+        return __awaiter(this, void 0, void 0, function* () {
+            this.resetStopwatch();
+            this.i = 0;
+            let quotes = yield this.generateWords();
+            this.quoteData.chars = quotes.split("");
+            this.quoteData.originalChars = quotes.split("");
+            this.textBox.innerHTML = quotes;
+        });
+    }
     /**
      * Fetches a random quote from an external data source.
      * @returns {Promise<string>} A Promise that resolves with the fetched quote text.
@@ -162,6 +173,11 @@ class TypingTest {
             }
         });
     }
+    /**
+     * Generates a shuffled quote by fetching words from a text file and shuffling them.
+     * @returns A promise that resolves to a string representing the shuffled quote.
+     * @throws An error if there is an issue fetching or processing the word data.
+     */
     generateWords() {
         return __awaiter(this, void 0, void 0, function* () {
             const response = yield fetch("../../data/words.txt");
@@ -183,6 +199,12 @@ class TypingTest {
             }
         });
     }
+    generateContent() {
+        return __awaiter(this, void 0, void 0, function* () {
+            // TODO;
+            return "";
+        });
+    }
 }
 // Define a mapping of pathname to test configuration
 const pathToTestMap = {
@@ -190,16 +212,19 @@ const pathToTestMap = {
         id: "test1",
         elementId: "test-1",
         stopwatchId: "stopwatch-1",
+        restartButtonId: "restart-button-1",
     },
     "/src/pages/test.html": {
         id: "test-2",
         elementId: "test-2",
         stopwatchId: "stopwatch-2",
+        restartButtonId: "restart-button-2",
     },
     "/src/pages/settings.html": {
         id: "test-settings",
         elementId: "test-settings",
-        stopwatchId: "stopwatch-2"
+        stopwatchId: "stopwatch-3",
+        restartButtonId: "restart-button-3",
     }
 };
 let soundPath = "../assets/sounds/standard-click.wav";
@@ -237,10 +262,13 @@ window.addEventListener("DOMContentLoaded", () => {
         return;
     }
     // Destructure the test configuration
-    const { id, elementId, stopwatchId } = currentTestConfig;
+    const { id, elementId, stopwatchId, restartButtonId } = currentTestConfig;
     // Create a TypingTest instance for the current test
-    const currentTest = new TypingTest(elementId, stopwatchId);
+    const currentTest = new TypingTest(elementId, stopwatchId, restartButtonId);
     currentTest.initializeTest();
+    currentTest.restartButton.addEventListener("click", () => __awaiter(void 0, void 0, void 0, function* () {
+        yield currentTest.restartTest();
+    }));
     // Add event listener for keydown events
     document.addEventListener("keydown", function async(event) {
         if (currentTest.i === 0) {
@@ -269,7 +297,7 @@ window.addEventListener("DOMContentLoaded", () => {
             audio.play().catch((error) => console.log(error));
         }
         if (currentTest.i === currentTest.quoteData.originalChars.length) {
-            currentTest.resetStopwatch();
+            currentTest.stopStopwatch();
         }
     });
 });

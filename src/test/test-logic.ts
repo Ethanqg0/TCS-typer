@@ -60,6 +60,8 @@ class TypingTest implements Test {
    */
   textBox: HTMLElement;
 
+  restartButton: HTMLElement;
+
   /**
    * The HTML element displaying the stopwatch time.
    * @type {HTMLElement}
@@ -95,9 +97,10 @@ class TypingTest implements Test {
    * @param {string} id - The ID of the text input box.
    * @param {string} stopwatchId - The ID of the stopwatch display element.
    */
-  constructor(id: string, stopwatchId: string) {
+  constructor(id: string, stopwatchId: string, restartButtonId: string) {
     this.textBox = document.querySelector(`#${id}`) as HTMLElement;
     this.stopwatchDisplay = document.querySelector(`#${stopwatchId}`) as HTMLElement;
+    this.restartButton = document.querySelector(`#${restartButtonId}`) as HTMLElement;
 
     this.stopwatch = {
       timer: null,
@@ -190,6 +193,15 @@ class TypingTest implements Test {
     console.error("LOGGED: ", this.quoteData.chars);
   }
 
+  async restartTest(): Promise<void> {
+    this.resetStopwatch();
+    this.i = 0;
+    let quotes = await this.generateWords();
+    this.quoteData.chars = quotes.split("");
+    this.quoteData.originalChars = quotes.split("");
+    this.textBox.innerHTML = quotes;
+  }
+
   /**
    * Fetches a random quote from an external data source.
    * @returns {Promise<string>} A Promise that resolves with the fetched quote text.
@@ -264,6 +276,7 @@ type TestConfig = {
   id: string;
   elementId: string;
   stopwatchId: string;
+  restartButtonId: string;
 };
 
 // Define a mapping of pathname to test configuration
@@ -272,16 +285,19 @@ const pathToTestMap: Record<string, TestConfig> = {
     id: "test1",
     elementId: "test-1",
     stopwatchId: "stopwatch-1",
+    restartButtonId: "restart-button-1",
   },
   "/src/pages/test.html": {
     id: "test-2",
     elementId: "test-2",
     stopwatchId: "stopwatch-2",
+    restartButtonId: "restart-button-2",
   },
   "/src/pages/settings.html": {
     id:"test-settings",
     elementId: "test-settings",
-    stopwatchId: "stopwatch-2"
+    stopwatchId: "stopwatch-3",
+    restartButtonId: "restart-button-3",
   }
 };
 
@@ -311,7 +327,6 @@ window.addEventListener("DOMContentLoaded", () => {
   updateSoundPath();
 });
 
-
 window.addEventListener("DOMContentLoaded", () => {
   // Get the test configuration based on the current pathname
   const currentTestConfig = pathToTestMap[window.location.pathname];
@@ -322,11 +337,15 @@ window.addEventListener("DOMContentLoaded", () => {
   }
 
   // Destructure the test configuration
-  const { id, elementId, stopwatchId } = currentTestConfig;
+  const { id, elementId, stopwatchId, restartButtonId } = currentTestConfig;
 
   // Create a TypingTest instance for the current test
-  const currentTest = new TypingTest(elementId, stopwatchId);
+  const currentTest = new TypingTest(elementId, stopwatchId, restartButtonId);
   currentTest.initializeTest();
+
+  currentTest.restartButton.addEventListener("click", async () => {
+    await currentTest.restartTest();
+  });
 
   // Add event listener for keydown events
   document.addEventListener("keydown", function async (event) {
@@ -335,7 +354,6 @@ window.addEventListener("DOMContentLoaded", () => {
       }
 
       if (event.key === "Shift") {
-
         return;
       }
 
@@ -345,9 +363,11 @@ window.addEventListener("DOMContentLoaded", () => {
         currentTest.textBox.innerHTML = currentTest.quoteData.chars.join("");
         currentTest.i++;
         updateSoundPath();
+
         let audio = new Audio(soundPath);
         audio.volume = soundVolume;
         audio.play().catch((error) => console.log(error));
+
       } else if (currentTest && currentTest.i < currentTest.quoteData.originalChars.length && event.key !== currentTest.quoteData.originalChars[currentTest.i] ) {
         currentTest.quoteData.chars[currentTest.i] =
           '<span style="color: red">' + currentTest.quoteData.originalChars[currentTest.i] + "</span>";
@@ -359,7 +379,7 @@ window.addEventListener("DOMContentLoaded", () => {
       }
 
       if (currentTest.i === currentTest.quoteData.originalChars.length) {
-        currentTest.resetStopwatch();
+        currentTest.stopStopwatch();
       }
   });
 });

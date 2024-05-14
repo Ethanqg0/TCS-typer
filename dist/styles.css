@@ -7,7 +7,7 @@
   --text-color: black;
   --title-text-color: black;
   --subtitle-text-color: rgb(62, 62, 62);
-  --button-background-color: rgb(41, 113, 201);
+  --button-background-color: rgb(65, 128, 205);
   --test-background-color: white;
   --test-font-color: black;
   --box-shadow-color: black;
@@ -120,7 +120,7 @@ html {
 }
 
 #title {
-  font-size: 80px;
+  font-size: 70px;
   font-weight: 700;
   color: var(--title-text-color);
 }
@@ -144,6 +144,7 @@ html {
 }
 
 #section1 {
+  margin-top: 25px;
   display: flex;
   flex-direction: column;
 }
@@ -152,8 +153,11 @@ html {
   background-color: var(--button-background-color);
 }
 
-button {
+.settings button {
   margin-top: 20px;
+}
+
+button {
   background-color: var(--background-color);
   border: 2px solid black;
   padding-left: 20px;
@@ -208,10 +212,9 @@ nav div button:hover {
   background-color: rgb(10, 65, 160);
 }
 
-nav p {
+nav img {
   padding-left: 30px;
-  padding-top: 15px;
-  padding-bottom: 15px;
+  margin-top: 10px;
   font-size: 30px;
   cursor: pointer;
   color: black;
@@ -226,7 +229,7 @@ nav p {
   margin-top: 30px;
   display: flex;
   flex-direction: row;
-  gap: 10px;
+  gap: 20px;
   align-items: center;
 }
 
@@ -234,14 +237,6 @@ nav p {
   display: flex;
   flex-direction: column;
   gap: 10px;
-}
-
-img {
-  border-radius: 25px;
-}
-
-img:hover {
-  height: 300px;
 }
 
 #test-1, #test-2, #test-settings {
@@ -256,6 +251,10 @@ img:hover {
 i {
   font-size: 30px;
   cursor: pointer;
+}
+
+i:hover {
+  color: rgb(41, 113, 201);
 }
 
 #stats {

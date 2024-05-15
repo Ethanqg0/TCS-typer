@@ -1,0 +1,73 @@
+* {
+    border: none;
+}
+
+dialog.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.modal-container {
+    width: 30vw;
+    justify-content: space-around;
+    display: flex;
+    gap: 30px;
+    flex-direction: column;
+    background-color: white;
+    padding: 30px 30px 30px 40px;
+}
+
+#close-modal {
+   margin-left: auto;
+   color: black;
+}
+
+h4 {
+    font-weight: 400;
+}
+
+#close-modal:hover {
+    color: grey;
+}
+
+dialog h1 {
+    font-size: 50px;
+}
+
+dialog section {
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    width: 100%;
+}
+
+.flex-column {
+    height: 40vh;
+    display: flex;
+    justify-content: start;
+    flex-direction: column;
+    gap: 20px;
+    overflow-y: scroll;
+}
+
+h3 {
+    font-weight: 200 !important;
+    font-family: sans-serif;
+}
+
+.fa-x {
+    font-size: 15px;
+}
+
+.leaderboard-player {
+    border-bottom: 1px solid lightgray;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    width: 30vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}

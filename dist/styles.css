@@ -245,7 +245,8 @@ nav img {
     background-color: var(--test-background-color);
     color: var(--test-font-color);
     border-radius: 20px;
-    font-size: 1.5rem;
+    font-size: 1.75rem;
+
 }
 
 i {

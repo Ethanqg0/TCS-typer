@@ -252,10 +252,10 @@ class TypingTest implements Test {
       wordsArray = shuffleArray(wordsArray);
 
       // Take the first 20 words from the shuffled array
-      let first20Words = wordsArray.slice(0, 15);
+      let first10Words = wordsArray.slice(0, 10);
 
       // Join the first 20 shuffled words back into a string
-      let shuffledQuote = first20Words.join(" ");
+      let shuffledQuote = first10Words.join(" ");
 
       return shuffledQuote;
     } catch (error) {
@@ -286,18 +286,6 @@ const pathToTestMap: Record<string, TestConfig> = {
     elementId: "test-1",
     stopwatchId: "stopwatch-1",
     restartButtonId: "restart-button-1",
-  },
-  "/src/pages/test.html": {
-    id: "test-2",
-    elementId: "test-2",
-    stopwatchId: "stopwatch-2",
-    restartButtonId: "restart-button-2",
-  },
-  "/src/pages/settings.html": {
-    id:"test-settings",
-    elementId: "test-settings",
-    stopwatchId: "stopwatch-3",
-    restartButtonId: "restart-button-3",
   }
 };
 

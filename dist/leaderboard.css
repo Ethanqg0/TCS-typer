@@ -68,6 +68,15 @@ h3 {
     font-size: 15px;
 }
 
+.modal-rank {
+    display: flex;
+    justify-content: start;
+}
+
+.modal-rank h3 {
+    font-weight: 800 !important;
+}
+
 .leaderboard-player {
     border-bottom: 1px solid lightgray;
     padding-top: 10px;

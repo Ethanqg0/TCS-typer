@@ -1,7 +1,7 @@
 # TCS-Typer Documentation
 
 ## Overview
-Title: TCS Typer
+Title: TCS Typer <br>
 Description: A web-based typing test application that allows users to improve their typing speed and accuracy through various tests. The application features a leaderboard, customizable settings, and dynamic quote generation for typing tests. It is designed specifically for theCoderSchool, a programming school located in Walnut Creek, California.
 
 ## Getting Started

@@ -7,10 +7,10 @@
 
 .register, .login {
     padding: 30px;
-    width: 30%;
+    width: 40%;
     border: 1px solid black;
     border-radius: 25px;
-    box-shadow: 0 2px 6px 6px rgb(0 0 0 / 0.05)
+    box-shadow: 6px 6px 8px 8px rgb(0 0 0 / 0.05);
 }
 
 .register h3, .login h3 {
@@ -22,18 +22,18 @@ form {
     margin-top: 20px;
     display: flex;
     flex-direction: column;
-    gap: 30px;
+    gap: 20px;
     justify-content: space-around;
 }
 
 input {
-    padding: 5px;
+    padding: 10px;
     border-radius: 10px;
     border: 1px solid gray;
 }
 
 button {
-    width: 30%;
+    width: 18%;
     padding: 8px;
 }
 

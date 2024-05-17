@@ -50,6 +50,9 @@ class TypingTest {
          * @type {number}
          */
         this.i = 0;
+        this.minutes = 0;
+        this.seconds = 0;
+        this.milliseconds = 0;
         this.textBox = document.querySelector(`#${id}`);
         this.stopwatchDisplay = document.querySelector(`#${stopwatchId}`);
         this.restartButton = document.querySelector(`#${restartButtonId}`);
@@ -95,11 +98,19 @@ class TypingTest {
      * @param {number} time - The elapsed time in milliseconds.
      */
     displayTime(time) {
-        const minutes = Math.floor(time / 60000);
-        const seconds = Math.floor((time % 60000) / 1000);
-        const milliseconds = Math.floor((time % 1000) / 10);
-        const formattedTime = `${pad2(minutes)}:${pad2(seconds)}:${pad2(milliseconds)}`;
+        this.minutes = Math.floor(time / 60000);
+        this.seconds = Math.floor((time % 60000) / 1000);
+        this.milliseconds = Math.floor(time % 1000);
+        const formattedTime = `${pad2(this.minutes)}:${pad2(this.seconds)}:${pad2(this.milliseconds)}`;
         this.stopwatchDisplay.textContent = formattedTime;
+    }
+    calculateWPM(time) {
+        this.minutes = Math.floor(time / 60000);
+        this.seconds = Math.floor((time % 60000) / 1000);
+        this.milliseconds = Math.floor(time % 1000);
+        const totalSeconds = this.minutes * 60 + this.seconds + this.milliseconds / 1000;
+        const wpm = totalSeconds !== 0 ? Math.round((60 / totalSeconds) * 10) : 0;
+        return wpm;
     }
     /**
      * Resets the stopwatch timer.
@@ -286,6 +297,8 @@ window.addEventListener("DOMContentLoaded", () => {
         }
         if (currentTest.i === currentTest.quoteData.originalChars.length) {
             currentTest.stopStopwatch();
+            currentTest.textBox.innerHTML = "WORDS PER MINUTE: " + currentTest.calculateWPM(currentTest.stopwatch.elapsedTime);
+            console.log("BOOM WPM:", currentTest.calculateWPM(currentTest.stopwatch.elapsedTime));
         }
     });
 });

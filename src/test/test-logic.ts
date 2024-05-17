@@ -92,6 +92,10 @@ class TypingTest implements Test {
    */
   i: number = 0;
 
+  minutes: number = 0;
+  seconds: number = 0;
+  milliseconds: number = 0;
+
   /**
    * Constructs a new TypingTest instance.
    * @param {string} id - The ID of the text input box.
@@ -99,8 +103,12 @@ class TypingTest implements Test {
    */
   constructor(id: string, stopwatchId: string, restartButtonId: string) {
     this.textBox = document.querySelector(`#${id}`) as HTMLElement;
-    this.stopwatchDisplay = document.querySelector(`#${stopwatchId}`) as HTMLElement;
-    this.restartButton = document.querySelector(`#${restartButtonId}`) as HTMLElement;
+    this.stopwatchDisplay = document.querySelector(
+      `#${stopwatchId}`
+    ) as HTMLElement;
+    this.restartButton = document.querySelector(
+      `#${restartButtonId}`
+    ) as HTMLElement;
 
     this.stopwatch = {
       timer: null,
@@ -149,13 +157,28 @@ class TypingTest implements Test {
    * @param {number} time - The elapsed time in milliseconds.
    */
   displayTime(time: number): void {
-    const minutes = Math.floor(time / 60000);
-    const seconds = Math.floor((time % 60000) / 1000);
-    const milliseconds = Math.floor((time % 1000) / 10);
+    this.minutes = Math.floor(time / 60000);
+    this.seconds = Math.floor((time % 60000) / 1000);
+    this.milliseconds = Math.floor(time % 1000);
 
-    const formattedTime = `${pad2(minutes)}:${pad2(seconds)}:${pad2(milliseconds)}`;
+    const formattedTime = `${pad2(this.minutes)}:${pad2(this.seconds)}:${pad2(
+      this.milliseconds
+    )}`;
 
     this.stopwatchDisplay.textContent = formattedTime;
+  }
+
+  calculateWPM(time: number): number {
+    this.minutes = Math.floor(time / 60000);
+    this.seconds = Math.floor((time % 60000) / 1000);
+    this.milliseconds = Math.floor(time % 1000);
+
+    const totalSeconds =
+      this.minutes * 60 + this.seconds + this.milliseconds / 1000;
+    const wpm =
+      totalSeconds !== 0 ? Math.round((60 / totalSeconds) * 10) : 0;
+
+    return wpm;
   }
 
   /**
@@ -208,16 +231,18 @@ class TypingTest implements Test {
    */
   async generateQuote(): Promise<string> {
     try {
-      const response = await fetch(
-        "../../data/quotes.json"
-      );
+      const response = await fetch("../../data/quotes.json");
       if (!response.ok) {
-        throw new Error(`Failed to fetch quotes. HTTP status: ${response.status}`);
+        throw new Error(
+          `Failed to fetch quotes. HTTP status: ${response.status}`
+        );
       }
 
       const data = await response.json();
       if (!Array.isArray(data) || data.length === 0) {
-        throw new Error("Invalid quote data format: Quotes array is empty or not an array");
+        throw new Error(
+          "Invalid quote data format: Quotes array is empty or not an array"
+        );
       }
 
       const randomIndex = Math.floor(Math.random() * data.length);
@@ -368,6 +393,8 @@ window.addEventListener("DOMContentLoaded", () => {
 
       if (currentTest.i === currentTest.quoteData.originalChars.length) {
         currentTest.stopStopwatch();
+        currentTest.textBox.innerHTML = "WORDS PER MINUTE: " + currentTest.calculateWPM(currentTest.stopwatch.elapsedTime) as unknown as string;
+        console.log("BOOM WPM:", currentTest.calculateWPM(currentTest.stopwatch.elapsedTime));
       }
   });
 });

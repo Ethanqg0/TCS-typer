@@ -276,6 +276,17 @@ window.addEventListener("DOMContentLoaded", () => {
         if (event.key === "Shift") {
             return;
         }
+        if (event.key === "Backspace" || event.key === "Delete") {
+            if (currentTest.i > 0) {
+                currentTest.i--;
+                // Remove styling from the last character
+                currentTest.quoteData.chars[currentTest.i] =
+                    currentTest.quoteData.originalChars[currentTest.i];
+                // Update the display
+                currentTest.textBox.innerHTML = currentTest.quoteData.chars.join("");
+            }
+            return; // Prevent further processing for backspace/delete
+        }
         if (currentTest && currentTest.i < currentTest.quoteData.originalChars.length && event.key === currentTest.quoteData.originalChars[currentTest.i]) {
             currentTest.quoteData.chars[currentTest.i] =
                 '<span style="color: green">' + currentTest.quoteData.originalChars[currentTest.i] + "</span>";
@@ -291,6 +302,7 @@ window.addEventListener("DOMContentLoaded", () => {
                 '<span style="color: red">' + currentTest.quoteData.originalChars[currentTest.i] + "</span>";
             currentTest.textBox.innerHTML = currentTest.quoteData.chars.join("");
             updateSoundPath();
+            currentTest.i++;
             let audio = new Audio(soundPath);
             audio.volume = soundVolume;
             audio.play().catch((error) => console.log(error));

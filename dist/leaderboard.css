@@ -87,3 +87,12 @@ h3 {
     justify-content: space-between;
     align-items: center;
 }
+
+.label {
+    display: flex;
+    justify-content: space-between;
+}
+
+.label h4 {
+    font-weight: 800 !important;
+}

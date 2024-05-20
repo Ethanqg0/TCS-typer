@@ -35,6 +35,8 @@ function pad2(number) {
  * - displayTime(time: number): void
  * - resetStopwatch(): void
  * - stopStopwatch(): void
+ * - calculateWPM(time: number): number
+ * - calculateAccuracy(): number
  * - initializeTest(): Promise<void>
  * - generateQuote(): Promise<string>
  */
@@ -111,6 +113,17 @@ class TypingTest {
         const totalSeconds = this.minutes * 60 + this.seconds + this.milliseconds / 1000;
         const wpm = totalSeconds !== 0 ? Math.round((60 / totalSeconds) * 10) : 0;
         return wpm;
+    }
+    calculateAccuracy() {
+        let incorrectChars = 0;
+        for (let i = 0; i < this.quoteData.chars.length; i++) {
+            if (this.quoteData.chars[i].includes('<span style="color: red">')) {
+                incorrectChars++;
+            }
+        }
+        const totalChars = this.quoteData.originalChars.length;
+        const correctChars = totalChars - incorrectChars;
+        return Math.round((correctChars / totalChars) * 100);
     }
     /**
      * Resets the stopwatch timer.
@@ -309,7 +322,7 @@ window.addEventListener("DOMContentLoaded", () => {
         }
         if (currentTest.i === currentTest.quoteData.originalChars.length) {
             currentTest.stopStopwatch();
-            currentTest.textBox.innerHTML = "WORDS PER MINUTE: " + currentTest.calculateWPM(currentTest.stopwatch.elapsedTime);
+            currentTest.textBox.innerHTML = "Words per minute: " + currentTest.calculateWPM(currentTest.stopwatch.elapsedTime) + "<br>Accuracy: " + currentTest.calculateAccuracy() + "%";
             console.log("BOOM WPM:", currentTest.calculateWPM(currentTest.stopwatch.elapsedTime));
         }
     });

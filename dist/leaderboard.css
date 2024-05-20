@@ -96,3 +96,9 @@ h3 {
 .label h4 {
     font-weight: 800 !important;
 }
+
+.wpm-accuracy {
+    display: flex;
+    width: 30%;
+    justify-content: space-between;
+}

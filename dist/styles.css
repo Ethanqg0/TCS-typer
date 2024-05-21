@@ -8,6 +8,30 @@ nav i {
   color: black !important;
 }
 
+dialog {
+  --open: 0;
+
+  --closed: calc( (var(--open) - 1) * -1);
+
+  transform: translateY( calc(var(--closed) * -10%));
+  &, &::backdrop {
+    --duration: calc( (var(--open) * .25s) );
+    transition: all var(--duration) ease-out allow-discrete;
+    opacity: var(--open);
+  }
+
+  &[open] {
+    --open: 1;
+  }
+
+  @starting-style {
+    --open: 1;
+    &[open] {
+      --open: 0;
+    }
+  }
+}
+
 /* Themes */
 .default-theme {
   --background-color: white;

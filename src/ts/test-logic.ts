@@ -325,7 +325,13 @@ const pathToTestMap: Record<string, TestConfig> = {
     elementId: "test-1",
     stopwatchId: "stopwatch-1",
     restartButtonId: "restart-button-1",
-  }
+  },
+  "/src": {
+    id: "test1",
+    elementId: "test-1",
+    stopwatchId: "stopwatch-1",
+    restartButtonId: "restart-button-1",
+  },
 };
 
 let soundPath: string = "../assets/sounds/standard-click.wav";

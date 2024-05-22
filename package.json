@@ -21,6 +21,7 @@
   "dependencies": {
     "@supabase/supabase-js": "^2.43.2",
     "chalk": "^5.3.0",
-    "express": "^4.19.2"
+    "express": "^4.19.2",
+    "netlify": "^13.1.16"
   }
 }

@@ -1,4 +1,9 @@
 [[redirects]]
+from = "/dist/*"
+to = "/dist/:splat"
+status = 200
+
+[[redirects]]
 from = "/*"
 to = "/src/index.html"
 status = 200

@@ -320,7 +320,7 @@ type TestConfig = {
 
 // Define a mapping of pathname to test configuration
 const pathToTestMap: Record<string, TestConfig> = {
-  "/src/index.html": {
+  "/": {
     id: "test1",
     elementId: "test-1",
     stopwatchId: "stopwatch-1",

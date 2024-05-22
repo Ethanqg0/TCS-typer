@@ -1,16 +1,23 @@
 .login-section2 {
     display: flex;
     width: 80vw;
-    height: 50vh;
+    height: 55vh;
     justify-content: space-between;
+}
+
+.login-section2 div {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
 }
 
 .register, .login {
     padding: 30px;
     width: 40%;
-    border: 1px solid black;
+    display: flex;
+    border: 0px solid black;
     border-radius: 25px;
-    box-shadow: 6px 6px 8px 8px rgb(0 0 0 / 0.05);
+    box-shadow: 3px 15px 50px -12px rgb(0 0 0 / 0.25);
 }
 
 .register h3, .login h3 {
@@ -23,7 +30,6 @@ form {
     display: flex;
     flex-direction: column;
     gap: 20px;
-    justify-content: space-around;
 }
 
 input {

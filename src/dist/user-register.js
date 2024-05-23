@@ -25,26 +25,30 @@ document.addEventListener("DOMContentLoaded", function () {
                 event.preventDefault();
                 // Add register validation here
                 // Perform request to server here
-                const response = yield fetch("http://localhost:3000/register", {
-                    method: "POST",
-                    mode: "cors",
-                    cache: "no-cache",
-                    credentials: "same-origin",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                        "username": username.value,
-                        "password": password.value
-                    })
-                });
-                const data = yield response.json();
-                console.log("Server response:", data);
-                if (data.error) {
-                    alert(data.error);
+                try {
+                    const response = yield fetch("http://localhost:3000/register", {
+                        method: "POST",
+                        mode: "cors",
+                        cache: "no-cache",
+                        credentials: "same-origin",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                            username: username.value,
+                            password: password.value,
+                        }),
+                    });
+                    if (response.ok) {
+                        alert("User registered successfully!");
+                        window.location.href = "/src/index.html";
+                    }
+                    else {
+                        alert("An error occurred while registering the user. Does this user already exist?");
+                    }
                 }
-                else {
-                    alert("User registered successfully!");
+                catch (error) {
+                    console.error("An error occurred:", error);
                 }
                 return;
             });

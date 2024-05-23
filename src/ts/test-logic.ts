@@ -432,7 +432,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
       if (currentTest.i === currentTest.quoteData.originalChars.length) {
         currentTest.stopStopwatch();
-        currentTest.textBox.innerHTML = "Words per minute: " + currentTest.calculateWPM(currentTest.stopwatch.elapsedTime) + "<br>Accuracy: " + currentTest.calculateAccuracy() + "%" as unknown as string;
+        currentTest.textBox.innerHTML = currentTest.calculateWPM(currentTest.stopwatch.elapsedTime) + " words per minute with " + currentTest.calculateAccuracy() + "% accuracy!";
         console.log("BOOM WPM:", currentTest.calculateWPM(currentTest.stopwatch.elapsedTime));
       }
   });

@@ -65,10 +65,7 @@ app.post("/register", async function(req, res) {
     return res.status(400).send({ error: "Username and password are required" });
   }
 
-  // check if user exists
-  const userExists = await checkUserExists(username);
-
-  if (userExists) {
+  if (await checkUserExists(username)) {
     return res.status(400).send({ error: "User already exists" });
   }
 

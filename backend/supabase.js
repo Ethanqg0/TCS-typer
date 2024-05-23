@@ -1,7 +1,10 @@
 const express = require("express");
+const cors = require("cors")
 const { createClient } = require("@supabase/supabase-js");
 
 const app = express();
+app.use(express.json());
+app.use(cors())
 const port = 3000;
 
 // Create a single supabase client for interacting with your database
@@ -21,6 +24,20 @@ app.get("/users", async (req, res) => {
   return res.status(200).send(data);
 });
 
+app.get("/tests", async function(req, res) {
+  const { data, error } = await supabase
+  .from("tests")
+  .select("*")
+  .gte("accuracy", 90);
+
+  if (error)
+    return res
+      .status(500)
+      .send({ error: `Failed to fetch tests: ${error.message}` });
+
+  return res.status(200).send(data);
+});
+
 app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+  console.log(`Backend is running on port ${port}`);
 });

@@ -232,12 +232,18 @@ class TypingTest {
 }
 // Define a mapping of pathname to test configuration
 const pathToTestMap = {
-    "/src/index.html": {
+    "/": {
         id: "test1",
         elementId: "test-1",
         stopwatchId: "stopwatch-1",
         restartButtonId: "restart-button-1",
-    }
+    },
+    "/src": {
+        id: "test1",
+        elementId: "test-1",
+        stopwatchId: "stopwatch-1",
+        restartButtonId: "restart-button-1",
+    },
 };
 let soundPath = "../assets/sounds/standard-click.wav";
 let soundVolume = 1.0;

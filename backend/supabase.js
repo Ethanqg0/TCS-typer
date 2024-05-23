@@ -73,7 +73,8 @@ app.post("/register", async function(req, res) {
   }
 
   const { data, error } = await supabase.from("users").insert([
-    { username, password },
+    { "username": username, 
+      "password": password },
   ]);
 
   if (error)

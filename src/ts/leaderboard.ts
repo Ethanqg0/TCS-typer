@@ -1,6 +1,7 @@
 const names: { [key: string]: string } = {
   "1": "Ethan Gutierrez",
   "2": "Keaton Freed",
+  "7": "Jack Bacon"
 };
 
 function rankByWPM(tests: Array<any>) {

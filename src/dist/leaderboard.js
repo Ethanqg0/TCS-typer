@@ -11,6 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 const names = {
     "1": "Ethan Gutierrez",
     "2": "Keaton Freed",
+    "7": "Jack Bacon"
 };
 function rankByWPM(tests) {
     return tests.sort((a, b) => b.wpm - a.wpm);

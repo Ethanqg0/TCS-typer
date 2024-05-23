@@ -9,15 +9,21 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 let form = null;
+function validateForm(form) {
+    //TODO
+    return true;
+}
 document.addEventListener("DOMContentLoaded", function () {
     form = document.querySelector(".register form") || null;
     const username = document.getElementById("username");
     const password = document.getElementById("password");
     const verifyPassword = document.getElementById("verify-password");
+    const formResponse = validateForm(form);
     if (form) {
         form.addEventListener("submit", function (event) {
             return __awaiter(this, void 0, void 0, function* () {
                 event.preventDefault();
+                // Add register validation here
                 // Perform request to server here
                 const response = yield fetch("http://localhost:3000/register", {
                     method: "POST",
@@ -32,13 +38,15 @@ document.addEventListener("DOMContentLoaded", function () {
                         "password": password.value
                     })
                 });
-                alert("User registered successfully!");
                 const data = yield response.json();
+                console.log("Server response:", data);
                 if (data.error) {
                     alert(data.error);
-                    return;
                 }
-                alert("User registered successfully!");
+                else {
+                    alert("User registered successfully!");
+                }
+                return;
             });
         });
     }

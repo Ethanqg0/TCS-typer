@@ -167,8 +167,10 @@ html {
 }
 
 #container {
-  margin-top: 60px;
+  margin: auto;
+  justify-content: center;
   width: 80vw;
+  height: 80vh;
   padding: 60px;
   display: flex;
   flex-direction: column;

@@ -36,11 +36,15 @@ document.addEventListener("DOMContentLoaded", function () {
             });
 
             const data = await response.json();
+            console.log("Server response:", data);
 
             if (data.error) {
                 alert(data.error);
-                return;
+            } else {
+                alert("User registered successfully!")
             }
+
+            return;
         });
     }
 });

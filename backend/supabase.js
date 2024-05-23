@@ -75,6 +75,13 @@ app.post("/register", async function(req, res) {
   const { data, error } = await supabase.from("users").insert([
     { username, password },
   ]);
+
+  if (error)
+    return res
+      .status(500)
+      .send({ error: `Failed to create user: ${error.message}` });
+
+  return res.status(200).send(data);
 });
 
 app.listen(port, () => {

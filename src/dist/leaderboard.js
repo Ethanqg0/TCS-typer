@@ -15,6 +15,10 @@ const names = {
 function rankByWPM(tests) {
     return tests.sort((a, b) => b.wpm - a.wpm);
 }
+// keeps the test with the largest "wpm" data, then removes all other tests with the same user_id
+function removeDuplicates(tests) {
+    // TODO
+}
 window.addEventListener("DOMContentLoaded", function () {
     return __awaiter(this, void 0, void 0, function* () {
         try {

@@ -14,7 +14,7 @@ function validateForm(form) {
     return true;
 }
 document.addEventListener("DOMContentLoaded", function () {
-    form = document.querySelector(".register form") || null;
+    form = document.querySelector("#signup-form") || null;
     const username = document.getElementById("username");
     const password = document.getElementById("password");
     const verifyPassword = document.getElementById("verify-password");
@@ -54,4 +54,44 @@ document.addEventListener("DOMContentLoaded", function () {
             });
         });
     }
+});
+document.addEventListener("DOMContentLoaded", function () {
+    const form = document.querySelector('#login-form');
+    const username = document.querySelector("#login-username");
+    const password = document.querySelector("#login-password");
+    if (!form) {
+        return;
+    }
+    form.addEventListener('submit', function (event) {
+        return __awaiter(this, void 0, void 0, function* () {
+            event.preventDefault();
+            try {
+                const response = yield fetch('http://localhost:3000/login', {
+                    method: 'POST',
+                    mode: 'cors',
+                    cache: 'no-cache',
+                    credentials: 'same-origin',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        username: username.value,
+                        password: password.value,
+                    })
+                });
+                if (response.ok) {
+                    localStorage.setItem("username", username.value);
+                    localStorage.setItem("first_name", "TODO");
+                    alert('User logged in successfully!');
+                    window.location.href = '/src/index.html';
+                }
+                else {
+                    alert('An error occurred while logging in. Please try again.');
+                }
+            }
+            catch (error) {
+                console.error('An error occurred:', error);
+            }
+        });
+    });
 });

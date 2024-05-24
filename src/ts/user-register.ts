@@ -5,8 +5,14 @@ function validateForm(form: HTMLFormElement): boolean {
   return true;
 }
 
+async function getFirstName(username: string): Promise<string> {
+    // TODO
+    
+    return "HI";
+}
+
 document.addEventListener("DOMContentLoaded", function () {
-  form = (document.querySelector(".register form") as HTMLFormElement) || null;
+  form = (document.querySelector("#signup-form") as HTMLFormElement) || null;
 
   const username = document.getElementById("username") as HTMLInputElement;
   const password = document.getElementById("password") as HTMLInputElement;
@@ -52,3 +58,45 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 });
+
+document.addEventListener("DOMContentLoaded", function() {
+    const form = document.querySelector('#login-form') as HTMLFormElement;
+    const username = document.querySelector("#login-username") as HTMLInputElement;
+    const password = document.querySelector("#login-password") as HTMLInputElement;
+
+    if (!form) {
+        return;
+    }
+
+    form.addEventListener('submit', async function(event) {
+        event.preventDefault();
+
+        try {
+            const response = await fetch('http://localhost:3000/login', {
+                method: 'POST',
+                mode: 'cors',
+                cache: 'no-cache',
+                credentials: 'same-origin',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    username: username.value,
+                    password: password.value,
+                })
+            });
+
+            if (response.ok) {
+                localStorage.setItem("username", username.value);
+                localStorage.setItem("first_name", "TODO");
+                alert('User logged in successfully!');
+                window.location.href = '/src/index.html';
+            } else {
+                alert('An error occurred while logging in. Please try again.');
+            }
+        } catch (error) {
+            console.error('An error occurred:', error);
+        }
+    });
+});
+

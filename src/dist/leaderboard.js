@@ -9,10 +9,30 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 function rankByWPM(tests) {
+    const test = tests.sort((a, b) => b["wpm"] - a["wpm"]);
+    return test;
 }
-// keeps the test with the largest "wpm" data, then removes all other tests with the same user_id
-function removeDuplicates(tests) {
-    // TODO
+function filterBestTests(users) {
+    let filteredTests = [];
+    for (const user of users) {
+        let bestTest = null;
+        const tests = user["tests"];
+        for (const test of tests) {
+            if (test["accuracy"] >= 90) {
+                if (bestTest === null || test["wpm"] > bestTest["wpm"]) {
+                    bestTest = {
+                        full_name: user["full_name"],
+                        wpm: test["wpm"],
+                        accuracy: test["accuracy"],
+                    };
+                }
+            }
+        }
+        if (bestTest !== null) {
+            filteredTests.push(bestTest);
+        }
+    }
+    return filteredTests;
 }
 window.addEventListener("DOMContentLoaded", function () {
     return __awaiter(this, void 0, void 0, function* () {
@@ -22,45 +42,31 @@ window.addEventListener("DOMContentLoaded", function () {
                 throw new Error("Failed to fetch tests from backend server.");
             }
             let tests = yield response.json();
-            for (const test of tests) {
+            console.log(tests);
+            tests = filterBestTests(tests);
+            tests = rankByWPM(tests);
+            for (let i = 0; i < tests.length; i++) {
                 const leaderboard = document.querySelector(".flex-column");
                 let player = leaderboard.appendChild(document.createElement("div"));
                 player.classList.add("leaderboard-player");
                 let name = player.appendChild(document.createElement("h3"));
-                name.innerHTML = test["full_name"];
+                name.innerHTML = tests[i]["full_name"];
+                if (i === 0) {
+                    name.innerHTML += " 🥇";
+                    name.style.fontWeight = "600";
+                }
+                else if (i === 1) {
+                    name.innerHTML += " 🥈";
+                }
+                else if (i === 2) {
+                    name.innerHTML += " 🥉";
+                }
                 let div = player.appendChild(document.createElement("div"));
                 div.classList.add("wpm-accuracy");
                 let wpm = div.appendChild(document.createElement("h4"));
-                wpm.innerHTML = test["tests"][0]["wpm"];
+                wpm.innerHTML = tests[i]["wpm"];
                 let accuracy = div.appendChild(document.createElement("h4"));
-                accuracy.innerHTML = test["tests"][0]["accuracy"] + "%";
-            }
-        }
-        catch (error) {
-            console.error(error);
-        }
-    });
-});
-window.addEventListener("testFinished", function () {
-    return __awaiter(this, void 0, void 0, function* () {
-        try {
-            const response = yield fetch("http://localhost:3000/users");
-            if (!response) {
-                throw new Error("Failed to fetch tests from backend server.");
-            }
-            let tests = yield response.json();
-            for (const test of tests) {
-                const leaderboard = document.querySelector(".flex-column");
-                let player = leaderboard.appendChild(document.createElement("div"));
-                player.classList.add("leaderboard-player");
-                let name = player.appendChild(document.createElement("h3"));
-                name.innerHTML = test["full_name"];
-                let div = player.appendChild(document.createElement("div"));
-                div.classList.add("wpm-accuracy");
-                let wpm = div.appendChild(document.createElement("h4"));
-                wpm.innerHTML = test["tests"][0]["wpm"];
-                let accuracy = div.appendChild(document.createElement("h4"));
-                accuracy.innerHTML = test["tests"][0]["accuracy"] + "%";
+                accuracy.innerHTML = tests[i]["accuracy"] + "%";
             }
         }
         catch (error) {

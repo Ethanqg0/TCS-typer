@@ -1,11 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Syne:wght@400..800&display=swap');
 
-nav {
-  background-color: white !important;
+nav i {
+  color: var(--icon-color);
 }
 
-nav i {
-  color: black !important;
+i {
+  color: var(--icon-color)
 }
 
 dialog {
@@ -35,14 +35,20 @@ dialog {
 /* Themes */
 .default-theme {
   --background-color: white;
-  --logo-color: black;
+  --logo-color: white;
   --text-color: black;
   --title-text-color: black;
   --subtitle-text-color: rgb(62, 62, 62);
-  --button-background-color: rgb(65, 128, 205);
+  --icon-color: black;
+  --button-background-color: white(65, 128, 205);
   --test-background-color: white;
   --test-font-color: black;
   --box-shadow-color: black;
+}
+
+#logo {
+  background-color: var(--logo-color);
+  border-radius: 25px;
 }
 
 .matrix-theme {
@@ -51,6 +57,7 @@ dialog {
   --text-color: green;
   --title-text-color: darkgreen;
   --subtitle-text-color: green;
+  --icon-color: green;
   --button-background-color: green;
   --test-background-color: black;
   --test-font-color: rgb(132, 132, 132);
@@ -59,7 +66,7 @@ dialog {
 
 .pink-theme {
   --background-color: white;
-  --logo-color: rgb(246,85,112);
+  --logo-color: white;
   --text-color: rgb(248, 124, 145);
   --title-text-color: rgb(246, 85, 112);
   --subtitle-text-color: rgb(238, 109, 133);
@@ -71,7 +78,7 @@ dialog {
 
 .discord-theme {
   --background-color: rgb(44, 47, 51);
-  --logo-color: rgb(114, 137, 218);
+  --logo-color: rgb(220, 221, 222);
   --text-color: rgb(220, 221, 222);
   --title-text-color: rgb(114, 137, 218);
   --subtitle-text-color: rgb(153, 170, 181);
@@ -83,12 +90,12 @@ dialog {
 
 .blueberry-theme {
   --background-color: #eaf4fc; /* Soft sky blue background */
-  --logo-color: #3b5998;       /* Deep ocean blue for logo */
+  --logo-color: #eaf4fc;       /* Deep ocean blue for logo */
   --text-color: #24578a;       /* Dark blue for text */
   --title-text-color: #0b4f6c; /* Rich sea blue for titles */
   --subtitle-text-color: #4ca1af; /* Aquamarine for subtitles */
   --button-background-color: #3b5998; /* Deep ocean blue for buttons */
-  --test-background-color: black; /* White for test areas */
+  --test-background-color: eaf4fc; /* White for test areas */
   --test-font-color: #24578a;   /* Dark blue for test text */
   --box-shadow-color: rgba(59, 89, 152, 0.3);
 }
@@ -155,10 +162,6 @@ html {
   font-size: 70px;
   font-weight: 700;
   color: var(--title-text-color);
-}
-
-#logo {
-  color: var(--logo-color);
 }
 
 #subtitle {
@@ -314,3 +317,4 @@ i:hover {
 a {
   text-decoration: none;
 }
+

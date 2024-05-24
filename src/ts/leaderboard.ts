@@ -1,7 +1,31 @@
-// TODO: rank by wpm, get the greatest wpm for each user, filter out tests lower than 90%
-
 function rankByWPM(tests: Array<any>) {
-   
+   const test = tests.sort((a, b) => b["wpm"] - a["wpm"]);
+   return test;
+}
+
+function filterBestTests(users: Array<any>) {
+  let filteredTests = [];
+
+  for (const user of users) {
+    let bestTest = null;
+    const tests = user["tests"];
+    for (const test of tests) {
+      if (test["accuracy"] >= 90) {
+        if (bestTest === null || test["wpm"] > bestTest["wpm"]) {
+          bestTest = {
+            full_name: user["full_name"],
+            wpm: test["wpm"],
+            accuracy: test["accuracy"],
+          }
+        }
+      }
+    }
+    if (bestTest !== null) {
+      filteredTests.push(bestTest);
+    }
+  }
+
+  return filteredTests;
 }
 
 window.addEventListener("DOMContentLoaded", async function () {
@@ -13,7 +37,12 @@ window.addEventListener("DOMContentLoaded", async function () {
     
     let tests = await response.json();
 
-    for (const test of tests) {
+    console.log(tests);
+
+    tests = filterBestTests(tests);
+    tests = rankByWPM(tests);
+
+    for (let i: number = 0; i < tests.length; i++ ) {
       const leaderboard = document.querySelector(
         ".flex-column"
       ) as HTMLDivElement;
@@ -26,7 +55,15 @@ window.addEventListener("DOMContentLoaded", async function () {
         document.createElement("h3") as HTMLHeadingElement
       );
 
-      name.innerHTML = test["full_name"];
+      name.innerHTML = tests[i]["full_name"];
+      if (i === 0) {
+        name.innerHTML += " 🥇";
+        name.style.fontWeight = "600";
+      } else if (i === 1) {
+        name.innerHTML += " 🥈";
+      } else if (i === 2) {
+        name.innerHTML += " 🥉";
+      }
 
       let div = player.appendChild(
         document.createElement("div") as HTMLDivElement
@@ -35,55 +72,11 @@ window.addEventListener("DOMContentLoaded", async function () {
       let wpm = div.appendChild(
         document.createElement("h4") as HTMLParagraphElement
       );
-      wpm.innerHTML = test["tests"][0]["wpm"];
+      wpm.innerHTML = tests[i]["wpm"];
       let accuracy = div.appendChild(
         document.createElement("h4") as HTMLParagraphElement
       );
-      accuracy.innerHTML = test["tests"][0]["accuracy"] + "%";
-    }
-  } catch (error) {
-    console.error(error);
-  }
-});
-
-window.addEventListener("testFinished", async function () {
-
-
-  try {
-    const response = await fetch("http://localhost:3000/users");
-    if (!response) {
-      throw new Error("Failed to fetch tests from backend server.");
-    }
-
-    let tests = await response.json();
-
-    for (const test of tests) {
-      const leaderboard = document.querySelector(
-        ".flex-column"
-      ) as HTMLDivElement;
-      let player = leaderboard.appendChild(
-        document.createElement("div") as HTMLDivElement
-      );
-      player.classList.add("leaderboard-player");
-
-      let name = player.appendChild(
-        document.createElement("h3") as HTMLHeadingElement
-      );
-
-      name.innerHTML = test["full_name"];
-
-      let div = player.appendChild(
-        document.createElement("div") as HTMLDivElement
-      );
-      div.classList.add("wpm-accuracy");
-      let wpm = div.appendChild(
-        document.createElement("h4") as HTMLParagraphElement
-      );
-      wpm.innerHTML = test["tests"][0]["wpm"];
-      let accuracy = div.appendChild(
-        document.createElement("h4") as HTMLParagraphElement
-      );
-      accuracy.innerHTML = test["tests"][0]["accuracy"] + "%";
+      accuracy.innerHTML = tests[i]["accuracy"] + "%";
     }
   } catch (error) {
     console.error(error);

@@ -33,7 +33,7 @@ form {
     margin-top: 20px;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 30px;
 }
 
 input {
@@ -45,6 +45,7 @@ input {
 button {
     width: 18%;
     padding: 8px;
+    background-color: var(--button-background-color);
 }
 
 #remember-me {

@@ -9,8 +9,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 let form = null;
-function validateForm(form) {
-    //TODO
+function validateForm(username, password, verifyPassword) {
+    console.log("USERNAME VALUE:", username.value);
+    if (!username.value.includes("tcswc")) {
+        alert("Username must contain 'tcswc', use your Scratch login!");
+        return false;
+    }
+    if (password.value !== verifyPassword.value) {
+        alert("Passwords do not match!");
+        return false;
+    }
     return true;
 }
 document.addEventListener("DOMContentLoaded", function () {
@@ -19,12 +27,14 @@ document.addEventListener("DOMContentLoaded", function () {
     const password = document.getElementById("password");
     const fullName = document.getElementById("full-name");
     const verifyPassword = document.getElementById("verify-password");
-    const formResponse = validateForm(form);
     if (form) {
         form.addEventListener("submit", function (event) {
             return __awaiter(this, void 0, void 0, function* () {
                 event.preventDefault();
-                // Add register validation here
+                const formResponse = validateForm(username, password, verifyPassword);
+                if (formResponse === false) {
+                    return;
+                }
                 // Perform request to server here
                 try {
                     const response = yield fetch("http://localhost:3000/register", {
@@ -39,6 +49,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             username: username.value,
                             password: password.value,
                             full_name: fullName.value,
+                            tests: [{ wpm: 0, accuracy: 0 }]
                         }),
                     });
                     if (response.ok) {

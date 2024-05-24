@@ -1,7 +1,16 @@
 let form: HTMLFormElement | null = null;
 
-function validateForm(form: HTMLFormElement): boolean {
-  //TODO
+function validateForm(username: HTMLInputElement, password: HTMLInputElement, verifyPassword: HTMLInputElement): boolean {
+  console.log("USERNAME VALUE:", username.value);
+  if ( !username.value.includes("tcswc") ) {
+    alert("Username must contain 'tcswc', use your Scratch login!");
+    return false;
+  }
+
+  if (password.value !== verifyPassword.value) {
+    alert("Passwords do not match!");
+    return false;
+  }
   return true;
 }
 
@@ -11,17 +20,20 @@ document.addEventListener("DOMContentLoaded", function () {
   const username = document.getElementById("username") as HTMLInputElement;
   const password = document.getElementById("password") as HTMLInputElement;
   const fullName = document.getElementById("full-name") as HTMLInputElement;
+
   const verifyPassword = document.getElementById(
     "verify-password"
   ) as HTMLInputElement;
-
-  const formResponse = validateForm(form);
 
   if (form) {
     form.addEventListener("submit", async function (event) {
       event.preventDefault();
 
-      // Add register validation here
+      const formResponse = validateForm(username, password, verifyPassword);
+
+      if (formResponse === false) {
+        return;
+      }
 
       // Perform request to server here
       try {
@@ -37,6 +49,7 @@ document.addEventListener("DOMContentLoaded", function () {
             username: username.value,
             password: password.value,
             full_name: fullName.value,
+            tests: [{ wpm: 0, accuracy: 0}]
           }),
         });
 

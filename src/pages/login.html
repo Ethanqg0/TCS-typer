@@ -13,7 +13,9 @@
 
 <body>
   <nav>
-    <a href="../index.html"><img src="../../assets/images/tcs-logo.png" height=50></a>
+    <div id="logo">
+        <a href="../index.html"><img src="../../assets/images/tcs-logo.png" height=50></a>
+    </div>
     <div>
         <a href="../index.html"><i class="fa-solid fa-user"></i></a>
         <a href="./settings.html"><i class="fa-solid fa-gear"></i></a>
@@ -23,8 +25,10 @@
   <main id="container">
       <section class="login-section2">
             <div class="register">
-                <h3>Sign Up</h3>
-                <h4>Use your Scratch Login!</h4>
+                <div style="gap: 15px;">
+                    <h3>Sign Up</h3>
+                    <h4>Use your Scratch Login!</h4>
+                </div>
                 <form id="signup-form">
                     <input placeholder="Full Name" id="full-name">
                     <input placeholder="Username" id="username">
@@ -34,8 +38,10 @@
                 </form>
             </div>
             <div class="login">
-                <h3>Login</h3>
-                <h4>If you forgot, ask your coach</h4>
+                <div style="gap: 15px;">
+                    <h3>Login</h3>
+                    <h4>If you forgot, ask your coach</h4>
+                </div>
                 <form id="login-form">
                     <input placeholder="Username" id="login-username">
                     <input placeholder="Password" type="password" id="login-password">

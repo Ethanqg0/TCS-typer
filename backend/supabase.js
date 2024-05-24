@@ -47,7 +47,7 @@ app.get("/users", async function (req, res) {
 });
 
 app.post("/register", async function (req, res) {
-  const { username, password, full_name } = req.body;
+  const { username, password, full_name, tests } = req.body;
 
   if (!username || !password) {
     return res
@@ -61,7 +61,7 @@ app.post("/register", async function (req, res) {
 
   const { data, error } = await supabase
     .from("users")
-    .insert([{ username: username, password: password, full_name: full_name}]);
+    .insert([{ username: username, password: password, full_name: full_name, tests: tests}]);
 
   if (error)
     return res

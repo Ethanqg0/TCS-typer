@@ -17,6 +17,7 @@ document.addEventListener("DOMContentLoaded", function () {
     form = document.querySelector("#signup-form") || null;
     const username = document.getElementById("username");
     const password = document.getElementById("password");
+    const fullName = document.getElementById("full-name");
     const verifyPassword = document.getElementById("verify-password");
     const formResponse = validateForm(form);
     if (form) {
@@ -37,9 +38,11 @@ document.addEventListener("DOMContentLoaded", function () {
                         body: JSON.stringify({
                             username: username.value,
                             password: password.value,
+                            full_name: fullName.value,
                         }),
                     });
                     if (response.ok) {
+                        localStorage.setItem("username", username.value);
                         alert("User registered successfully!");
                         window.location.href = "/src/index.html";
                     }
@@ -81,7 +84,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 });
                 if (response.ok) {
                     localStorage.setItem("username", username.value);
-                    localStorage.setItem("first_name", "TODO");
                     alert('User logged in successfully!');
                     window.location.href = '/src/index.html';
                 }

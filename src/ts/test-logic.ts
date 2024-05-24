@@ -366,6 +366,35 @@ window.addEventListener("DOMContentLoaded", () => {
   updateSoundPath();
 });
 
+let username = null; 
+
+async function sendResultsToDatabase(test: TypingTest) {
+  username = localStorage.getItem("username");
+  let wpm: number = test.calculateWPM(test.stopwatch.elapsedTime);
+  let accuracy: number = test.calculateAccuracy();
+
+  try {
+    const response = await fetch("http://localhost:3000/test", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        "username": username,
+        "wpm": wpm,
+        "accuracy": accuracy,
+      }),
+    }
+  );
+  } catch (error) {
+    console.error("Failed to send test results to the database:", error);
+  }
+}
+
+window.addEventListener("DOMContentLoaded", () => {
+  username = localStorage.getItem("username");
+});
+
 window.addEventListener("DOMContentLoaded", () => {
   // Get the test configuration based on the current pathname
   const currentTestConfig = pathToTestMap[window.location.pathname];
@@ -432,6 +461,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
       if (currentTest.i === currentTest.quoteData.originalChars.length) {
         currentTest.stopStopwatch();
+        sendResultsToDatabase(currentTest);
         currentTest.textBox.innerHTML = currentTest.calculateWPM(currentTest.stopwatch.elapsedTime) + " words per minute with " + currentTest.calculateAccuracy() + "% accuracy!";
         console.log("BOOM WPM:", currentTest.calculateWPM(currentTest.stopwatch.elapsedTime));
       }

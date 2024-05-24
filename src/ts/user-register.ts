@@ -5,17 +5,12 @@ function validateForm(form: HTMLFormElement): boolean {
   return true;
 }
 
-async function getFirstName(username: string): Promise<string> {
-    // TODO
-    
-    return "HI";
-}
-
 document.addEventListener("DOMContentLoaded", function () {
   form = (document.querySelector("#signup-form") as HTMLFormElement) || null;
 
   const username = document.getElementById("username") as HTMLInputElement;
   const password = document.getElementById("password") as HTMLInputElement;
+  const fullName = document.getElementById("full-name") as HTMLInputElement;
   const verifyPassword = document.getElementById(
     "verify-password"
   ) as HTMLInputElement;
@@ -41,10 +36,12 @@ document.addEventListener("DOMContentLoaded", function () {
           body: JSON.stringify({
             username: username.value,
             password: password.value,
+            full_name: fullName.value,
           }),
         });
 
         if (response.ok) {
+            localStorage.setItem("username", username.value);
             alert("User registered successfully!");
             window.location.href = "/src/index.html";
         } else {
@@ -88,7 +85,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
             if (response.ok) {
                 localStorage.setItem("username", username.value);
-                localStorage.setItem("first_name", "TODO");
                 alert('User logged in successfully!');
                 window.location.href = '/src/index.html';
             } else {

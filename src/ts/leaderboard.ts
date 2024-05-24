@@ -30,7 +30,7 @@ function filterBestTests(users: Array<any>) {
 
 window.addEventListener("DOMContentLoaded", async function () {
   try {
-    const response = await fetch("http://localhost:3000/users");
+    const response = await fetch("https://tcs-typer.vercel.app/users");
     if (!response) {
       throw new Error("Failed to fetch tests from backend server.");
     }

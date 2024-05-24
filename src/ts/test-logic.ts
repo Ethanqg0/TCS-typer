@@ -374,7 +374,7 @@ async function sendResultsToDatabase(test: TypingTest) {
   let accuracy: number = test.calculateAccuracy();
 
   try {
-    const response = await fetch("http://localhost:3000/test", {
+    const response = await fetch("https://tcs-typer.vercel.app/test", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

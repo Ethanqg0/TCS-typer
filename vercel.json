@@ -7,5 +7,11 @@
         "distDir": "src/dist"
       }
     }
+  ],
+  "routes": [
+    { "src": "/api/users", "dest": "/api/users.js" },
+    { "src": "/api/register", "dest": "/api/register.js" },
+    { "src": "/api/login", "dest": "/api/login.js" },
+    { "src": "/api/test", "dest": "/api/test.js" }
   ]
 }

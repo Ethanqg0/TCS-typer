@@ -1,0 +1,10 @@
+[[redirects]]
+  from = "/*"
+  to = "/src/index.html"
+  status = 200
+  force = false
+
+[[redirects]]
+  from = "/api/*"
+  to = "/netlify/functions/users.js"
+  status = 200

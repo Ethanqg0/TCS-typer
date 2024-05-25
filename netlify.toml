@@ -17,3 +17,8 @@
   from = "/api/.netlify/functions/login"
   to = "/.netlify/functions/login"
   status = 200
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

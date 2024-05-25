@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
                 // Perform request to server here
                 try {
-                    const response = yield fetch("http://localhost:3000/register", {
+                    const response = yield fetch("https://tcs-typer.netlify.app/api/.netlify/functions/register", {
                         method: "POST",
                         mode: "cors",
                         cache: "no-cache",
@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             username: username.value,
                             password: password.value,
                             full_name: fullName.value,
-                            tests: [{ wpm: 0, accuracy: 0 }]
+                            tests: [{ wpm: 0, accuracy: 0 }],
                         }),
                     });
                     if (response.ok) {

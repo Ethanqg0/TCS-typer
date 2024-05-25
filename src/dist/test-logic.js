@@ -285,7 +285,7 @@ function sendResultsToDatabase(test) {
         let wpm = test.calculateWPM(test.stopwatch.elapsedTime);
         let accuracy = test.calculateAccuracy();
         try {
-            const response = yield fetch("http://localhost:3000/test", {
+            const response = yield fetch("https://tcs-typer.vercel.app/test", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

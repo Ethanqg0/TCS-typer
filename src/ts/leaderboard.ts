@@ -36,6 +36,8 @@ window.addEventListener("DOMContentLoaded", async function () {
     if (!response) {
       throw new Error("Failed to fetch tests from backend server.");
     }
+
+    console.log(response)
     
     let tests = await response.json();
 

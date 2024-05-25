@@ -1,16 +1,31 @@
 const { createClient } = require("@supabase/supabase-js");
 
-const supabase = createClient(
-  "https://mjdbcmqftdfkonuolgbc.supabase.co",
-  "your-supabase-key"
-);
+exports.handler = async function (event, context) {
+  const supabase = createClient(
+    "https://mjdbcmqftdfkonuolgbc.supabase.co",
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1qZGJjbXFmdGRma29udW9sZ2JjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTYzNDc0MDEsImV4cCI6MjAzMTkyMzQwMX0.v-PIg3KmT8etL81Eq5H7Tmt7xzH5ZtEc-NDSO-9mofs"
+  );
 
-module.exports.handler = async (req, res) => {
-  const { data, error } = await supabase.from("users").select();
-  if (error)
-    return res
-      .status(500)
-      .send({ error: `Failed to fetch users: ${error.message}` });
+  try {
+    const { data, error } = await supabase.from("users").select();
 
-  return res.status(200).send(data);
+    if (error) {
+      return {
+        statusCode: 500,
+        body: JSON.stringify({
+          error: `Failed to fetch users: ${error.message}`,
+        }),
+      };
+    }
+
+    return {
+      statusCode: 200,
+      body: JSON.stringify(data),
+    };
+  } catch (err) {
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ error: `Failed to fetch users: ${err.message}` }),
+    };
+  }
 };

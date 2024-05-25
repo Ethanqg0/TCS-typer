@@ -56,6 +56,8 @@ document.addEventListener("DOMContentLoaded", function () {
           }
         );
 
+        console.log("RESPONSE BOI")
+
         if (response.ok) {
             localStorage.setItem("username", username.value);
             alert("User registered successfully!");

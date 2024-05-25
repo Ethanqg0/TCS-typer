@@ -285,15 +285,15 @@ function sendResultsToDatabase(test) {
         let wpm = test.calculateWPM(test.stopwatch.elapsedTime);
         let accuracy = test.calculateAccuracy();
         try {
-            const response = yield fetch("https://tcs-typer.vercel.app/test", {
+            const response = yield fetch("https://tcs-typer.netlify.app/api/.netlify/functions/test", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    "username": username,
-                    "wpm": wpm,
-                    "accuracy": accuracy,
+                    username: username,
+                    wpm: wpm,
+                    accuracy: accuracy,
                 }),
             });
         }

@@ -374,18 +374,20 @@ async function sendResultsToDatabase(test: TypingTest) {
   let accuracy: number = test.calculateAccuracy();
 
   try {
-    const response = await fetch("https://tcs-typer.vercel.app/test", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        "username": username,
-        "wpm": wpm,
-        "accuracy": accuracy,
-      }),
-    }
-  );
+    const response = await fetch(
+      "https://tcs-typer.netlify.app/api/.netlify/functions/test",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: username,
+          wpm: wpm,
+          accuracy: accuracy,
+        }),
+      }
+    );
   } catch (error) {
     console.error("Failed to send test results to the database:", error);
   }

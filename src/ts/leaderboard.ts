@@ -38,7 +38,6 @@ window.addEventListener("DOMContentLoaded", async function () {
     }
     
     let tests = await response.json();
-    tests = tests["output"]
 
     console.log("TESTS:", tests);
 

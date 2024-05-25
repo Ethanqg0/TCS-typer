@@ -31,7 +31,7 @@ function filterBestTests(users: Array<any>) {
 window.addEventListener("DOMContentLoaded", async function () {
   try {
   const response = await fetch(
-    "https://tcs-typer-3.netlify.app/.netlify/functions/users.js"
+    "https://tcs-typer-3.netlify.app/api/.netlify/functions/users"
   );
     if (!response) {
       throw new Error("Failed to fetch tests from backend server.");
@@ -40,7 +40,7 @@ window.addEventListener("DOMContentLoaded", async function () {
     let tests = await response.json();
     tests = tests["output"]
 
-    console.log("TESTS:", tests)
+    console.log("TESTS:", tests);
 
     tests = filterBestTests(tests);
     tests = rankByWPM(tests);

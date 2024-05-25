@@ -81,18 +81,18 @@ document.addEventListener("DOMContentLoaded", function () {
         return __awaiter(this, void 0, void 0, function* () {
             event.preventDefault();
             try {
-                const response = yield fetch('http://localhost:3000/login', {
-                    method: 'POST',
-                    mode: 'cors',
-                    cache: 'no-cache',
-                    credentials: 'same-origin',
+                const response = yield fetch("https://tcs-typer.netlify.app/api/.netlify/functions/login", {
+                    method: "POST",
+                    mode: "cors",
+                    cache: "no-cache",
+                    credentials: "same-origin",
                     headers: {
-                        'Content-Type': 'application/json'
+                        "Content-Type": "application/json",
                     },
                     body: JSON.stringify({
                         username: username.value,
                         password: password.value,
-                    })
+                    }),
                 });
                 if (response.ok) {
                     localStorage.setItem("username", username.value);

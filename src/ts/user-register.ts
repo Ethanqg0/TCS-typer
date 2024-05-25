@@ -37,21 +37,24 @@ document.addEventListener("DOMContentLoaded", function () {
 
       // Perform request to server here
       try {
-        const response = await fetch("http://localhost:3000/register", {
-          method: "POST",
-          mode: "cors",
-          cache: "no-cache",
-          credentials: "same-origin",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            username: username.value,
-            password: password.value,
-            full_name: fullName.value,
-            tests: [{ wpm: 0, accuracy: 0}]
-          }),
-        });
+        const response = await fetch(
+          "https://tcs-typer.netlify.app/api/.netlify/functions/register",
+          {
+            method: "POST",
+            mode: "cors",
+            cache: "no-cache",
+            credentials: "same-origin",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              username: username.value,
+              password: password.value,
+              full_name: fullName.value,
+              tests: [{ wpm: 0, accuracy: 0 }],
+            }),
+          }
+        );
 
         if (response.ok) {
             localStorage.setItem("username", username.value);

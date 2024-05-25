@@ -1,15 +1,13 @@
 [[redirects]]
-  from = "/api/register"
-  to = "/api/register.js"
+  from = "/api/.netlify/functions/users"
+  to = "/.netlify/functions/users"
   status = 200
+
 [[redirects]]
-  from = "/api/test"
-  to = "/api/test.js"
+  from = "/api/.netlify/functions/register"
+  to = "/.netlify/functions/register"
   status = 200
-[[redirects]]
-  from = "/api/users"
-  to = "/api/users.js"
-  status = 200
+
 [[redirects]]
   from = "/*"
   to = "/src/index.html"

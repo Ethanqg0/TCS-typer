@@ -5,7 +5,7 @@ const supabase = createClient(
   "your-supabase-key"
 );
 
-module.exports = async (req, res) => {
+module.exports.handler = async (req, res) => {
   const { data, error } = await supabase.from("users").select();
   if (error)
     return res

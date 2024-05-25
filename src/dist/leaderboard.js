@@ -42,7 +42,6 @@ window.addEventListener("DOMContentLoaded", function () {
                 throw new Error("Failed to fetch tests from backend server.");
             }
             let tests = yield response.json();
-            tests = tests["output"];
             console.log("TESTS:", tests);
             tests = filterBestTests(tests);
             tests = rankByWPM(tests);

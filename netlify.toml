@@ -1,3 +1,7 @@
+[build]
+  publish = "src"
+  functions = "netlify/functions"
+
 [[redirects]]
   from = "/api/.netlify/functions/users"
   to = "/.netlify/functions/users"

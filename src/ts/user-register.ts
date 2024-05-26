@@ -56,12 +56,10 @@ document.addEventListener("DOMContentLoaded", function () {
           }
         );
 
-        console.log("RESPONSE BOI")
-
         if (response.ok) {
           localStorage.setItem("username", username.value);
           alert("User registered successfully!");
-          window.location.href = "/src/index.html";
+          window.location.href = "";
         } else {
           alert("An error occurred while registering the user. Does this user already exist?");
         }
@@ -107,7 +105,7 @@ document.addEventListener("DOMContentLoaded", function () {
       if (response.ok) {
         localStorage.setItem("username", username.value);
         alert('User logged in successfully!');
-        window.location.href = '/src/index.html';
+        window.location.href = '/';
       } else {
         alert('An error occurred while logging in. Please try again.');
       }

@@ -23,8 +23,8 @@ dialog.modal {
 }
 
 #close-modal {
-   margin-left: auto;
-   color: black;
+    margin-left: auto;
+    color: black;
 }
 
 h4 {
@@ -81,7 +81,8 @@ h3 {
     border-bottom: 1px solid lightgray;
     padding-top: 10px;
     padding-bottom: 10px;
-    width: 40vw;
+    /* width: 40vw; */
+    width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: space-between;

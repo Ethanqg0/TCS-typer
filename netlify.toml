@@ -3,22 +3,22 @@
   functions = "netlify/functions"
 
 [[redirects]]
-  from = "/api/.netlify/functions/users"
+  from = "/api/users"
   to = "/.netlify/functions/users"
   status = 200
 
 [[redirects]]
-  from = "/api/.netlify/functions/register"
+  from = "/api/register"
   to = "/.netlify/functions/register"
   status = 200
 
 [[redirects]]
-  from = "/api/.netlify/functions/test"
+  from = "/api/test"
   to = "/.netlify/functions/test"
   status = 200
 
 [[redirects]]
-  from = "/api/.netlify/functions/login"
+  from = "/api/login"
   to = "/.netlify/functions/login"
   status = 200
 

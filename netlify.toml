@@ -23,8 +23,3 @@
   to = "/.netlify/functions/login"
   status = 200
 
-[[redirects]]
-  from = "/"
-  to = "/src/index.html"
-  status = 200
-

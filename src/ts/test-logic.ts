@@ -192,7 +192,7 @@ class TypingTest implements Test {
 
     const totalChars = this.quoteData.originalChars.length;
     const correctChars = totalChars - incorrectChars;
-    return Math.round( (correctChars / totalChars) * 100 );
+    return Math.round((correctChars / totalChars) * 100);
   }
 
   /**
@@ -245,7 +245,7 @@ class TypingTest implements Test {
    */
   async generateQuote(): Promise<string> {
     try {
-      const response = await fetch("../../data/quotes.json");
+      const response = await fetch("/assets/data/quotes.json");
       if (!response.ok) {
         throw new Error(
           `Failed to fetch quotes. HTTP status: ${response.status}`
@@ -279,7 +279,7 @@ class TypingTest implements Test {
    * @throws An error if there is an issue fetching or processing the word data.
    */
   async generateWords(): Promise<string> {
-    const response = await fetch("../../data/words.txt");
+    const response = await fetch("/assets/data/words.txt");
 
     try {
       let data = await response.text();
@@ -366,7 +366,7 @@ window.addEventListener("DOMContentLoaded", () => {
   updateSoundPath();
 });
 
-let username = null; 
+let username = null;
 
 async function sendResultsToDatabase(test: TypingTest) {
   username = localStorage.getItem("username");
@@ -375,7 +375,7 @@ async function sendResultsToDatabase(test: TypingTest) {
 
   try {
     const response = await fetch(
-      "https://tcs-typer.netlify.app/api/.netlify/functions/test",
+      "https://tcs-typer.netlify.app/api/test",
       {
         method: "POST",
         headers: {
@@ -418,54 +418,54 @@ window.addEventListener("DOMContentLoaded", () => {
   });
 
   // Add event listener for keydown events
-  document.addEventListener("keydown", function async (event) {
-      if (currentTest.i === 0) {
-        currentTest.startStopwatch();
-      }
+  document.addEventListener("keydown", function async(event) {
+    if (currentTest.i === 0) {
+      currentTest.startStopwatch();
+    }
 
-      if (event.key === "Shift") {
-        return;
-      }
+    if (event.key === "Shift") {
+      return;
+    }
 
-      if (event.key === "Backspace" || event.key === "Delete") {
-        if (currentTest.i > 0) {
-          currentTest.i--;
-          // Remove styling from the last character
-          currentTest.quoteData.chars[currentTest.i] =
-            currentTest.quoteData.originalChars[currentTest.i];
-          // Update the display
-          currentTest.textBox.innerHTML = currentTest.quoteData.chars.join("");
-        }
-        return; // Prevent further processing for backspace/delete
-      }
-
-      if (currentTest && currentTest.i < currentTest.quoteData.originalChars.length && event.key === currentTest.quoteData.originalChars[currentTest.i]) {
+    if (event.key === "Backspace" || event.key === "Delete") {
+      if (currentTest.i > 0) {
+        currentTest.i--;
+        // Remove styling from the last character
         currentTest.quoteData.chars[currentTest.i] =
-          '<span style="color: green">' + currentTest.quoteData.originalChars[currentTest.i] + "</span>";
+          currentTest.quoteData.originalChars[currentTest.i];
+        // Update the display
         currentTest.textBox.innerHTML = currentTest.quoteData.chars.join("");
-        currentTest.i++;
-        updateSoundPath();
-
-        let audio = new Audio(soundPath);
-        audio.volume = soundVolume;
-        audio.play().catch((error) => console.log(error));
-
-      } else if (currentTest && currentTest.i < currentTest.quoteData.originalChars.length && event.key !== currentTest.quoteData.originalChars[currentTest.i] ) {
-        currentTest.quoteData.chars[currentTest.i] =
-          '<span style="color: red">' + currentTest.quoteData.originalChars[currentTest.i] + "</span>";
-        currentTest.textBox.innerHTML = currentTest.quoteData.chars.join("");
-        updateSoundPath();
-        currentTest.i++;
-        let audio = new Audio(soundPath);
-        audio.volume = soundVolume;
-        audio.play().catch((error) => console.log(error));
       }
+      return; // Prevent further processing for backspace/delete
+    }
 
-      if (currentTest.i === currentTest.quoteData.originalChars.length) {
-        currentTest.stopStopwatch();
-        sendResultsToDatabase(currentTest);
-        currentTest.textBox.innerHTML = currentTest.calculateWPM(currentTest.stopwatch.elapsedTime) + " words per minute with " + currentTest.calculateAccuracy() + "% accuracy!";
-        console.log("BOOM WPM:", currentTest.calculateWPM(currentTest.stopwatch.elapsedTime));
-      }
+    if (currentTest && currentTest.i < currentTest.quoteData.originalChars.length && event.key === currentTest.quoteData.originalChars[currentTest.i]) {
+      currentTest.quoteData.chars[currentTest.i] =
+        '<span style="color: green">' + currentTest.quoteData.originalChars[currentTest.i] + "</span>";
+      currentTest.textBox.innerHTML = currentTest.quoteData.chars.join("");
+      currentTest.i++;
+      updateSoundPath();
+
+      let audio = new Audio(soundPath);
+      audio.volume = soundVolume;
+      audio.play().catch((error) => console.log(error));
+
+    } else if (currentTest && currentTest.i < currentTest.quoteData.originalChars.length && event.key !== currentTest.quoteData.originalChars[currentTest.i]) {
+      currentTest.quoteData.chars[currentTest.i] =
+        '<span style="color: red">' + currentTest.quoteData.originalChars[currentTest.i] + "</span>";
+      currentTest.textBox.innerHTML = currentTest.quoteData.chars.join("");
+      updateSoundPath();
+      currentTest.i++;
+      let audio = new Audio(soundPath);
+      audio.volume = soundVolume;
+      audio.play().catch((error) => console.log(error));
+    }
+
+    if (currentTest.i === currentTest.quoteData.originalChars.length) {
+      currentTest.stopStopwatch();
+      sendResultsToDatabase(currentTest);
+      currentTest.textBox.innerHTML = currentTest.calculateWPM(currentTest.stopwatch.elapsedTime) + " words per minute with " + currentTest.calculateAccuracy() + "% accuracy!";
+      console.log("BOOM WPM:", currentTest.calculateWPM(currentTest.stopwatch.elapsedTime));
+    }
   });
 });

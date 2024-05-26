@@ -1,6 +1,6 @@
 function rankByWPM(tests: Array<any>) {
-   const test = tests.sort((a, b) => b["wpm"] - a["wpm"]);
-   return test;
+  const test = tests.sort((a, b) => b["wpm"] - a["wpm"]);
+  return test;
 }
 
 function filterBestTests(users: Array<any>) {
@@ -30,13 +30,13 @@ function filterBestTests(users: Array<any>) {
 
 window.addEventListener("DOMContentLoaded", async function () {
   try {
-  const response = await fetch(
-    "https://tcs-typer.netlify.app/api/.netlify/functions/users"
-  );
+    const response = await fetch(
+      "https://tcs-typer.netlify.app/api/users"
+    );
     if (!response) {
       throw new Error("Failed to fetch tests from backend server.");
     }
-    
+
     let tests = await response.json();
 
     console.log("TESTS:", tests);
@@ -44,7 +44,7 @@ window.addEventListener("DOMContentLoaded", async function () {
     tests = filterBestTests(tests);
     tests = rankByWPM(tests);
 
-    for (let i: number = 0; i < tests.length; i++ ) {
+    for (let i: number = 0; i < tests.length; i++) {
       const leaderboard = document.querySelector(
         ".flex-column"
       ) as HTMLDivElement;

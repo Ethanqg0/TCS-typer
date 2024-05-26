@@ -1,6 +1,7 @@
 [build]
   publish = "src"
   functions = "netlify/functions"
+  command = "npm run build"
 
 [[redirects]]
   from = "/api/users"

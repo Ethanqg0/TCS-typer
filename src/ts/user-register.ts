@@ -59,7 +59,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (response.ok) {
           localStorage.setItem("username", username.value);
           alert("User registered successfully!");
-          window.location.href = "";
+          window.location.href = "/";
         } else {
           alert("An error occurred while registering the user. Does this user already exist?");
         }

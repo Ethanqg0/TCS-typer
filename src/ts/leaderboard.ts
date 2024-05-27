@@ -10,7 +10,7 @@ function filterBestTests(users: Array<any>) {
     let bestTest = null;
     const tests = user["tests"];
     for (const test of tests) {
-      if (test["accuracy"] >= 90) {
+      if ( test["accuracy"] >= 90 && !(test["wpm"] >= 200) ) {
         if (bestTest === null || test["wpm"] > bestTest["wpm"]) {
           bestTest = {
             full_name: user["full_name"],

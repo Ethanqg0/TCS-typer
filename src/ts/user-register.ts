@@ -23,10 +23,10 @@ document.addEventListener("DOMContentLoaded", function () {
 document.addEventListener("DOMContentLoaded", function () {
   const logoutButton = document.getElementById("logout-button") as HTMLButtonElement;
 
-  logoutButton.onclick = () => {
+  logoutButton?.addEventListener("click", () => {
     window.localStorage.setItem("username", "")
     window.location.reload()
-  }
+  })
 });
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -73,7 +73,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (response.ok) {
           localStorage.setItem("username", username.value);
-          // alert("User registered successfully!");
           window.location.href = "/";
         } else {
           alert("An error occurred while registering the user. Does this user already exist?");

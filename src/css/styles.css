@@ -259,10 +259,6 @@ nav div button {
   margin-bottom: 15px;
 }
 
-nav div button:hover {
-  background-color: rgb(10, 65, 160);
-}
-
 nav img {
   padding-left: 30px;
   margin-top: 10px;
@@ -313,6 +309,10 @@ nav a #logged-username {
 i {
   font-size: 30px;
   cursor: pointer;
+}
+
+#restart-button-1:hover {
+  color: rgb(41, 113, 201);
 }
 
 nav #nav-buttons .nav-button:hover {

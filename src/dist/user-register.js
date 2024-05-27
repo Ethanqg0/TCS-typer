@@ -28,10 +28,10 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 document.addEventListener("DOMContentLoaded", function () {
     const logoutButton = document.getElementById("logout-button");
-    logoutButton.onclick = () => {
+    logoutButton === null || logoutButton === void 0 ? void 0 : logoutButton.addEventListener("click", () => {
         window.localStorage.setItem("username", "");
         window.location.reload();
-    };
+    });
 });
 document.addEventListener("DOMContentLoaded", function () {
     form = document.querySelector("#signup-form") || null;
@@ -66,7 +66,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     });
                     if (response.ok) {
                         localStorage.setItem("username", username.value);
-                        // alert("User registered successfully!");
                         window.location.href = "/";
                     }
                     else {
@@ -107,7 +106,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 });
                 if (response.ok) {
                     localStorage.setItem("username", username.value);
-                    alert('User logged in successfully!');
                     window.location.href = '/';
                 }
                 else {

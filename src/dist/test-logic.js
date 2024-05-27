@@ -244,6 +244,12 @@ const pathToTestMap = {
         stopwatchId: "stopwatch-1",
         restartButtonId: "restart-button-1",
     },
+    "/src/index.html": {
+        id: "test1",
+        elementId: "test-1",
+        stopwatchId: "stopwatch-1",
+        restartButtonId: "restart-button-1",
+    }
 };
 let soundPath = "../assets/sounds/standard-click.wav";
 let soundVolume = 1.0;
@@ -319,7 +325,7 @@ window.addEventListener("DOMContentLoaded", () => {
         if (currentTest.i === 0) {
             currentTest.startStopwatch();
         }
-        if (event.key === "Shift") {
+        if (event.key === "Shift" || event.key === "Control" || event.key === "Alt") {
             return;
         }
         if (event.key === "Backspace" || event.key === "Delete") {

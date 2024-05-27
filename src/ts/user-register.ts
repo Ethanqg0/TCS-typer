@@ -15,6 +15,21 @@ function validateForm(username: HTMLInputElement, password: HTMLInputElement, ve
 }
 
 document.addEventListener("DOMContentLoaded", function () {
+  const username = localStorage.getItem("username");
+  const usernameDisplay = document.getElementById("logged-username") as HTMLParagraphElement;
+  usernameDisplay.textContent = username || "";
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+  const logoutButton = document.getElementById("logout-button") as HTMLButtonElement;
+
+  logoutButton.onclick = () => {
+    window.localStorage.setItem("username", "")
+    window.location.reload()
+  }
+});
+
+document.addEventListener("DOMContentLoaded", function () {
   form = (document.querySelector("#signup-form") as HTMLFormElement) || null;
 
   const username = document.getElementById("username") as HTMLInputElement;
@@ -58,7 +73,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (response.ok) {
           localStorage.setItem("username", username.value);
-          alert("User registered successfully!");
+          // alert("User registered successfully!");
           window.location.href = "/";
         } else {
           alert("An error occurred while registering the user. Does this user already exist?");

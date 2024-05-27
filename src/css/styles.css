@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Syne:wght@400..800&display=swap');
 
+body {
+  height: 100%;
+}
+
 nav i {
   color: var(--icon-color);
 }
@@ -11,11 +15,12 @@ i {
 dialog {
   --open: 0;
 
-  --closed: calc( (var(--open) - 1) * -1);
+  --closed: calc((var(--open) - 1) * -1);
 
-  transform: translateY( calc(var(--closed) * -10%));
+  transform: translateY(calc(var(--closed) * -10%));
+
   &, &::backdrop {
-    --duration: calc( (var(--open) * .25s) );
+    --duration: calc((var(--open) * .25s));
     transition: all var(--duration) ease-out allow-discrete;
     opacity: var(--open);
   }
@@ -26,6 +31,7 @@ dialog {
 
   @starting-style {
     --open: 1;
+
     &[open] {
       --open: 0;
     }
@@ -72,7 +78,7 @@ dialog {
   --subtitle-text-color: rgb(238, 109, 133);
   --button-background-color: pink;
   --test-background-color: rgb(252, 220, 225);
-  --test-font-color: rgb(240,80,110);
+  --test-font-color: rgb(240, 80, 110);
   --box-shadow-color: black;
 }
 
@@ -89,21 +95,29 @@ dialog {
 }
 
 .blueberry-theme {
-  --background-color: #eaf4fc; /* Soft sky blue background */
-  --logo-color: #eaf4fc;       /* Deep ocean blue for logo */
-  --text-color: #24578a;       /* Dark blue for text */
-  --title-text-color: #0b4f6c; /* Rich sea blue for titles */
-  --subtitle-text-color: #4ca1af; /* Aquamarine for subtitles */
-  --button-background-color: #3b5998; /* Deep ocean blue for buttons */
-  --test-background-color: eaf4fc; /* White for test areas */
-  --test-font-color: #24578a;   /* Dark blue for test text */
+  --background-color: #eaf4fc;
+  /* Soft sky blue background */
+  --logo-color: #eaf4fc;
+  /* Deep ocean blue for logo */
+  --text-color: #24578a;
+  /* Dark blue for text */
+  --title-text-color: #0b4f6c;
+  /* Rich sea blue for titles */
+  --subtitle-text-color: #4ca1af;
+  /* Aquamarine for subtitles */
+  --button-background-color: #3b5998;
+  /* Deep ocean blue for buttons */
+  --test-background-color: eaf4fc;
+  /* White for test areas */
+  --test-font-color: #24578a;
+  /* Dark blue for test text */
   --box-shadow-color: rgba(59, 89, 152, 0.3);
 }
 
 /* Buttons */
 #default-theme {
   background-color: white;
-  color: rgb(41,113,201);
+  color: rgb(41, 113, 201);
   border: 2px solid black;
 }
 
@@ -277,13 +291,23 @@ nav img {
 }
 
 #test-1, #test-2, #test-settings {
-    border: 2px solid gray;
-    padding: 25px;
-    background-color: var(--test-background-color);
-    color: var(--test-font-color);
-    border-radius: 20px;
-    font-size: 1.75rem;
+  border: 2px solid gray;
+  padding: 25px;
+  background-color: var(--test-background-color);
+  color: var(--test-font-color);
+  border-radius: 20px;
+  font-size: 1.75rem;
 
+}
+
+
+nav a {
+  display: flex;
+  align-items: center;
+}
+
+nav a #logged-username {
+  margin-right: 15px;
 }
 
 i {
@@ -291,8 +315,12 @@ i {
   cursor: pointer;
 }
 
-i:hover {
+nav #nav-buttons .nav-button:hover {
   color: rgb(41, 113, 201);
+
+  i, p {
+    color: rgb(41, 113, 201);
+  }
 }
 
 #stats {
@@ -317,4 +345,3 @@ i:hover {
 a {
   text-decoration: none;
 }
-

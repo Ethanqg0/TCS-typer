@@ -25,6 +25,7 @@ dialog.modal {
 #close-modal {
     margin-left: auto;
     color: black;
+    padding: 20px;
 }
 
 h4 {
@@ -81,8 +82,9 @@ h3 {
     border-bottom: 1px solid lightgray;
     padding-top: 10px;
     padding-bottom: 10px;
+    padding-inline: 10px;
     /* width: 40vw; */
-    width: 100%;
+    width: calc(100% - 20px);
     display: flex;
     flex-direction: row;
     justify-content: space-between;

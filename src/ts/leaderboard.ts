@@ -10,7 +10,7 @@ function filterBestTests(users: Array<any>) {
     let bestTest = null;
     const tests = user["tests"];
     for (const test of tests) {
-      if ( test["accuracy"] >= 90 && !(test["wpm"] >= 200) ) {
+      if (test["accuracy"] >= 90 && !(test["wpm"] >= 200) && !(test["accuracy"] > 100)) {
         if (bestTest === null || test["wpm"] > bestTest["wpm"]) {
           bestTest = {
             full_name: user["full_name"],
@@ -96,6 +96,10 @@ window.addEventListener("DOMContentLoaded", () => {
     leaderboardModal.showModal();
   });
 
+  leaderboardModal?.addEventListener("click", (e) => {
+    if (e.target !== leaderboardModal) return
+    leaderboardModal.close()
+  })
   closeModal?.addEventListener("click", () => {
     leaderboardModal.close();
   });

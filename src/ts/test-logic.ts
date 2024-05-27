@@ -423,7 +423,7 @@ window.addEventListener("DOMContentLoaded", () => {
       currentTest.startStopwatch();
     }
 
-    if (event.key === "Shift") {
+    if (event.key === "Shift" || event.key === "Control" || event.key === "Alt") {
       return;
     }
 

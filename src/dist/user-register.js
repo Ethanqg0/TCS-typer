@@ -22,6 +22,18 @@ function validateForm(username, password, verifyPassword) {
     return true;
 }
 document.addEventListener("DOMContentLoaded", function () {
+    const username = localStorage.getItem("username");
+    const usernameDisplay = document.getElementById("logged-username");
+    usernameDisplay.textContent = username || "";
+});
+document.addEventListener("DOMContentLoaded", function () {
+    const logoutButton = document.getElementById("logout-button");
+    logoutButton.onclick = () => {
+        window.localStorage.setItem("username", "");
+        window.location.reload();
+    };
+});
+document.addEventListener("DOMContentLoaded", function () {
     form = document.querySelector("#signup-form") || null;
     const username = document.getElementById("username");
     const password = document.getElementById("password");
@@ -54,8 +66,8 @@ document.addEventListener("DOMContentLoaded", function () {
                     });
                     if (response.ok) {
                         localStorage.setItem("username", username.value);
-                        alert("User registered successfully!");
-                        window.location.href = "";
+                        // alert("User registered successfully!");
+                        window.location.href = "/";
                     }
                     else {
                         alert("An error occurred while registering the user. Does this user already exist?");

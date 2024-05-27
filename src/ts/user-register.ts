@@ -118,7 +118,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
       if (response.ok) {
         localStorage.setItem("username", username.value);
-        alert('User logged in successfully!');
         window.location.href = '/';
       } else {
         alert('An error occurred while logging in. Please try again.');

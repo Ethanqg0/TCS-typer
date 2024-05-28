@@ -460,9 +460,6 @@ window.addEventListener("DOMContentLoaded", () => {
       currentTest.startStopwatch();
     }
 
-    if (event.ctrlKey || event.altKey || event.metaKey || !/^[a-zA-Z.,' ]$/.test(event.key)) {
-      return;
-    }
 
     if (event.key === "Backspace" || event.key === "Delete") {
       if (currentTest.i > 0) {
@@ -476,6 +473,10 @@ window.addEventListener("DOMContentLoaded", () => {
 
       }
       return; // Prevent further processing for backspace/delete
+    }
+
+    if (event.ctrlKey || event.altKey || event.metaKey || !/^[a-zA-Z.,' ]$/.test(event.key)) {
+      return;
     }
 
     if (currentTest && currentTest.i < currentTest.quoteData.originalChars.length) {

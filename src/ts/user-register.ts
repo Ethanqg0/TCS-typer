@@ -1,12 +1,6 @@
-import Filter from "bad-words";
-
 let form: HTMLFormElement | null = null;
 
-function validateForm(
-  username: HTMLInputElement,
-  password: HTMLInputElement,
-  verifyPassword: HTMLInputElement
-): boolean {
+function validateForm(username: HTMLInputElement, password: HTMLInputElement, verifyPassword: HTMLInputElement): boolean {
   console.log("USERNAME VALUE:", username.value);
   if (!username.value.includes("tcswc")) {
     alert("Username must contain 'tcswc', use your Scratch login!");
@@ -20,29 +14,19 @@ function validateForm(
   return true;
 }
 
-function filterBadWords(text: string): void {
-  const filter = new Filter();
-  if (filter.isProfane(text)) {
-    throw new Error("Profanity is not allowed");
-  }
-}
+document.addEventListener("DOMContentLoaded", function () {
+  const username = localStorage.getItem("username");
+  const usernameDisplay = document.getElementById("logged-username") as HTMLParagraphElement;
+  usernameDisplay.textContent = username || "";
+});
 
 document.addEventListener("DOMContentLoaded", function () {
-  // Get and display the username
-  const username = localStorage.getItem("username");
-  const usernameDisplay = document.getElementById(
-    "logged-username"
-  ) as HTMLParagraphElement;
-  usernameDisplay.textContent = username || "";
+  const logoutButton = document.getElementById("logout-button") as HTMLButtonElement;
 
-  // Handle logout button click
-  const logoutButton = document.getElementById(
-    "logout-button"
-  ) as HTMLButtonElement;
   logoutButton?.addEventListener("click", () => {
-    window.localStorage.setItem("username", "");
-    window.location.reload();
-  });
+    window.localStorage.setItem("username", "")
+    window.location.reload()
+  })
 });
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -91,9 +75,7 @@ document.addEventListener("DOMContentLoaded", function () {
           localStorage.setItem("username", username.value);
           window.location.href = "/";
         } else {
-          alert(
-            "An error occurred while registering the user. Does this user already exist?"
-          );
+          alert("An error occurred while registering the user. Does this user already exist?");
         }
       } catch (error) {
         console.error("An error occurred:", error);
@@ -105,44 +87,44 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 document.addEventListener("DOMContentLoaded", function () {
-  const form = document.querySelector("#login-form") as HTMLFormElement;
-  const username = document.querySelector(
-    "#login-username"
-  ) as HTMLInputElement;
-  const password = document.querySelector(
-    "#login-password"
-  ) as HTMLInputElement;
+  const form = document.querySelector('#login-form') as HTMLFormElement;
+  const username = document.querySelector("#login-username") as HTMLInputElement;
+  const password = document.querySelector("#login-password") as HTMLInputElement;
 
   if (!form) {
     return;
   }
 
-  form.addEventListener("submit", async function (event) {
+  form.addEventListener('submit', async function (event) {
     event.preventDefault();
 
     try {
-      const response = await fetch("https://tcs-typer.netlify.app/api/login", {
-        method: "POST",
-        mode: "cors",
-        cache: "no-cache",
-        credentials: "same-origin",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username: username.value,
-          password: password.value,
-        }),
-      });
+      const response = await fetch(
+        "https://tcs-typer.netlify.app/api/login",
+        {
+          method: "POST",
+          mode: "cors",
+          cache: "no-cache",
+          credentials: "same-origin",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username: username.value,
+            password: password.value,
+          }),
+        }
+      );
 
       if (response.ok) {
         localStorage.setItem("username", username.value);
-        window.location.href = "/";
+        window.location.href = '/';
       } else {
-        alert("An error occurred while logging in. Please try again.");
+        alert('An error occurred while logging in. Please try again.');
       }
     } catch (error) {
-      console.error("An error occurred:", error);
+      console.error('An error occurred:', error);
     }
   });
 });
+

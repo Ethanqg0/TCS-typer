@@ -60,7 +60,9 @@ class TypingTest implements Test {
    * The HTML element representing the text input box where the quote is displayed.
    * @type {HTMLElement}
    */
+  testContainer: HTMLElement;
   textBox: HTMLElement;
+  testCaret: HTMLElement;
 
   restartButton: HTMLElement;
 
@@ -104,7 +106,17 @@ class TypingTest implements Test {
    * @param {string} stopwatchId - The ID of the stopwatch display element.
    */
   constructor(id: string, stopwatchId: string, restartButtonId: string) {
-    this.textBox = document.querySelector(`#${id}`) as HTMLElement;
+    this.testContainer = document.querySelector(`#${id}`) as HTMLDivElement;
+
+    this.textBox = document.createElement("div") as HTMLDivElement;
+    this.testContainer.appendChild(this.textBox);
+    this.textBox.className = "test-textbox"
+
+    this.testCaret = document.createElement("div") as HTMLDivElement;
+    this.testContainer.appendChild(this.testCaret);
+    this.testCaret.className = "test-caret"
+
+
     this.stopwatchDisplay = document.querySelector(
       `#${stopwatchId}`
     ) as HTMLElement;
@@ -227,6 +239,7 @@ class TypingTest implements Test {
     this.quoteData.chars = quotes.split("");
     this.quoteData.originalChars = quotes.split("");
     this.textBox.innerHTML = quotes;
+    this.moveCaret()
     console.error("LOGGED: ", this.quoteData.chars);
   }
 
@@ -237,6 +250,7 @@ class TypingTest implements Test {
     this.quoteData.chars = quotes.split("");
     this.quoteData.originalChars = quotes.split("");
     this.textBox.innerHTML = quotes;
+    this.moveCaret()
   }
 
   /**
@@ -307,6 +321,29 @@ class TypingTest implements Test {
     // TODO;
 
     return "";
+  }
+
+  moveCaret(): void {
+    this.testCaret.style.display = "block"
+    const lastTypedRect = (this.textBox.lastChild?.previousSibling as HTMLSpanElement)?.getBoundingClientRect()
+    const testContainerComputedStyles = window.getComputedStyle(this.testContainer, null);
+    const testContainerPaddingLeft = parseInt(testContainerComputedStyles.getPropertyValue("padding-left"), 10);
+    const testContainerPaddingTop = parseInt(testContainerComputedStyles.getPropertyValue("padding-top"), 10);
+
+    if (lastTypedRect) {
+      this.testCaret.style.left = lastTypedRect.x - this.textBox.getBoundingClientRect().x + testContainerPaddingLeft + lastTypedRect.width + "px"
+      this.testCaret.style.top = lastTypedRect.y - this.textBox.getBoundingClientRect().y + testContainerPaddingTop + "px"
+      this.testCaret.style.animationName = "none"
+    } else {
+      this.testCaret.style.left = testContainerPaddingLeft + "px"
+      this.testCaret.style.top = testContainerPaddingTop + "px"
+      this.testCaret.style.animationName = "caretAnim"
+    }
+    // console.log(lastTypedRect.x, this.textBox.getBoundingClientRect().x, testContainerPaddingLeft, lastTypedRect.width, lastTypedRect.x - this.textBox.getBoundingClientRect().x + testContainerPaddingLeft + lastTypedRect.width)
+  }
+
+  hideCaret(): void {
+    this.testCaret.style.display = "none"
   }
 }
 
@@ -423,7 +460,7 @@ window.addEventListener("DOMContentLoaded", () => {
       currentTest.startStopwatch();
     }
 
-    if (event.key === "Shift" || event.key === "Control" || event.key === "Alt") {
+    if (event.ctrlKey || event.altKey || event.metaKey || !/^[a-zA-Z.,' ]$/.test(event.key)) {
       return;
     }
 
@@ -435,27 +472,22 @@ window.addEventListener("DOMContentLoaded", () => {
           currentTest.quoteData.originalChars[currentTest.i];
         // Update the display
         currentTest.textBox.innerHTML = currentTest.quoteData.chars.join("");
+        currentTest.moveCaret()
+
       }
       return; // Prevent further processing for backspace/delete
     }
 
-    if (currentTest && currentTest.i < currentTest.quoteData.originalChars.length && event.key === currentTest.quoteData.originalChars[currentTest.i]) {
+    if (currentTest && currentTest.i < currentTest.quoteData.originalChars.length) {
       currentTest.quoteData.chars[currentTest.i] =
-        '<span style="color: green">' + currentTest.quoteData.originalChars[currentTest.i] + "</span>";
+        `<span class="test-char" style="color: ${event.key === currentTest.quoteData.originalChars[currentTest.i] ? "green" : "red"};">` + currentTest.quoteData.originalChars[currentTest.i] + "</span>";
       currentTest.textBox.innerHTML = currentTest.quoteData.chars.join("");
+
+      currentTest.moveCaret()
+
       currentTest.i++;
       updateSoundPath();
 
-      let audio = new Audio(soundPath);
-      audio.volume = soundVolume;
-      audio.play().catch((error) => console.log(error));
-
-    } else if (currentTest && currentTest.i < currentTest.quoteData.originalChars.length && event.key !== currentTest.quoteData.originalChars[currentTest.i]) {
-      currentTest.quoteData.chars[currentTest.i] =
-        '<span style="color: red">' + currentTest.quoteData.originalChars[currentTest.i] + "</span>";
-      currentTest.textBox.innerHTML = currentTest.quoteData.chars.join("");
-      updateSoundPath();
-      currentTest.i++;
       let audio = new Audio(soundPath);
       audio.volume = soundVolume;
       audio.play().catch((error) => console.log(error));
@@ -465,6 +497,7 @@ window.addEventListener("DOMContentLoaded", () => {
       currentTest.stopStopwatch();
       sendResultsToDatabase(currentTest);
       currentTest.textBox.innerHTML = currentTest.calculateWPM(currentTest.stopwatch.elapsedTime) + " words per minute with " + currentTest.calculateAccuracy() + "% accuracy!";
+      currentTest.hideCaret()
       console.log("BOOM WPM:", currentTest.calculateWPM(currentTest.stopwatch.elapsedTime));
     }
   });

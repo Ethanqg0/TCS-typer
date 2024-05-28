@@ -13,30 +13,36 @@ i {
 }
 
 dialog {
-  --open: 0;
-
-  --closed: calc((var(--open) - 1) * -1);
-
-  transform: translateY(calc(var(--closed) * -10%));
+  /* translate: -50% -50% !important; */
+  translate: -50% calc(-50% + (1 - var(--open)) * -20%) !important;
 
   &, &::backdrop {
-    --duration: calc((var(--open) * .25s));
-    transition: all var(--duration) ease-out allow-discrete;
+    --open: 0;
+    --duration: calc(0.2s + (var(--open) * 0.20s));
+    transition: all var(--duration) ease allow-discrete;
     opacity: var(--open);
   }
 
-  &[open] {
-    --open: 1;
+  &::backdrop {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+
+  &[open], &[open]::backdrop {
+    --open: 1
   }
 
   @starting-style {
-    --open: 1;
+    & {
+      translate: -50% -70% !important;
+    }
 
-    &[open] {
-      --open: 0;
+    &, &::backdrop {
+      opacity: 0;
+      --open: 0
     }
   }
 }
+
 
 /* Themes */
 .default-theme {
@@ -293,7 +299,7 @@ nav img {
   color: var(--test-font-color);
   border-radius: 20px;
   font-size: 1.75rem;
-
+  position: relative;
 }
 
 
@@ -344,4 +350,28 @@ nav #nav-buttons .nav-button:hover {
 
 a {
   text-decoration: none;
+}
+
+.test-caret {
+  position: absolute;
+  width: .1em;
+  font-size: 2rem;
+  border-radius: .5rem;
+  top: 25px;
+  left: 25px;
+  height: 1.2em;
+  background-color: var(--text-color);
+  transition: 50ms top ease, 50ms left ease;
+  animation: caretAnim 2s infinite;
+  opacity: 1;
+}
+
+@keyframes caretAnim {
+  0%, 100% {
+    opacity: 0.5;
+  }
+
+  50% {
+    opacity: 1;
+  }
 }

@@ -121,9 +121,10 @@ class TypingTest {
         return wpm;
     }
     calculateAccuracy() {
+        console.log(this.quoteData);
         let incorrectChars = 0;
         for (let i = 0; i < this.quoteData.chars.length; i++) {
-            if (this.quoteData.chars[i].includes('<span style="color: red">')) {
+            if (this.quoteData.chars[i].includes('class="test-char test-char-incorrect"')) {
                 incorrectChars++;
             }
         }
@@ -355,9 +356,6 @@ window.addEventListener("DOMContentLoaded", () => {
         if (currentTest.i === 0) {
             currentTest.startStopwatch();
         }
-        if (event.ctrlKey || event.altKey || event.metaKey || !/^[a-zA-Z.,' ]$/.test(event.key)) {
-            return;
-        }
         if (event.key === "Backspace" || event.key === "Delete") {
             if (currentTest.i > 0) {
                 currentTest.i--;
@@ -370,9 +368,12 @@ window.addEventListener("DOMContentLoaded", () => {
             }
             return; // Prevent further processing for backspace/delete
         }
+        if (event.ctrlKey || event.altKey || event.metaKey || !/^[a-zA-Z.,' ]$/.test(event.key)) {
+            return;
+        }
         if (currentTest && currentTest.i < currentTest.quoteData.originalChars.length) {
             currentTest.quoteData.chars[currentTest.i] =
-                `<span class="test-char" style="color: ${event.key === currentTest.quoteData.originalChars[currentTest.i] ? "green" : "red"};">` + currentTest.quoteData.originalChars[currentTest.i] + "</span>";
+                `<span class="test-char ${event.key === currentTest.quoteData.originalChars[currentTest.i] ? "test-char-correct" : "test-char-incorrect"}" style="color: ${event.key === currentTest.quoteData.originalChars[currentTest.i] ? "green" : "red"};">` + currentTest.quoteData.originalChars[currentTest.i] + "</span>";
             currentTest.textBox.innerHTML = currentTest.quoteData.chars.join("");
             currentTest.moveCaret();
             currentTest.i++;

@@ -66,15 +66,6 @@ document.addEventListener("DOMContentLoaded", function () {
         return;
       }
 
-      try {
-        filterBadWords(username.value);
-        filterBadWords(password.value);
-        filterBadWords(fullName.value);
-      } catch (error) {
-        alert("We detected profanity in your input. Is this a mistake? If so, please let your coach know.");
-        return;
-      }
-
       // Perform request to server here
       try {
         const response = await fetch(

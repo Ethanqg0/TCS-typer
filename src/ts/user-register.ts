@@ -67,15 +67,6 @@ document.addEventListener("DOMContentLoaded", function () {
         return;
       }
 
-      try {
-        filterBadWords(username.value);
-        filterBadWords(fullName.value);
-      } catch (error) {
-        alert('We detected profanity. If we made a mistake, please let us know!');
-        console.error("Profanity detected in user input:", error as Error);
-        return;
-      }
-
       // Perform request to server here
       try {
         const response = await fetch(

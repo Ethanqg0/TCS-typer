@@ -18,15 +18,6 @@ function validateForm(
   return true;
 }
 
-function filterBadWords(text: string): boolean {
-  const filter = new Filter();
-  if (filter.isProfane(text)) {
-    return true;
-  } else {
-    return false;
-  }
-}
-
 document.addEventListener("DOMContentLoaded", function () {
   const username = localStorage.getItem("username");
   const usernameDisplay = document.getElementById(

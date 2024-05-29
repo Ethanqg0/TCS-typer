@@ -28,7 +28,8 @@ function filterBestTests(users: Array<any>) {
   return filteredTests;
 }
 
-window.addEventListener("DOMContentLoaded", async function () {
+(<any>window).fetchAndDisplayLeaderboard = async () => {
+  console.log("Fetching and displaying leaderboard...")
   try {
     const response = await fetch(
       "https://tcs-typer.netlify.app/api/users"
@@ -44,10 +45,11 @@ window.addEventListener("DOMContentLoaded", async function () {
     tests = filterBestTests(tests);
     tests = rankByWPM(tests);
 
+    const leaderboard = document.querySelector(
+      ".flex-column"
+    ) as HTMLDivElement;
+    leaderboard.innerHTML = ""
     for (let i: number = 0; i < tests.length; i++) {
-      const leaderboard = document.querySelector(
-        ".flex-column"
-      ) as HTMLDivElement;
       let player = leaderboard.appendChild(
         document.createElement("div") as HTMLDivElement
       );
@@ -82,6 +84,14 @@ window.addEventListener("DOMContentLoaded", async function () {
     }
   } catch (error) {
     console.error(error);
+  }
+}
+
+
+
+window.addEventListener("DOMContentLoaded", async function () {
+  if ((<any>window).fetchAndDisplayLeaderboard) {
+    (<any>window).fetchAndDisplayLeaderboard()
   }
 });
 

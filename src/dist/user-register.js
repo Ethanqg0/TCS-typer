@@ -81,13 +81,13 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 document.addEventListener("DOMContentLoaded", function () {
-    const form = document.querySelector('#login-form');
+    const form = document.querySelector("#login-form");
     const username = document.querySelector("#login-username");
     const password = document.querySelector("#login-password");
     if (!form) {
         return;
     }
-    form.addEventListener('submit', function (event) {
+    form.addEventListener("submit", function (event) {
         return __awaiter(this, void 0, void 0, function* () {
             event.preventDefault();
             try {
@@ -106,14 +106,14 @@ document.addEventListener("DOMContentLoaded", function () {
                 });
                 if (response.ok) {
                     localStorage.setItem("username", username.value);
-                    window.location.href = '/';
+                    window.location.href = "/";
                 }
                 else {
-                    alert('An error occurred while logging in. Please try again.');
+                    alert("An error occurred while logging in. Please try again.");
                 }
             }
             catch (error) {
-                console.error('An error occurred:', error);
+                console.error("An error occurred:", error);
             }
         });
     });

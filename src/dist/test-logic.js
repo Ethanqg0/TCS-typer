@@ -315,22 +315,23 @@ function sendResultsToDatabase(test) {
         username = localStorage.getItem("username");
         let wpm = test.calculateWPM(test.stopwatch.elapsedTime);
         let accuracy = test.calculateAccuracy();
-        try {
-            const response = yield fetch("https://tcs-typer.netlify.app/api/test", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    username: username,
-                    wpm: wpm,
-                    accuracy: accuracy,
-                }),
-            });
-        }
-        catch (error) {
-            console.error("Failed to send test results to the database:", error);
-        }
+        const response = yield fetch("https://tcs-typer.netlify.app/api/test", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                username: username,
+                wpm: wpm,
+                accuracy: accuracy,
+            }),
+        }).then(() => {
+            if (window.fetchAndDisplayLeaderboard) {
+                window.fetchAndDisplayLeaderboard();
+            }
+        }).catch((e) => {
+            console.error("Failed to send test results to the database:", e);
+        });
     });
 }
 window.addEventListener("DOMContentLoaded", () => {
@@ -355,6 +356,9 @@ window.addEventListener("DOMContentLoaded", () => {
     document.addEventListener("keydown", function async(event) {
         if (currentTest.i === 0) {
             currentTest.startStopwatch();
+        }
+        if (currentTest.i > currentTest.quoteData.originalChars.length) {
+            return;
         }
         if (event.key === "Backspace" || event.key === "Delete") {
             if (currentTest.i > 0) {
@@ -383,6 +387,7 @@ window.addEventListener("DOMContentLoaded", () => {
             audio.play().catch((error) => console.log(error));
         }
         if (currentTest.i === currentTest.quoteData.originalChars.length) {
+            currentTest.i++;
             currentTest.stopStopwatch();
             sendResultsToDatabase(currentTest);
             currentTest.textBox.innerHTML = currentTest.calculateWPM(currentTest.stopwatch.elapsedTime) + " words per minute with " + currentTest.calculateAccuracy() + "% accuracy!";

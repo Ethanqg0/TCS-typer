@@ -411,24 +411,27 @@ async function sendResultsToDatabase(test: TypingTest) {
   let wpm: number = test.calculateWPM(test.stopwatch.elapsedTime);
   let accuracy: number = test.calculateAccuracy();
 
-  try {
-    const response = await fetch(
-      "https://tcs-typer.netlify.app/api/test",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username: username,
-          wpm: wpm,
-          accuracy: accuracy,
-        }),
-      }
-    );
-  } catch (error) {
-    console.error("Failed to send test results to the database:", error);
-  }
+
+  const response = await fetch(
+    "https://tcs-typer.netlify.app/api/test",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        username: username,
+        wpm: wpm,
+        accuracy: accuracy,
+      }),
+    }
+  ).then(() => {
+    if ((<any>window).fetchAndDisplayLeaderboard) {
+      (<any>window).fetchAndDisplayLeaderboard()
+    }
+  }).catch((e) => {
+    console.error("Failed to send test results to the database:", e);
+  });
 }
 
 window.addEventListener("DOMContentLoaded", () => {
@@ -459,6 +462,9 @@ window.addEventListener("DOMContentLoaded", () => {
   document.addEventListener("keydown", function async(event) {
     if (currentTest.i === 0) {
       currentTest.startStopwatch();
+    }
+    if (currentTest.i > currentTest.quoteData.originalChars.length) {
+      return
     }
 
 
@@ -496,6 +502,7 @@ window.addEventListener("DOMContentLoaded", () => {
     }
 
     if (currentTest.i === currentTest.quoteData.originalChars.length) {
+      currentTest.i++;
       currentTest.stopStopwatch();
       sendResultsToDatabase(currentTest);
       currentTest.textBox.innerHTML = currentTest.calculateWPM(currentTest.stopwatch.elapsedTime) + " words per minute with " + currentTest.calculateAccuracy() + "% accuracy!";

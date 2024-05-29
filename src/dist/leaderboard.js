@@ -34,43 +34,50 @@ function filterBestTests(users) {
     }
     return filteredTests;
 }
+window.fetchAndDisplayLeaderboard = () => __awaiter(void 0, void 0, void 0, function* () {
+    console.log("Fetching and displaying leaderboard...");
+    try {
+        const response = yield fetch("https://tcs-typer.netlify.app/api/users");
+        if (!response) {
+            throw new Error("Failed to fetch tests from backend server.");
+        }
+        let tests = yield response.json();
+        console.log("TESTS:", tests);
+        tests = filterBestTests(tests);
+        tests = rankByWPM(tests);
+        const leaderboard = document.querySelector(".flex-column");
+        leaderboard.innerHTML = "";
+        for (let i = 0; i < tests.length; i++) {
+            let player = leaderboard.appendChild(document.createElement("div"));
+            player.classList.add("leaderboard-player");
+            let name = player.appendChild(document.createElement("h3"));
+            name.innerHTML = tests[i]["full_name"];
+            if (i === 0) {
+                name.innerHTML += " 🥇";
+                name.style.fontWeight = "600";
+            }
+            else if (i === 1) {
+                name.innerHTML += " 🥈";
+            }
+            else if (i === 2) {
+                name.innerHTML += " 🥉";
+            }
+            let div = player.appendChild(document.createElement("div"));
+            div.classList.add("wpm-accuracy");
+            let wpm = div.appendChild(document.createElement("h4"));
+            wpm.innerHTML = tests[i]["wpm"];
+            let accuracy = div.appendChild(document.createElement("h4"));
+            accuracy.innerHTML = tests[i]["accuracy"] + "%";
+        }
+    }
+    catch (error) {
+        console.error(error);
+    }
+});
 window.addEventListener("DOMContentLoaded", function () {
     return __awaiter(this, void 0, void 0, function* () {
-        try {
-            const response = yield fetch("https://tcs-typer.netlify.app/api/users");
-            if (!response) {
-                throw new Error("Failed to fetch tests from backend server.");
-            }
-            let tests = yield response.json();
-            console.log("TESTS:", tests);
-            tests = filterBestTests(tests);
-            tests = rankByWPM(tests);
-            for (let i = 0; i < tests.length; i++) {
-                const leaderboard = document.querySelector(".flex-column");
-                let player = leaderboard.appendChild(document.createElement("div"));
-                player.classList.add("leaderboard-player");
-                let name = player.appendChild(document.createElement("h3"));
-                name.innerHTML = tests[i]["full_name"];
-                if (i === 0) {
-                    name.innerHTML += " 🥇";
-                    name.style.fontWeight = "600";
-                }
-                else if (i === 1) {
-                    name.innerHTML += " 🥈";
-                }
-                else if (i === 2) {
-                    name.innerHTML += " 🥉";
-                }
-                let div = player.appendChild(document.createElement("div"));
-                div.classList.add("wpm-accuracy");
-                let wpm = div.appendChild(document.createElement("h4"));
-                wpm.innerHTML = tests[i]["wpm"];
-                let accuracy = div.appendChild(document.createElement("h4"));
-                accuracy.innerHTML = tests[i]["accuracy"] + "%";
-            }
-        }
-        catch (error) {
-            console.error(error);
+        if (window.fetchAndDisplayLeaderboard) {
+            window.fetchAndDisplayLeaderboard();
         }
     });
 });

@@ -1,9 +1,19 @@
-function rankByWPM(tests: Array<any>) {
+interface User {
+  full_name: string;
+  tests: Array<FilteredTest>;
+}
+
+interface FilteredTest {
+  wpm: number;
+  accuracy: number;
+}
+
+function rankByWPM(tests: Array<FilteredTest>) {
   const test = tests.sort((a, b) => b["wpm"] - a["wpm"]);
   return test;
 }
 
-function filterBestTests(users: Array<any>) {
+function filterBestTests(users: Array<User>) {
   let filteredTests = [];
 
   for (const user of users) {
@@ -39,8 +49,6 @@ function filterBestTests(users: Array<any>) {
     }
 
     let tests = await response.json();
-
-    console.log("TESTS:", tests);
 
     tests = filterBestTests(tests);
     tests = rankByWPM(tests);
@@ -83,7 +91,7 @@ function filterBestTests(users: Array<any>) {
       accuracy.innerHTML = tests[i]["accuracy"] + "%";
     }
   } catch (error) {
-    console.error(error);
+    console.error("An error occurred while fetching the leaderboard: ", error);
   }
 }
 

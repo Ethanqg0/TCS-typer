@@ -1,5 +1,3 @@
-import Filter from "bad-words";
-
 let form: HTMLFormElement | null = null;
 
 function validateForm(
@@ -66,13 +64,6 @@ document.addEventListener("DOMContentLoaded", function () {
       const formResponse = validateForm(username, password, verifyPassword);
 
       if (formResponse === false) {
-        return;
-      }
-
-      const badWords = filterBadWords(username.value) || filterBadWords(fullName.value);
-
-      if (badWords) {
-        alert("Please do not use inappropriate language in your username or full name.");
         return;
       }
 

@@ -20,10 +20,12 @@ function validateForm(
   return true;
 }
 
-function filterBadWords(text: string): void {
+function filterBadWords(text: string): boolean {
   const filter = new Filter();
   if (filter.isProfane(text)) {
-    throw new Error("Profanity is not allowed");
+    return true;
+  } else {
+    return false;
   }
 }
 
@@ -67,11 +69,10 @@ document.addEventListener("DOMContentLoaded", function () {
         return;
       }
 
-      try {
-        filterBadWords(username.value);
-        filterBadWords(fullName.value);
-      } catch (error) {
-        alert('Profanity is not allowed in the username or full name.');
+      const badWords = filterBadWords(username.value) || filterBadWords(fullName.value);
+
+      if (badWords) {
+        alert("Please do not use inappropriate language in your username or full name.");
         return;
       }
 

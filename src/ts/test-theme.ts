@@ -22,15 +22,6 @@ function changeClick(sound: string) {
   }
 }
 
-window.addEventListener("DOMContentLoaded", function () {
-  for (let sound of soundThemes) {
-    const soundButton = document.querySelector("#" + sound) as HTMLElement;
-    soundButton?.addEventListener("click", function () {
-      changeClick(sound);
-    });
-  }
-});
-
 
 window.addEventListener("DOMContentLoaded", function () {
   const body: HTMLElement | null = document.querySelector("body");
@@ -49,6 +40,15 @@ window.addEventListener("DOMContentLoaded", function () {
     currentTheme = "default-theme"
   }
   body?.classList.add(currentTheme || "");
+});
+
+window.addEventListener("DOMContentLoaded", function () {
+  for (let sound of soundThemes) {
+    const soundButton = document.querySelector("#" + sound) as HTMLElement;
+    soundButton?.addEventListener("click", function () {
+      changeClick(sound);
+    });
+  }
 });
 
 window.addEventListener("DOMContentLoaded", function () {

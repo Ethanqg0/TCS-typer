@@ -74,14 +74,11 @@ window.fetchAndDisplayLeaderboard = () => __awaiter(void 0, void 0, void 0, func
         console.error(error);
     }
 });
-window.addEventListener("DOMContentLoaded", function () {
-    return __awaiter(this, void 0, void 0, function* () {
-        if (window.fetchAndDisplayLeaderboard) {
-            window.fetchAndDisplayLeaderboard();
-        }
-    });
-});
-window.addEventListener("DOMContentLoaded", () => {
+window.addEventListener("DOMContentLoaded", () => __awaiter(void 0, void 0, void 0, function* () {
+    // When the page is loaded, fetch and display the leaderboard
+    if (window.fetchAndDisplayLeaderboard) {
+        window.fetchAndDisplayLeaderboard();
+    }
     const leaderboardModal = document.getElementById("leaderboard-modal");
     const openModal = document.getElementById("leaderboard-toggle");
     const closeModal = document.getElementById("close-modal");
@@ -96,4 +93,4 @@ window.addEventListener("DOMContentLoaded", () => {
     closeModal === null || closeModal === void 0 ? void 0 : closeModal.addEventListener("click", () => {
         leaderboardModal.close();
     });
-});
+}));

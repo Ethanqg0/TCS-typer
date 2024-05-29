@@ -87,15 +87,12 @@ function filterBestTests(users: Array<any>) {
   }
 }
 
-
-
-window.addEventListener("DOMContentLoaded", async function () {
+window.addEventListener("DOMContentLoaded", async () => {
+  // When the page is loaded, fetch and display the leaderboard
   if ((<any>window).fetchAndDisplayLeaderboard) {
-    (<any>window).fetchAndDisplayLeaderboard()
+    (<any>window).fetchAndDisplayLeaderboard();
   }
-});
 
-window.addEventListener("DOMContentLoaded", () => {
   const leaderboardModal = document.getElementById(
     "leaderboard-modal"
   ) as HTMLDialogElement;
@@ -105,7 +102,6 @@ window.addEventListener("DOMContentLoaded", () => {
   openModal?.addEventListener("click", () => {
     leaderboardModal.showModal();
   });
-
   leaderboardModal?.addEventListener("click", (e) => {
     if (e.target !== leaderboardModal) return
     leaderboardModal.close()

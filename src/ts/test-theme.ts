@@ -47,6 +47,9 @@ window.addEventListener("DOMContentLoaded", function () {
     const soundButton = document.querySelector("#" + sound) as HTMLElement;
     soundButton?.addEventListener("click", function () {
       changeClick(sound);
+      let audio = new Audio(`/assets/sounds/${sound}.wav`);
+      audio.volume = 0.8;
+      audio.play();
     });
   }
 });

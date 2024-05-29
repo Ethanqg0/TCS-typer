@@ -378,26 +378,18 @@ const pathToTestMap: Record<string, TestConfig> = {
   }
 };
 
-let soundPath: string = "../assets/sounds/standard-click.wav";
+let soundPath: string = "/assets/sounds/standard-click.wav";
 let soundVolume: number = 1.0;
 
 function updateSoundPath() {
-  let click = localStorage.getItem("sound");
+  let currentSound: string | null = localStorage.getItem("sound");
 
-  if (click === "standard-click") {
-    soundPath = "../../assets/sounds/standard-click.wav";
-  } else if (click === "mechanical-click") {
-    soundPath = "../../assets/sounds/typewriter.wav";
-  } else if (click === "pop-click") {
-    soundPath = "../../assets/sounds/pop.mp3";
-  } else if (click === "clacky-click") {
-    soundPath = "../../assets/sounds/clacky.mp3";
-  } else if (click === "cap-click") {
-    soundPath = "../../../assets/sounds/popcapoff.wav";
-  } else {
+  if (!currentSound) {
     localStorage.setItem("sound", "standard-click");
-    soundPath = "../../assets/sounds/standard-click.wav"; // Ensure soundPath is set correctly after updating localStorage
+    currentSound = "standard-click"
   }
+
+  soundPath = `/assets/sounds/${currentSound}.wav`;
 }
 
 window.addEventListener("DOMContentLoaded", () => {

@@ -21,14 +21,6 @@ function changeClick(sound) {
     }
 }
 window.addEventListener("DOMContentLoaded", function () {
-    for (let sound of soundThemes) {
-        const soundButton = document.querySelector("#" + sound);
-        soundButton === null || soundButton === void 0 ? void 0 : soundButton.addEventListener("click", function () {
-            changeClick(sound);
-        });
-    }
-});
-window.addEventListener("DOMContentLoaded", function () {
     const body = document.querySelector("body");
     let currentSound = localStorage.getItem("sound");
     let currentTheme = localStorage.getItem("theme");
@@ -42,6 +34,17 @@ window.addEventListener("DOMContentLoaded", function () {
         currentTheme = "default-theme";
     }
     body === null || body === void 0 ? void 0 : body.classList.add(currentTheme || "");
+});
+window.addEventListener("DOMContentLoaded", function () {
+    for (let sound of soundThemes) {
+        const soundButton = document.querySelector("#" + sound);
+        soundButton === null || soundButton === void 0 ? void 0 : soundButton.addEventListener("click", function () {
+            changeClick(sound);
+            let audio = new Audio(`/assets/sounds/${sound}.wav`);
+            audio.volume = 0.8;
+            audio.play();
+        });
+    }
 });
 window.addEventListener("DOMContentLoaded", function () {
     for (let theme of colorThemes) {

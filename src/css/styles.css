@@ -72,7 +72,7 @@ dialog[open]::backdrop {
   --title-text-color: #ACACAC;
   --subtitle-text-color: #D4D4D4;
   --icon-color: #D4D4D4;
-  --button-background-color: #383838;
+  --button-background-color: #949292;
   --test-background-color: #121212;
   --test-font-color: #D4D4D4;
   --box-shadow-color: rgba(0, 0, 0, 0.2);
@@ -97,7 +97,7 @@ dialog[open]::backdrop {
   --text-color: #24578a;
   --title-text-color: #0b4f6c;
   --subtitle-text-color: #4ca1af;
-  --button-background-color: #3b5998;
+  --button-background-color: #93aad8;
   --test-background-color: eaf4fc;
   --test-font-color: #24578a;
   --box-shadow-color: rgba(59, 89, 152, 0.3);
@@ -110,7 +110,7 @@ dialog[open]::backdrop {
   --title-text-color: #967BB6;
   --subtitle-text-color: #7E685A;
   --icon-color: #967BB6;
-  --button-background-color: #967BB6;
+  --button-background-color: #af9ac8;
   --test-background-color: #FFF;
   --test-font-color: #333;
   --box-shadow-color: rgba(0, 0, 0, 0.2);
@@ -156,7 +156,7 @@ dialog[open]::backdrop {
 
 .matrix-theme {
   --background-color: rgb(17, 17, 17);
-  --logo-color: green;
+  --logo-color: rgb(0, 86, 0);
   --text-color: green;
   --title-text-color: darkgreen;
   --subtitle-text-color: green;

@@ -373,7 +373,7 @@ a {
   height: 1.2em;
   background-color: var(--text-color);
   transition: 50ms top ease, 50ms left ease;
-  animation: caretAnim 2s infinite;
+  animation: caretAnim 1s infinite;
   opacity: 1;
 }
 
@@ -381,7 +381,7 @@ a {
 
   0%,
   100% {
-    opacity: 0.5;
+    opacity: 0.1;
   }
 
   50% {

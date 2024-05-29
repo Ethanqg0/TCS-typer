@@ -28,18 +28,32 @@ window.addEventListener("DOMContentLoaded", function () {
     const capClick = document.querySelector("#cap-click");
     standardClick.addEventListener("click", function () {
         changeClick("standard-click");
+        let audio = new Audio("../assets/sounds/standard-click.wav");
+        audio.play();
     });
     mechanicalClick.addEventListener("click", function () {
         changeClick("mechanical-click");
+        let audio = new Audio("../assets/sounds/typewriter.wav");
+        audio.volume = 0.8;
+        audio.play();
     });
     popClick.addEventListener("click", function () {
         changeClick("pop-click");
+        let audio = new Audio("../assets/sounds/pop.mp3");
+        audio.volume = 0.8;
+        audio.play();
     });
     clackyClick.addEventListener("click", function () {
         changeClick("clacky-click");
+        let audio = new Audio("../assets/sounds/clacky.mp3");
+        audio.volume = 0.8;
+        audio.play();
     });
     capClick.addEventListener("click", function () {
         changeClick("cap-click");
+        let audio = new Audio("../assets/sounds/popcapoff.wav");
+        audio.volume = 0.8;
+        audio.play();
     });
 });
 window.addEventListener("DOMContentLoaded", function () {

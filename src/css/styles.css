@@ -46,7 +46,10 @@ dialog[open]::backdrop {
   }
 }
 
-
+#logo {
+  background-color: var(--logo-color);
+  border-radius: 25px;
+}
 
 /* Themes */
 .default-theme {
@@ -62,9 +65,93 @@ dialog[open]::backdrop {
   --box-shadow-color: black;
 }
 
-#logo {
-  background-color: var(--logo-color);
-  border-radius: 25px;
+.dark-theme {
+  --background-color: #1E1E1E;
+  --logo-color: #7a7a7a;
+  --text-color: #D4D4D4;
+  --title-text-color: #ACACAC;
+  --subtitle-text-color: #D4D4D4;
+  --icon-color: #D4D4D4;
+  --button-background-color: #383838;
+  --test-background-color: #121212;
+  --test-font-color: #D4D4D4;
+  --box-shadow-color: rgba(0, 0, 0, 0.2);
+}
+
+.pink-theme {
+  --background-color: #fff0f5;
+  --logo-color: #fff0f5;
+  --text-color: #333;
+  --title-text-color: #ff69b4;
+  --subtitle-text-color: #666;
+  --icon-color: #ff69b4;
+  --button-background-color: #ff69b4;
+  --test-background-color: #fff;
+  --test-font-color: #333;
+  --box-shadow-color: rgba(0, 0, 0, 0.2);
+}
+
+.blueberry-theme {
+  --background-color: #eaf4fc;
+  --logo-color: #eaf4fc;
+  --text-color: #24578a;
+  --title-text-color: #0b4f6c;
+  --subtitle-text-color: #4ca1af;
+  --button-background-color: #3b5998;
+  --test-background-color: eaf4fc;
+  --test-font-color: #24578a;
+  --box-shadow-color: rgba(59, 89, 152, 0.3);
+}
+
+.lavendar-theme {
+  --background-color: #E6E6FA;
+  --logo-color: #E6E6FA;
+  --text-color: #333;
+  --title-text-color: #967BB6;
+  --subtitle-text-color: #7E685A;
+  --icon-color: #967BB6;
+  --button-background-color: #967BB6;
+  --test-background-color: #FFF;
+  --test-font-color: #333;
+  --box-shadow-color: rgba(0, 0, 0, 0.2);
+}
+
+.forest-theme {
+  --background-color: #35654d;
+  --logo-color: #458565;
+  --text-color: #FFFFFF;
+  --title-text-color: #70b77e;
+  --subtitle-text-color: #a9cfb8;
+  --icon-color: #70b77e;
+  --button-background-color: #70b77e;
+  --test-background-color: #1f3a2e;
+  --test-font-color: #FFFFFF;
+  --box-shadow-color: rgba(112, 183, 126, 0.3);
+}
+
+.cartoon-theme {
+  --background-color: #1f1f1f;
+  --logo-color: #606060;
+  --text-color: #00ffdc;
+  --title-text-color: #ff00c8;
+  --subtitle-text-color: rgb(251, 255, 0);
+  --icon-color: #05f3ff;
+  --button-background-color: white;
+  --test-background-color: black;
+  --test-font-color: black;
+  --box-shadow-color: black;  
+}
+
+.discord-theme {
+  --background-color: rgb(44, 47, 51);
+  --logo-color: rgb(220, 221, 222);
+  --text-color: rgb(220, 221, 222);
+  --title-text-color: rgb(114, 137, 218);
+  --subtitle-text-color: rgb(153, 170, 181);
+  --button-background-color: rgb(114, 137, 218);
+  --test-background-color: rgb(35, 39, 42);
+  --test-font-color: rgb(220, 221, 222);
+  --box-shadow-color: black;
 }
 
 .matrix-theme {
@@ -80,64 +167,17 @@ dialog[open]::backdrop {
   --box-shadow-color: gray;
 }
 
-.pink-theme {
-  --background-color: white;
-  --logo-color: white;
-  --text-color: rgb(248, 124, 145);
-  --title-text-color: rgb(246, 85, 112);
-  --subtitle-text-color: rgb(238, 109, 133);
-  --button-background-color: pink;
-  --test-background-color: rgb(252, 220, 225);
-  --test-font-color: rgb(240, 80, 110);
-  --box-shadow-color: black;
-}
 
-.discord-theme {
-  --background-color: rgb(44, 47, 51);
-  --logo-color: rgb(220, 221, 222);
-  --text-color: rgb(220, 221, 222);
-  --title-text-color: rgb(114, 137, 218);
-  --subtitle-text-color: rgb(153, 170, 181);
-  --button-background-color: rgb(114, 137, 218);
-  --test-background-color: rgb(35, 39, 42);
-  --test-font-color: rgb(220, 221, 222);
-  --box-shadow-color: black;
-}
-
-.blueberry-theme {
-  --background-color: #eaf4fc;
-  /* Soft sky blue background */
-  --logo-color: #eaf4fc;
-  /* Deep ocean blue for logo */
-  --text-color: #24578a;
-  /* Dark blue for text */
-  --title-text-color: #0b4f6c;
-  /* Rich sea blue for titles */
-  --subtitle-text-color: #4ca1af;
-  /* Aquamarine for subtitles */
-  --button-background-color: #3b5998;
-  /* Deep ocean blue for buttons */
-  --test-background-color: eaf4fc;
-  /* White for test areas */
-  --test-font-color: #24578a;
-  /* Dark blue for test text */
-  --box-shadow-color: rgba(59, 89, 152, 0.3);
-}
-
-/* Buttons */
+/* Buttons for themes */
 #default-theme {
   background-color: white;
   color: rgb(41, 113, 201);
   border: 2px solid black;
 }
 
-#standard-theme {
-  background-color: blue;
-}
-
-#matrix-theme {
-  background-color: black;
-  color: green;
+#dark-theme {
+  background-color: rgb(67, 67, 67);
+  color: white;
   border: 2px solid black;
 }
 
@@ -147,15 +187,39 @@ dialog[open]::backdrop {
   border: 2px solid black;
 }
 
+#blueberry-theme {
+  background-color: #c0e2fe;
+  color: #3b5998;
+  border: 2px solid black;
+}
+
+#lavendar-theme {
+  background-color: #d6d6fa;
+  color: black;
+  border: 2px solid black;
+}
+
+#forest-theme {
+  background-color: darkgreen;
+  color: white;
+  border: 2px solid black;
+}
+
+#cartoon-theme {
+  background-color: #1f1f1f;
+  color: #ff00c8;
+  border: 2px solid black;
+}
+
 #discord-theme {
   background-color: rgb(36, 36, 36);
   color: rgb(114, 137, 218);
   border: 2px solid black;
 }
 
-#blueberry-theme {
-  background-color: #c0e2fe;
-  color: #3b5998;
+#matrix-theme {
+  background-color: black;
+  color: green;
   border: 2px solid black;
 }
 

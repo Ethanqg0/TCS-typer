@@ -1,5 +1,5 @@
 "use strict";
-let colorThemes = ["default-theme", "matrix-theme", "pink-theme", "discord-theme", "blueberry-theme"];
+let colorThemes = ["default-theme", "dark-theme", "lavendar-theme", "forest-theme", "matrix-theme", "pink-theme", "discord-theme", "blueberry-theme", "cartoon-theme"];
 let soundThemes = ["standard-click", "mechanical-click", "pop-click", "clacky-click", "cap-click"];
 function changeTheme(theme) {
     const body = document.querySelector("body");
@@ -77,6 +77,18 @@ window.addEventListener("DOMContentLoaded", function () {
     else if (currentTheme === "blueberry-theme") {
         body === null || body === void 0 ? void 0 : body.classList.add("blueberry-theme");
     }
+    else if (currentTheme === "dark-theme") {
+        body === null || body === void 0 ? void 0 : body.classList.add("dark-theme");
+    }
+    else if (currentTheme === "lavendar-theme") {
+        body === null || body === void 0 ? void 0 : body.classList.add("lavendar-theme");
+    }
+    else if (currentTheme === "forest-theme") {
+        body === null || body === void 0 ? void 0 : body.classList.add("forest-theme");
+    }
+    else if (currentTheme === "cartoon-theme") {
+        body === null || body === void 0 ? void 0 : body.classList.add("cartoon-theme");
+    }
     else {
         // If currentTheme is "default-theme" or null/undefined, set to "default-theme"
         localStorage.setItem("theme", "default-theme");
@@ -85,12 +97,28 @@ window.addEventListener("DOMContentLoaded", function () {
 });
 window.addEventListener("DOMContentLoaded", function () {
     const defaultTheme = document.querySelector("#default-theme");
+    const darkTheme = document.querySelector("#dark-theme");
+    const lavendarTheme = document.querySelector("#lavendar-theme");
+    const forestTheme = document.querySelector("#forest-theme");
     const matrixTheme = document.querySelector("#matrix-theme");
     const pinkTheme = document.querySelector("#pink-theme");
     const discordTheme = document.querySelector("#discord-theme");
     const blueberryTheme = document.querySelector("#blueberry-theme");
+    const cartoonTheme = document.querySelector("#cartoon-theme");
     defaultTheme.addEventListener("click", function () {
         changeTheme("default-theme");
+    });
+    darkTheme.addEventListener("click", function () {
+        changeTheme("dark-theme");
+    });
+    lavendarTheme.addEventListener("click", function () {
+        changeTheme("lavendar-theme");
+    });
+    forestTheme.addEventListener("click", function () {
+        changeTheme("forest-theme");
+    });
+    cartoonTheme.addEventListener("click", function () {
+        changeTheme("cartoon-theme");
     });
     pinkTheme.addEventListener("click", function () {
         changeTheme("pink-theme");

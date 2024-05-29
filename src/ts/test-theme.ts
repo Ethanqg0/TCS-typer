@@ -1,4 +1,4 @@
-let colorThemes = ["default-theme", "matrix-theme", "pink-theme", "discord-theme", "blueberry-theme"];
+let colorThemes = ["default-theme", "dark-theme", "lavendar-theme", "forest-theme", "matrix-theme", "pink-theme", "discord-theme", "blueberry-theme", "cartoon-theme"];
 let soundThemes = ["standard-click", "mechanical-click", "pop-click", "clacky-click", "cap-click"];
 
 function changeTheme(theme: string) {
@@ -79,6 +79,14 @@ window.addEventListener("DOMContentLoaded", function () {
     body?.classList.add("discord-theme");
   } else if (currentTheme === "blueberry-theme") {
     body?.classList.add("blueberry-theme");
+  } else if (currentTheme === "dark-theme") {
+    body?.classList.add("dark-theme");
+  } else if (currentTheme === "lavendar-theme") {
+    body?.classList.add("lavendar-theme");
+  } else if (currentTheme === "forest-theme") {
+    body?.classList.add("forest-theme");
+  } else if (currentTheme === "cartoon-theme") {
+    body?.classList.add("cartoon-theme");
   } else {
     // If currentTheme is "default-theme" or null/undefined, set to "default-theme"
     localStorage.setItem("theme", "default-theme");
@@ -88,13 +96,33 @@ window.addEventListener("DOMContentLoaded", function () {
 
 window.addEventListener("DOMContentLoaded", function () {
   const defaultTheme = document.querySelector("#default-theme") as HTMLElement;
+  const darkTheme = document.querySelector("#dark-theme") as HTMLElement;
+  const lavendarTheme = document.querySelector("#lavendar-theme") as HTMLElement;
+  const forestTheme = document.querySelector("#forest-theme") as HTMLElement;
   const matrixTheme = document.querySelector("#matrix-theme") as HTMLElement;
   const pinkTheme = document.querySelector("#pink-theme") as HTMLElement;
   const discordTheme = document.querySelector("#discord-theme") as HTMLElement;
   const blueberryTheme = document.querySelector("#blueberry-theme") as HTMLElement;
+  const cartoonTheme = document.querySelector("#cartoon-theme") as HTMLElement;
 
   defaultTheme.addEventListener("click", function () {
     changeTheme("default-theme");
+  });
+
+  darkTheme.addEventListener("click", function () {
+    changeTheme("dark-theme");
+  });
+
+  lavendarTheme.addEventListener("click", function () {
+    changeTheme("lavendar-theme");
+  });
+
+  forestTheme.addEventListener("click", function () {
+    changeTheme("forest-theme");
+  });
+
+  cartoonTheme.addEventListener("click", function () {
+    changeTheme("cartoon-theme");
   });
 
   pinkTheme.addEventListener("click", function () {

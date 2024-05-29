@@ -14,34 +14,38 @@ i {
 
 dialog {
   /* translate: -50% -50% !important; */
-  translate: -50% calc(-50% + (1 - var(--open)) * -20%) !important;
+  transform: translate(-50%, calc(-50% + (1 - var(--open)) * -20%));
+}
 
-  &, &::backdrop {
-    --open: 0;
-    --duration: calc(0.2s + (var(--open) * 0.20s));
-    transition: all var(--duration) ease allow-discrete;
-    opacity: var(--open);
+dialog,
+dialog::backdrop {
+  --open: 0;
+  --duration: calc(0.2s + (var(--open) * 0.20s));
+  transition: all var(--duration) ease allow-discrete;
+  opacity: var(--open);
+}
+
+dialog::backdrop {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+dialog[open],
+dialog[open]::backdrop {
+  --open: 1
+}
+
+@starting-style {
+  dialog {
+    transform: translate(-50%, -70%) !important;
   }
 
-  &::backdrop {
-    background-color: rgba(0, 0, 0, 0.2);
-  }
-
-  &[open], &[open]::backdrop {
-    --open: 1
-  }
-
-  @starting-style {
-    & {
-      translate: -50% -70% !important;
-    }
-
-    &, &::backdrop {
-      opacity: 0;
-      --open: 0
-    }
+  dialog,
+  dialog::backdrop {
+    opacity: 0;
+    --open: 0
   }
 }
+
 
 
 /* Themes */
@@ -206,7 +210,11 @@ html {
   flex-direction: column;
 }
 
-#standard-click, #mechanical-click, #pop-click, #clacky-click, #cap-click {
+#standard-click,
+#mechanical-click,
+#pop-click,
+#clacky-click,
+#cap-click {
   background-color: var(--button-background-color);
 }
 
@@ -292,7 +300,9 @@ nav img {
   gap: 10px;
 }
 
-#test-1, #test-2, #test-settings {
+#test-1,
+#test-2,
+#test-settings {
   border: 2px solid gray;
   padding: 25px;
   background-color: var(--test-background-color);
@@ -324,7 +334,8 @@ i {
 nav #nav-buttons .nav-button:hover {
   color: rgb(41, 113, 201);
 
-  i, p {
+  i,
+  p {
     color: rgb(41, 113, 201);
   }
 }
@@ -367,7 +378,9 @@ a {
 }
 
 @keyframes caretAnim {
-  0%, 100% {
+
+  0%,
+  100% {
     opacity: 0.5;
   }
 

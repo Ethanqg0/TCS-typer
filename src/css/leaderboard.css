@@ -6,8 +6,8 @@ dialog.modal {
     position: fixed;
     top: 50%;
     left: 50%;
-    translate: -50% -50%;
-    /* transform: translate(-50%, -50%); */
+    /* translate: -50% -50%; */
+    transform: translate(-50%, -50%);
     border-radius: 25px;
     box-shadow: 0 2px 6px 6px rgb(0 0 0 / 0.05)
 }
@@ -48,7 +48,10 @@ dialog section {
     width: 100%;
 }
 
-dialog:focus, a:focus, button:focus, input:focus {
+dialog:focus,
+a:focus,
+button:focus,
+input:focus {
     outline: none;
 }
 

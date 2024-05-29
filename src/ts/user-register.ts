@@ -1,3 +1,5 @@
+import Filter from "bad-words";
+
 let form: HTMLFormElement | null = null;
 
 function validateForm(
@@ -16,6 +18,13 @@ function validateForm(
     return false;
   }
   return true;
+}
+
+function filterBadWords(text: string): void {
+  const filter = new Filter();
+  if (filter.isProfane(text)) {
+    throw new Error("Profanity is not allowed");
+  }
 }
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -55,6 +64,14 @@ document.addEventListener("DOMContentLoaded", function () {
       const formResponse = validateForm(username, password, verifyPassword);
 
       if (formResponse === false) {
+        return;
+      }
+
+      try {
+        filterBadWords(username.value);
+        filterBadWords(fullName.value);
+      } catch (error) {
+        alert('Profanity is not allowed in the username or full name.');
         return;
       }
 

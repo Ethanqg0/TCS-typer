@@ -296,7 +296,7 @@ class TypingTest implements Test {
     this.typingData.words[0][0] = { char: "", init: true }
     this.updateTextBox()
     this.moveCaret()
-    console.error("Test chars: ", this.typingData.originalWords);
+    // console.error("Test chars: ", this.typingData.originalWords);
   }
 
   async restartTest(): Promise<void> {
@@ -307,9 +307,9 @@ class TypingTest implements Test {
   }
 
   async updateTextBox(): Promise<void> {
-    console.log("FOR:", this.wordIndex, this.charIndex)
-    console.dir(this.typingData.words)
-    console.dir(this.typingData.originalWords)
+    // console.log("FOR:", this.wordIndex, this.charIndex)
+    // console.dir(this.typingData.words)
+    // console.dir(this.typingData.originalWords)
     let newTextBoxHTML = ""
 
     for (let i = 0; i < this.typingData.originalWords.length; i++) {
@@ -574,7 +574,7 @@ window.addEventListener("DOMContentLoaded", () => {
         return
       }
       currentTest.charIndex++;
-      console.log(currentTest.typingData.originalWords[currentTest.wordIndex][currentTest.charIndex], currentTest.typingData.originalWords[currentTest.wordIndex])
+      // console.log(currentTest.typingData.originalWords[currentTest.wordIndex][currentTest.charIndex], currentTest.typingData.originalWords[currentTest.wordIndex])
       currentTest.typingData.words[currentTest.wordIndex][currentTest.charIndex] = { char: event.key, correct: event.key === currentTest.typingData.originalWords[currentTest.wordIndex][currentTest.charIndex]?.char };
       // `<span class="test-char ${event.key === currentTest.typingData.originalChars[currentTest.i] ? "test-char-correct" : "test-char-incorrect"}" style="color: ${event.key === currentTest.typingData.originalChars[currentTest.i] ? "green" : "red"};">` + currentTest.typingData.originalChars[currentTest.i] + "</span>";
     }

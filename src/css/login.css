@@ -12,14 +12,14 @@
 }
 
 
-.login-section2 {
+.login-section {
     display: flex;
     width: 80vw;
     height: 65vh;
     justify-content: space-between;
 }
 
-.login-section2 div {
+.login-section div {
     display: flex;
     flex-direction: column;
     justify-content: space-around;

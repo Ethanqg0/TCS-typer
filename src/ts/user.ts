@@ -24,6 +24,17 @@ document.addEventListener("DOMContentLoaded", function () {
     "logged-username"
   ) as HTMLParagraphElement;
   usernameDisplay.textContent = username || "";
+
+  const loginSection = document.querySelector("#login-section") as HTMLElement;
+  const userSection = document.querySelector("#user-section") as HTMLElement;
+
+  if (!username || username === "" || username === "null") {
+    loginSection.style.display = "none";
+    userSection.style.display = "block";
+  } else {
+    loginSection.style.display = "block";
+    userSection.style.display = "none";
+  }
 });
 
 document.addEventListener("DOMContentLoaded", function () {

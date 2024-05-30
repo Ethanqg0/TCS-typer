@@ -9,8 +9,8 @@ interface FilteredTest {
 }
 
 function rankByWPM(tests: Array<FilteredTest>) {
-  const test = tests.sort((a, b) => b["wpm"] - a["wpm"]);
-  return test;
+    const test = tests.sort((a, b) => b["wpm"] - a["wpm"]);
+    return test;
 }
 
 function filterBestTests(users: Array<User>) {
@@ -30,7 +30,7 @@ function filterBestTests(users: Array<User>) {
         }
       }
     }
-    if (bestTest !== null) {
+    if (bestTest !== null && bestTest["full_name"] !== "Ethan Gutierrez" && bestTest["full_name"] !== "Keaton Freed") {
       filteredTests.push(bestTest);
     }
   }

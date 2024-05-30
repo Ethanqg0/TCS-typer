@@ -241,7 +241,6 @@ class TypingTest implements Test {
     this.quoteData.originalChars = quotes.split("");
     this.textBox.innerHTML = quotes;
     this.moveCaret()
-    console.error("LOGGED: ", this.quoteData.chars);
   }
 
   async restartTest(): Promise<void> {
@@ -487,7 +486,6 @@ window.addEventListener("DOMContentLoaded", () => {
       sendResultsToDatabase(currentTest);
       currentTest.textBox.innerHTML = currentTest.calculateWPM(currentTest.stopwatch.elapsedTime) + " words per minute with " + currentTest.calculateAccuracy() + "% accuracy!";
       currentTest.hideCaret()
-      console.log("BOOM WPM:", currentTest.calculateWPM(currentTest.stopwatch.elapsedTime));
     }
   });
 });

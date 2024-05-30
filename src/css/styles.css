@@ -139,7 +139,7 @@ dialog[open]::backdrop {
   --button-background-color: white;
   --test-background-color: black;
   --test-font-color: black;
-  --box-shadow-color: black;
+  --box-shadow-color: black;  
 }
 
 .discord-theme {
@@ -402,18 +402,6 @@ nav #nav-buttons .nav-button:hover {
   p {
     color: rgb(41, 113, 201);
   }
-}
-
-.test-char-space {
-  white-space: pre;
-}
-
-.test-char-incorrect {
-  color: red
-}
-
-.test-char-correct {
-  color: green
 }
 
 #stats {

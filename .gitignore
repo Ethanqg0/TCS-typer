@@ -1,5 +1,3 @@
 node_modules/
 .netlify
 .env
-
-src/dist/*.js

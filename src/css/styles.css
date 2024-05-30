@@ -405,11 +405,29 @@ nav #nav-buttons .nav-button:hover {
 }
 
 .test-textbox, .test-textbox * {
-  font-family: "Source Code Pro", "Roboto Mono", "Vazirmatn", monospace;
+  /* font-family: "Source Code Pro", "Roboto Mono", "Vazirmatn", monospace; */
+}
+
+/* .test-char-space {
+  white-space: pre;
+} */
+
+/* .test-char-space {
+  white-space: pre-wrap;
+  display: inline-block;
+} */
+
+.test-textbox {
+  white-space: pre-wrap;
+  word-break: break-word;
 }
 
 .test-char-space {
-  white-space: pre;
+  display: inline-block;
+}
+
+.test-char {
+  display: inline;
 }
 
 .test-char-incorrect {

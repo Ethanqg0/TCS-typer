@@ -130,6 +130,9 @@ class TypingTest implements Test {
     this.testContainer.appendChild(this.testCaret);
     this.testCaret.className = "test-caret"
 
+    window.addEventListener("resize", () => {
+      this.moveCaret()
+    })
 
     this.stopwatchDisplay = document.querySelector(
       `#${stopwatchId}`
@@ -318,7 +321,6 @@ class TypingTest implements Test {
         const typedLetter = this.typingData.words[i]?.[j];
 
         if (typedLetter) {
-          // newTextBoxHTML += `<span class="test-char test-char-${typedLetter.space ? "space" : typedLetter.correct ? "correct" : "incorrect"} test-char-${i}-${j}">${typedLetter.char}</span>`;
           newTextBoxHTML += `<span class="test-char test-char-${typedLetter.space ? "space" : typedLetter.correct ? "correct" : "incorrect"} test-char-${i}-${j}">${originalLetter.char}</span>`;
         } else if (originalLetter) {
           newTextBoxHTML += `<span class="test-char test-char-placeholder test-char-${originalLetter.space ? "space" : ""}">${originalLetter.char}</span>`;

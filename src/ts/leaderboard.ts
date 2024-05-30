@@ -9,8 +9,10 @@ interface FilteredTest {
 }
 
 function rankByWPM(tests: Array<FilteredTest>) {
-  const test = tests.sort((a, b) => b["wpm"] - a["wpm"]);
-  return test;
+  // remove any tests that have the username "Ethan Gutierrez" or "Keaton Freed"
+  const filteredTests = tests.filter((test) => test["full_name"] !== "Ethan Gutierrez" && test["full_name"] !== "Keaton Freed");
+  filteredTests = filteredTests.sort((a, b) => b["wpm"] - a["wpm"]);
+  return fitleredTests;
 }
 
 function filterBestTests(users: Array<User>) {

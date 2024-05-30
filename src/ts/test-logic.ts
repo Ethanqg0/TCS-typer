@@ -218,7 +218,7 @@ class TypingTest implements Test {
   }
 
   calculateAccuracy(): number {
-    console.log(this.typingData);
+    // console.log(this.typingData);
     let correctChars = 0;
     let totalTypedChars = 0;
     let missingChars = 0;
@@ -477,6 +477,10 @@ async function sendResultsToDatabase(test: TypingTest) {
   let wpm: number = test.calculateWPM(test.stopwatch.elapsedTime);
   let accuracy: number = test.calculateAccuracy();
 
+  if (!username || username === "") {
+    console.log("User is not logged in, skipping sending test results to the database.");
+    return;
+  }
 
   const response = await fetch(
     "https://tcs-typer.netlify.app/api/test",

@@ -22,15 +22,22 @@ interface Settings {
   mode: string;
 }
 
-interface QuoteData {
-  chars: string[];
+type TypingData = {
+  char: string,
+  correct?: boolean,
+  extra?: boolean
+}[][]
+
+interface TypedData {
+  words: TypingData;
+  originalWords: TypingData;
   originalChars: string[];
 }
 
 interface Test {
   stopwatch: Stopwatch;
   settings: Settings;
-  quoteData: QuoteData;
+  typingData: TypedData;
 }
 
 /**
@@ -41,7 +48,7 @@ interface Test {
  * - stopwatchDisplay: HTMLElement
  * - stopwatch: Stopwatch
  * - settings: Settings
- * - quoteData: QuoteData
+ * - typingData: QuoteData
  * - i: number
  * 
  * Methods:
@@ -86,15 +93,20 @@ class TypingTest implements Test {
 
   /**
    * The quote data object containing test text information.
-   * @type {QuoteData}
+   * @type {TypedData}
    */
-  quoteData: QuoteData;
+  typingData: TypedData;
 
   /**
    * Keeps track of the current character index.
    * @type {number}
    */
-  i: number = 0;
+  wordIndex: number = 0;
+  /**
+   * Keeps track of the current character index.
+   * @type {number}
+   */
+  charIndex: number = 0;
 
   minutes: number = 0;
   seconds: number = 0;
@@ -136,8 +148,9 @@ class TypingTest implements Test {
       mode: "words",
     };
 
-    this.quoteData = {
-      chars: [""],
+    this.typingData = {
+      words: [],
+      originalWords: [],
       originalChars: [""],
     };
   }
@@ -195,15 +208,15 @@ class TypingTest implements Test {
   }
 
   calculateAccuracy(): number {
-    console.log(this.quoteData)
+    console.log(this.typingData)
     let incorrectChars = 0;
-    for (let i = 0; i < this.quoteData.chars.length; i++) {
-      if (this.quoteData.chars[i].includes('class="test-char test-char-incorrect"')) {
+    for (let i = 0; i < this.typingData.chars.length; i++) {
+      if (this.typingData.chars[i].includes('class="test-char test-char-incorrect"')) {
         incorrectChars++;
       }
     }
 
-    const totalChars = this.quoteData.originalChars.length;
+    const totalChars = this.typingData.originalChars.length;
     const correctChars = totalChars - incorrectChars;
     return Math.round((correctChars / totalChars) * 100);
   }
@@ -212,12 +225,8 @@ class TypingTest implements Test {
    * Resets the stopwatch timer.
    */
   resetStopwatch(): void {
-    if (this.stopwatch.timer) {
-      clearInterval(this.stopwatch.timer);
-    }
-    this.stopwatch.isRunning = false;
     this.stopwatch.elapsedTime = 0;
-    this.displayTime(this.stopwatch.elapsedTime);
+    this.stopStopwatch()
   }
 
   /**
@@ -237,20 +246,22 @@ class TypingTest implements Test {
    */
   async initializeTest(): Promise<void> {
     let quotes = await this.generateWords();
-    this.quoteData.chars = quotes.split("");
-    this.quoteData.originalChars = quotes.split("");
+    // this.typingData.originalChars = quotes.split(" ");
+    this.typingData.originalWords = (quotes.split(" ").map((word: string) => word.split("").map((character: string) => { return { char: character } })) as TypingData);
+    this.typingData.words = [[]];
     this.textBox.innerHTML = quotes;
     this.moveCaret()
+    console.error("Test chars: ", this.typingData.originalWords);
   }
 
   async restartTest(): Promise<void> {
     this.resetStopwatch();
     this.i = 0;
-    let quotes = await this.generateWords();
-    this.quoteData.chars = quotes.split("");
-    this.quoteData.originalChars = quotes.split("");
-    this.textBox.innerHTML = quotes;
-    this.moveCaret()
+    this.initializeTest()
+  }
+
+  async updateTextBox(): Promise<void> {
+    this.textBox.innerHTML = this.typingData.chars.join("");
   }
 
   /**
@@ -383,7 +394,7 @@ window.addEventListener("DOMContentLoaded", () => {
   updateSoundPath();
 });
 
-let username = null;
+let username: string | null = "";
 
 async function sendResultsToDatabase(test: TypingTest) {
   username = localStorage.getItem("username");
@@ -439,24 +450,23 @@ window.addEventListener("DOMContentLoaded", () => {
 
   // Add event listener for keydown events
   document.addEventListener("keydown", function async(event) {
-    if (currentTest.i === 0) {
+    if (currentTest.oIndex === 0) {
       currentTest.startStopwatch();
     }
-    if (currentTest.i > currentTest.quoteData.originalChars.length) {
+    if (currentTest.oIndex > currentTest.typingData.originalChars.length) {
       return
     }
 
 
     if (event.key === "Backspace" || event.key === "Delete") {
-      if (currentTest.i > 0) {
-        currentTest.i--;
+      if (currentTest.oIndex > 0) {
+        currentTest.typeIndex--;
         // Remove styling from the last character
-        currentTest.quoteData.chars[currentTest.i] =
-          currentTest.quoteData.originalChars[currentTest.i];
+        currentTest.typingData.chars[currentTest.typeIndex] =
+          currentTest.typingData.originalChars[currentTest.i];
         // Update the display
-        currentTest.textBox.innerHTML = currentTest.quoteData.chars.join("");
+        currentTest.updateTextBox()
         currentTest.moveCaret()
-
       }
       return; // Prevent further processing for backspace/delete
     }
@@ -465,10 +475,10 @@ window.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    if (currentTest && currentTest.i < currentTest.quoteData.originalChars.length) {
-      currentTest.quoteData.chars[currentTest.i] =
-        `<span class="test-char ${event.key === currentTest.quoteData.originalChars[currentTest.i] ? "test-char-correct" : "test-char-incorrect"}" style="color: ${event.key === currentTest.quoteData.originalChars[currentTest.i] ? "green" : "red"};">` + currentTest.quoteData.originalChars[currentTest.i] + "</span>";
-      currentTest.textBox.innerHTML = currentTest.quoteData.chars.join("");
+    if (currentTest && currentTest.i < currentTest.typingData.originalChars.length) {
+      currentTest.typingData.chars[currentTest.i] =
+        `<span class="test-char ${event.key === currentTest.typingData.originalChars[currentTest.i] ? "test-char-correct" : "test-char-incorrect"}" style="color: ${event.key === currentTest.typingData.originalChars[currentTest.i] ? "green" : "red"};">` + currentTest.typingData.originalChars[currentTest.i] + "</span>";
+      currentTest.updateTextBox()
 
       currentTest.moveCaret()
 
@@ -480,8 +490,8 @@ window.addEventListener("DOMContentLoaded", () => {
       audio.play().catch((error) => console.log(error));
     }
 
-    if (currentTest.i === currentTest.quoteData.originalChars.length) {
-      currentTest.i++;
+    if (currentTest.oIndex === currentTest.typingData.originalChars.length) {
+      currentTest.oIndex++;
       currentTest.stopStopwatch();
       sendResultsToDatabase(currentTest);
       currentTest.textBox.innerHTML = currentTest.calculateWPM(currentTest.stopwatch.elapsedTime) + " words per minute with " + currentTest.calculateAccuracy() + "% accuracy!";

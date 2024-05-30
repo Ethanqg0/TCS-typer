@@ -34,7 +34,6 @@ window.addEventListener("DOMContentLoaded", function () {
   }
   body?.classList.add(currentSound || "");
 
-
   if (!currentTheme) {
     localStorage.setItem("theme", "default-theme");
     currentTheme = "default-theme"

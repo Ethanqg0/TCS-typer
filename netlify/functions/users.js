@@ -6,8 +6,8 @@ exports.handler = async function (event, context) {
 
   // Create the Supabase client
   const supabase = createClient(
-    "https://mjdbcmqftdfkonuolgbc.supabase.co",
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1qZGJjbXFmdGRma29udW9sZ2JjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTYzNDc0MDEsImV4cCI6MjAzMTkyMzQwMX0.v-PIg3KmT8etL81Eq5H7Tmt7xzH5ZtEc-NDSO-9mofs"
+    process.env.SUPABASE_URL,
+    process.env.SUPABASE_KEY
   );
 
   // Define the response headers with CORS headers

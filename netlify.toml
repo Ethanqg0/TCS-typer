@@ -4,8 +4,13 @@
   command = "npm run build"
 
 [[redirects]]
-  from = "/api/users"
-  to = "/.netlify/functions/users"
+  from = "/api/user"
+  to = "/.netlify/functions/user"
+  status = 200
+
+[[redirects]]
+  from = "/api/leaderboard"
+  to = "/.netlify/functions/leaderboard"
   status = 200
 
 [[redirects]]

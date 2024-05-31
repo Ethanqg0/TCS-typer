@@ -1,38 +1,39 @@
 interface User {
   full_name: string;
-  tests: Array<FilteredTest>;
+  coach?: boolean;
+  best_test: TestRecord;
+  // tests: Array<FilteredTest>;
 }
 
-interface FilteredTest {
+interface TestRecord {
+  wpm: number;
+  accuracy: number;
+}
+interface BestTest {
+  full_name: string;
   wpm: number;
   accuracy: number;
 }
 
-function rankByWPM(tests: Array<FilteredTest>) {
-    const test = tests.sort((a, b) => b["wpm"] - a["wpm"]);
-    return test;
+function rankByWPM(tests: Array<BestTest>) {
+  const test = tests.sort((a, b) => b["wpm"] - a["wpm"]);
+  return test;
 }
 
-function filterBestTests(users: Array<User>) {
-  let filteredTests = [];
+function filterTests(users: Array<User>) {
+  let filteredTests: Array<BestTest> = [];
 
   for (const user of users) {
-    let bestTest = null;
-    const tests = user["tests"];
-    for (const test of tests) {
-      if (test["accuracy"] >= 90 && !(test["wpm"] >= 200) && !(test["accuracy"] > 100)) {
-        if (bestTest === null || test["wpm"] > bestTest["wpm"]) {
-          bestTest = {
-            full_name: user["full_name"],
-            wpm: test["wpm"],
-            accuracy: test["accuracy"],
-          }
-        }
-      }
+    if (user["coach"] === true) {
+      continue
     }
-    if (bestTest !== null && bestTest["full_name"] !== "Ethan Gutierrez" && bestTest["full_name"] !== "Keaton Freed") {
-      filteredTests.push(bestTest);
-    }
+    let test: TestRecord = user["best_test"]
+    if (!test) continue
+    filteredTests.push(({
+      full_name: user["full_name"],
+      wpm: test["wpm"],
+      accuracy: test["accuracy"],
+    } as BestTest))
   }
 
   return filteredTests;
@@ -42,7 +43,8 @@ function filterBestTests(users: Array<User>) {
   console.log("Fetching and displaying leaderboard...")
   try {
     const response = await fetch(
-      "https://tcs-typer.netlify.app/api/users"
+      "https://tcs-typer.netlify.app/api/leaderboard"
+      // "http://localhost:8888/api/leaderboard"
     );
     if (!response) {
       throw new Error("Failed to fetch tests from backend server.");
@@ -50,7 +52,7 @@ function filterBestTests(users: Array<User>) {
 
     let tests = await response.json();
 
-    tests = filterBestTests(tests);
+    tests = filterTests(tests);
     tests = rankByWPM(tests);
 
     const leaderboard = document.querySelector(

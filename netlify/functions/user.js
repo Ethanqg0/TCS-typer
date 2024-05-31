@@ -1,4 +1,5 @@
 const { createClient } = require("@supabase/supabase-js");
+const dotenv = require("dotenv").config()
 
 exports.handler = async function (event, context) {
   // Define the allowed origins
@@ -26,29 +27,56 @@ exports.handler = async function (event, context) {
     };
   }
 
+  let requestUsername;
+  if (event.body) {
+    try {
+      requestUsername = JSON.parse(event.body)?.username
+    } catch {
+      return {
+        statusCode: 400,
+        headers,
+        body: JSON.stringify({ error: `Body cannot be parsed.` }),
+      };
+    }
+  }
+
+  if (!requestUsername) return {
+    statusCode: 500,
+    headers,
+    body: JSON.stringify({ error: `No username provided.` }),
+  };
+
   try {
-    const { data, error } = await supabase.from("users").select();
+    const { data: usersData, error } = await supabase.from("users").select().eq("username", requestUsername);
 
     if (error) {
       return {
         statusCode: 500,
         headers,
         body: JSON.stringify({
-          error: `Failed to fetch users: ${error.message}`,
+          error: `Failed to fetch users from supabase: ${error.message}`,
         }),
+      };
+    }
+
+    if (!usersData) {
+      return {
+        statusCode: 400,
+        headers,
+        body: JSON.stringify("No user data."),
       };
     }
 
     return {
       statusCode: 200,
       headers,
-      body: JSON.stringify(data),
+      body: JSON.stringify(usersData),
     };
   } catch (err) {
     return {
       statusCode: 500,
       headers,
-      body: JSON.stringify({ error: `Failed to fetch users: ${err.message}` }),
+      body: JSON.stringify({ error: `Failed to filter users: ${err.message}` }),
     };
   }
 };

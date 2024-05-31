@@ -5,7 +5,6 @@ function validateForm(
   password: HTMLInputElement,
   verifyPassword: HTMLInputElement
 ): boolean {
-  console.log("USERNAME VALUE:", username.value);
   if (!username.value.includes("tcswc")) {
     alert("Username must contain 'tcswc', use your Scratch login!");
     return false;
@@ -96,8 +95,8 @@ document.addEventListener("DOMContentLoaded", async function () {
   //   --------------------------------  SIGNUP FORM --------------------------------
   let signupForm = document.querySelector("#signup-form") as HTMLFormElement;
   if (signupForm) {
-    const username = document.getElementById("username") as HTMLInputElement;
-    const password = document.getElementById("password") as HTMLInputElement;
+    const signupUsername = document.getElementById("username") as HTMLInputElement;
+    const signupPassword = document.getElementById("password") as HTMLInputElement;
     const fullName = document.getElementById("full-name") as HTMLInputElement;
 
     const verifyPassword = document.getElementById(
@@ -108,7 +107,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       signupForm.addEventListener("submit", async function (event) {
         event.preventDefault();
 
-        const formResponse = validateForm(username, password, verifyPassword);
+        const formResponse = validateForm(signupUsername, signupPassword, verifyPassword);
 
         if (formResponse === false) {
           return;
@@ -127,8 +126,8 @@ document.addEventListener("DOMContentLoaded", async function () {
                 "Content-Type": "application/json",
               },
               body: JSON.stringify({
-                username: username.value,
-                password: password.value,
+                username: signupUsername.value,
+                password: signupPassword.value,
                 full_name: fullName.value,
                 tests: [{ wpm: 0, accuracy: 0 }],
               }),
@@ -161,6 +160,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     const password = document.querySelector(
       "#login-password"
     ) as HTMLInputElement;
+    console.log("Logging in with:", username.value, password.value);
 
     if (!loginForm) {
       return;

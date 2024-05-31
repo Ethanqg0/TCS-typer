@@ -27,7 +27,8 @@ exports.handler = async function (event, context) {
     };
   }
 
-    let storedUser = getUsername();
+  // not working
+  let storedUser = getUsername();
 
   if (!requestUsername) return {
     statusCode: 500,
@@ -36,7 +37,7 @@ exports.handler = async function (event, context) {
   };
 
   try {
-    const { data: usersData, error } = await supabase.from("users").select().eq("username", storedUser);
+    const { data: usersData, error } = await supabase.from("users").select().eq("username", "tcswc_egutierrez");
 
     if (error) {
       return {

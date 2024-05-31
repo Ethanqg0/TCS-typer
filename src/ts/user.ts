@@ -39,7 +39,6 @@ function calculateAverageAccuracy(tests: Array<any>): number {
 
 document.addEventListener("DOMContentLoaded", async function () {
   const username = getUser()?.username;
-  console.log("USERNAME:", username);
 
   //   --------------------------------  USERNAME DISPLAY --------------------------------
   const usernameDisplay = document.getElementById(
@@ -51,6 +50,8 @@ document.addEventListener("DOMContentLoaded", async function () {
   const loginSection = document.querySelector(".login-section") as HTMLElement;
   const userSection = document.querySelector(".user-section") as HTMLElement;
 
+  console.log(userSection);
+
   if (!username || username === "" || username === "null") {
     loginSection.style.display = "flex";
     userSection.style.display = "none";
@@ -59,25 +60,28 @@ document.addEventListener("DOMContentLoaded", async function () {
     userSection.style.display = "flex";
   }
 
-  const userDetails = await fetchUserDetails();
+  let userDetails;
+  if (username) {
+    userDetails = await fetchUserDetails();
+  }
 
   const usernamePageDisplay = document.getElementById("user-username") as HTMLElement;
-  if (usernamePageDisplay) {
+  if (usernamePageDisplay && userDetails && userDetails.full_name) {
     usernamePageDisplay.textContent = `Hi, ${userDetails.full_name}👋`;
   }
 
   const userTestCount = document.getElementById("user-test-count") as HTMLElement;
-  if (userTestCount) {
+  if (userTestCount && userDetails && userDetails.tests) {
     userTestCount.textContent = `Total tests completed: ${userDetails.tests.length}`;
   }
 
   const userAverageWpm = document.getElementById("user-wpm") as HTMLElement;
-  if (userAverageWpm) {
+  if (userAverageWpm && userDetails && userDetails.tests) {
     userAverageWpm.textContent = `Average WPM: ${calculateAverageWpm(userDetails.tests)}`;
   }
 
   const userAverageAccuracy = document.getElementById("user-accuracy") as HTMLElement;
-  if (userAverageAccuracy) {
+  if (userAverageAccuracy && userDetails && userDetails.tests) {
     userAverageAccuracy.textContent = `Average Accuracy: ${calculateAverageAccuracy(userDetails.tests)}%`;
   }
 
@@ -103,11 +107,15 @@ document.addEventListener("DOMContentLoaded", async function () {
       "verify-password"
     ) as HTMLInputElement;
 
+    console.log("S", signupUsername, signupPassword, verifyPassword);
+
     if (signupForm) {
       signupForm.addEventListener("submit", async function (event) {
         event.preventDefault();
 
         const formResponse = validateForm(signupUsername, signupPassword, verifyPassword);
+
+        console.log(formResponse);
 
         if (formResponse === false) {
           return;

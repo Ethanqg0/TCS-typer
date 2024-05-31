@@ -27,8 +27,17 @@ exports.handler = async function (event, context) {
     };
   }
 
+  let requestUsername;
+  requestUsername = new URLSearchParams(event.rawQuery)?.get("username")
+
+  if (!requestUsername || requestUsername === "" || requestUsername === "undefined" || requestUsername === "null") return {
+    statusCode: 500,
+    headers,
+    body: JSON.stringify({ error: `No username provided.` }),
+  };
+
   try {
-    const { data: usersData, error } = await supabase.from("users").select();
+    const { data: usersData, error } = await supabase.from("users").select().eq("username", requestUsername);
 
     if (error) {
       return {
@@ -40,7 +49,7 @@ exports.handler = async function (event, context) {
       };
     }
 
-    if (!usersData) {
+    if (!usersData || !usersData.length) {
       return {
         statusCode: 400,
         headers,
@@ -51,7 +60,7 @@ exports.handler = async function (event, context) {
     return {
       statusCode: 200,
       headers,
-      body: JSON.stringify(usersData),
+      body: JSON.stringify(usersData[0]),
     };
   } catch (err) {
     return {

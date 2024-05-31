@@ -50,19 +50,19 @@ document.addEventListener("DOMContentLoaded", async function () {
   const loginSection = document.querySelector(".login-section") as HTMLElement;
   const userSection = document.querySelector(".user-section") as HTMLElement;
 
-  console.log(userSection);
-
-  if (!username || username === "" || username === "null") {
-    loginSection.style.display = "flex";
-    userSection.style.display = "none";
-  } else {
-    loginSection.style.display = "none";
-    userSection.style.display = "flex";
+  if (loginSection && userSection) {
+    if (!username || username === "" || username === "null") {
+      loginSection.style.display = "flex";
+      userSection.style.display = "none";
+    } else {
+      loginSection.style.display = "none";
+      userSection.style.display = "flex";
+    }
   }
 
   let userDetails;
   if (username) {
-    userDetails = await fetchUserDetails();
+    userDetails = await fetchUserDetails(username);
   }
 
   const usernamePageDisplay = document.getElementById("user-username") as HTMLElement;

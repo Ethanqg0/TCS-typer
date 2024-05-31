@@ -27,11 +27,8 @@ exports.handler = async function (event, context) {
     };
   }
 
-  // not working
-  let storedUser = getUsername();
-
   try {
-    const { data: usersData, error } = await supabase.from("users").select().eq("username", storedUser);
+    const { data: usersData, error } = await supabase.from("users").select();
 
     if (error) {
       return {

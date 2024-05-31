@@ -25,7 +25,7 @@ function getUser(): TcsTyperUser | null {
         let storedUser = localStorage.getItem("TcsTyper_SavedUser")
 
         if (storedUser) {
-            return JSON.parse(localStorage.getItem("TcsTyper_SavedUser") || "");
+            return JSON.parse(storedUser);
         } else {
             // OLD Storage fix:
             let oldStoredUser = localStorage.getItem("username")

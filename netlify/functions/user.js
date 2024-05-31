@@ -27,7 +27,7 @@ exports.handler = async function (event, context) {
     };
   }
 
-  let requestUsername = "tcswc_egutierrez"
+  let requestUsername = getUser();
 
   if (!requestUsername) return {
     statusCode: 500,

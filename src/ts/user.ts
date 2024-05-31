@@ -45,8 +45,6 @@ document.addEventListener("DOMContentLoaded", async function () {
     usernamePageDisplay.textContent = username;
   }
 
-  const data = await fetchUserDetails();
-
 
   //   --------------------------------  LOGOUT BUTTON --------------------------------
   // const logoutButton = document.getElementById(

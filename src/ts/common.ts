@@ -14,21 +14,9 @@ async function getUsername(): Promise<any> {
 }
 
 async function fetchUserDetails(): Promise<any> {
-    let storedUser = localStorage.getItem("TcsTyper_SavedUser") as any;
-    storedUser = JSON.parse(storedUser || "{}") as any;
-    console.log("STORED USER", storedUser["username"] ) as any;
     const response = await fetch("https://tcs-typer.netlify.app/api/user/");
 
-    if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-    }
-
-    const users = await response.json();
-
-    
-    console.log("USERS", users);
-
-    return users;
+    return response.json();
 }
 
 

@@ -18,8 +18,9 @@ function validateForm(
   return true;
 }
 
-document.addEventListener("DOMContentLoaded", function () {
-  const username = getUser()?.username
+document.addEventListener("DOMContentLoaded", async function () {
+  const username = getUser()?.username;
+  console.log("USERNAME:", username);
 
   //   --------------------------------  USERNAME DISPLAY --------------------------------
   const usernameDisplay = document.getElementById(
@@ -28,18 +29,24 @@ document.addEventListener("DOMContentLoaded", function () {
   usernameDisplay.textContent = username || "";
 
   //   --------------------------------  ACCOUNT PAGE SECTIONS --------------------------------
-  const loginSection = document.querySelector("#login-section") as HTMLElement;
-  const userSection = document.querySelector("#user-section") as HTMLElement;
+  const loginSection = document.querySelector(".login-section") as HTMLElement;
+  const userSection = document.querySelector(".user-section") as HTMLElement;
 
-  if (loginSection && userSection) {
-    if (!username || username === "" || username === "null") {
-      loginSection.style.display = "none";
-      userSection.style.display = "block";
-    } else {
-      loginSection.style.display = "block";
-      userSection.style.display = "none";
-    }
+  if (!username || username === "" || username === "null") {
+    loginSection.style.display = "flex";
+    userSection.style.display = "none";
+  } else {
+    loginSection.style.display = "none";
+    userSection.style.display = "flex";
   }
+
+  const usernamePageDisplay = document.getElementById("user-username") as HTMLElement;
+  if (usernamePageDisplay && username) {
+    usernamePageDisplay.textContent = username;
+  }
+
+  const data = await fetchUserDetails();
+
 
   //   --------------------------------  LOGOUT BUTTON --------------------------------
   // const logoutButton = document.getElementById(
@@ -50,7 +57,6 @@ document.addEventListener("DOMContentLoaded", function () {
   //   setUser({ username: "" })
   //   window.location.reload();
   // });
-
 
   //   --------------------------------  SIGNUP FORM --------------------------------
   let signupForm = document.querySelector("#signup-form") as HTMLFormElement;
@@ -95,7 +101,7 @@ document.addEventListener("DOMContentLoaded", function () {
           );
 
           if (response.ok) {
-            setUser({ username: username.value })
+            setUser({ username: username.value });
             window.location.href = "/";
           } else {
             alert(
@@ -129,22 +135,25 @@ document.addEventListener("DOMContentLoaded", function () {
       event.preventDefault();
 
       try {
-        const response = await fetch("https://tcs-typer.netlify.app/api/login", {
-          method: "POST",
-          mode: "cors",
-          cache: "no-cache",
-          credentials: "same-origin",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            username: username.value,
-            password: password.value,
-          }),
-        });
+        const response = await fetch(
+          "https://tcs-typer.netlify.app/api/login",
+          {
+            method: "POST",
+            mode: "cors",
+            cache: "no-cache",
+            credentials: "same-origin",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              username: username.value,
+              password: password.value,
+            }),
+          }
+        );
 
         if (response.ok) {
-          setUser({ username: username.value })
+          setUser({ username: username.value });
           window.location.href = "/";
         } else {
           alert("An error occurred while logging in. Please try again.");

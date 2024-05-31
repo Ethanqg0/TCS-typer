@@ -11,7 +11,6 @@
     margin-top: 20px;
 }
 
-
 .login-section {
     display: flex;
     width: 80vw;
@@ -62,4 +61,10 @@ button {
 #remember-me {
     display: flex;
     gap: 10px;
+}
+
+.user-section div {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
 }

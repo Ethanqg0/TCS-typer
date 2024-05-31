@@ -25,13 +25,14 @@ function changeClick(sound: string) {
 window.addEventListener("DOMContentLoaded", function () {
   const body: HTMLElement | null = document.querySelector("body");
 
+  //   --------------------------------  SAVED SETTINGS LOAD --------------------------------
   let currentSettings: TcsTyperSettings = getSettings();
 
   body?.classList.add(currentSettings.theme);
   body?.classList.add(currentSettings.sound);
-});
 
-window.addEventListener("DOMContentLoaded", function () {
+
+  //   --------------------------------  SOUND BUTTONS --------------------------------
   for (let sound of soundThemes) {
     const soundButton = document.querySelector("#" + sound) as HTMLElement;
     soundButton?.addEventListener("click", function () {
@@ -41,9 +42,8 @@ window.addEventListener("DOMContentLoaded", function () {
       audio.play();
     });
   }
-});
 
-window.addEventListener("DOMContentLoaded", function () {
+  //   --------------------------------  THEME BUTTONS --------------------------------
   for (let theme of colorThemes) {
     const themeButton = document.querySelector("#" + theme) as HTMLElement;
     themeButton?.addEventListener("click", function () {

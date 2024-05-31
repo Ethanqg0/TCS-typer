@@ -6,6 +6,13 @@ type TcsTyperSettings = {
     sound: string
 }
 
+async function getUsername(): Promise<any> {
+    let storedUser = localStorage.getItem("TcsTyper_SavedUser") as any;
+    storedUser = JSON.parse(storedUser || "{}") as any;
+
+    return storedUser["username"];
+}
+
 async function fetchUserDetails(): Promise<any> {
     let storedUser = localStorage.getItem("TcsTyper_SavedUser") as any;
     storedUser = JSON.parse(storedUser || "{}") as any;

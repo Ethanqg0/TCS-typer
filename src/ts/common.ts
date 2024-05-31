@@ -37,7 +37,12 @@ function getSettings(): TcsTyperSettings {
     let storedSettings = localStorage.getItem("TcsTyper_SavedSettings")
 
     if (storedSettings) {
-        return JSON.parse(storedSettings);
+        let returning = JSON.parse(storedSettings);
+        if (returning.sound === "standard-click") {
+            returning.sound = "default-click"
+        }
+        setSettings(returning)
+        return returning
     } else {
         let defualtSettings = { theme: "default-click", sound: "default-click" }
 

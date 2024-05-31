@@ -1,11 +1,11 @@
-let colorThemes = ["default-theme", "dark-theme", "lavendar-theme", "forest-theme", "matrix-theme", "pink-theme", "discord-theme", "blueberry-theme", "cartoon-theme"];
-let soundThemes = ["defualt-click", "mechanical-click", "pop-click", "clacky-click", "cap-click"];
+let colorThemes = { "default-theme": "Light Theme", "dark-theme": "Dark Theme", "lavendar-theme": "Lavendar Theme", "forest-theme": "Forest Theme", "matrix-theme": "Matrix Theme", "pink-theme": "Pink Theme", "discord-theme": "Discord Theme", "blueberry-theme": "Blueberry Theme", "cartoon-theme": "Cartoon Theme" };
+let soundThemes = { "default-click": "Standard Click", "mechanical-click": "Mechanical Click", "pop-click": "Pop Click", "clacky-click": "Clacky Click", "cap-click": "Cap Click" };
 
 function changeTheme(theme: string) {
   const body = document.querySelector("body");
   if (body) {
     // Remove all other color themes from body's class list
-    body.classList.remove(...colorThemes.filter((t) => t !== theme));
+    body.classList.remove(...Object.keys(colorThemes).filter((t) => t !== theme));
     // Add the new theme class to body
     body.classList.add(theme);
     setSettings({ ...getSettings(), theme: theme })
@@ -15,7 +15,7 @@ function changeTheme(theme: string) {
 function changeClick(sound: string) {
   const body = document.querySelector("body");
   if (body) {
-    body.classList.remove(...soundThemes.filter((t) => t !== sound));
+    body.classList.remove(...Object.keys(soundThemes).filter((t) => t !== sound));
     body.classList.add(sound);
     setSettings({ ...getSettings(), sound: sound })
   }
@@ -23,7 +23,7 @@ function changeClick(sound: string) {
 
 
 window.addEventListener("DOMContentLoaded", function () {
-  const body: HTMLElement | null = document.querySelector("body");
+  const body: HTMLBodyElement | null = document.querySelector("body");
 
   //   --------------------------------  SAVED SETTINGS LOAD --------------------------------
   let currentSettings: TcsTyperSettings = getSettings();
@@ -31,23 +31,36 @@ window.addEventListener("DOMContentLoaded", function () {
   body?.classList.add(currentSettings.theme);
   body?.classList.add(currentSettings.sound);
 
-
-  //   --------------------------------  SOUND BUTTONS --------------------------------
-  for (let sound of soundThemes) {
-    const soundButton = document.querySelector("#" + sound) as HTMLElement;
-    soundButton?.addEventListener("click", function () {
-      changeClick(sound);
-      let audio = new Audio(`/assets/sounds/${sound}.wav`);
-      audio.volume = 0.8;
-      audio.play();
-    });
-  }
+  if (!document.querySelector("body#settings")) return
 
   //   --------------------------------  THEME BUTTONS --------------------------------
-  for (let theme of colorThemes) {
-    const themeButton = document.querySelector("#" + theme) as HTMLElement;
-    themeButton?.addEventListener("click", function () {
-      changeTheme(theme);
-    });
+  let themeButtonsSection = document.getElementById("theme-buttons") as HTMLDivElement
+  if (themeButtonsSection) {
+    for (let [theme, themeName] of Object.entries(colorThemes)) {
+      const themeButton = document.createElement("button") as HTMLButtonElement;
+      themeButton.textContent = themeName
+      themeButton.id = theme
+      themeButtonsSection.appendChild(themeButton)
+      themeButton?.addEventListener("click", function () {
+        changeTheme(theme);
+      });
+    }
+  }
+
+  //   --------------------------------  SOUND BUTTONS --------------------------------
+  let soundButtonsSection = document.getElementById("sound-buttons") as HTMLDivElement
+  if (soundButtonsSection) {
+    for (let [sound, soundName] of Object.entries(soundThemes)) {
+      const soundButton = document.createElement("button") as HTMLButtonElement;
+      soundButton.textContent = soundName
+      soundButton.id = sound
+      soundButtonsSection.appendChild(soundButton)
+      soundButton?.addEventListener("click", function () {
+        changeClick(sound);
+        let audio = new Audio(`/assets/sounds/${sound}.wav`);
+        audio.volume = 0.8;
+        audio.play();
+      });
+    }
   }
 });

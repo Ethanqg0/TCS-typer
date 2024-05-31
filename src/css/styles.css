@@ -51,6 +51,18 @@ dialog[open]::backdrop {
   border-radius: 25px;
 }
 
+#theme-buttons,
+#sound-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+#sound-buttons button {
+  background-color: var(--button-background-color);
+}
+
 /* Themes */
 .default-theme {
   --background-color: white;
@@ -63,6 +75,12 @@ dialog[open]::backdrop {
   --test-background-color: white;
   --test-font-color: black;
   --box-shadow-color: black;
+}
+
+#default-theme {
+  background-color: white;
+  color: rgb(41, 113, 201);
+  border: 2px solid black;
 }
 
 .dark-theme {
@@ -78,6 +96,12 @@ dialog[open]::backdrop {
   --box-shadow-color: rgba(0, 0, 0, 0.2);
 }
 
+#dark-theme {
+  background-color: rgb(67, 67, 67);
+  color: white;
+  border: 2px solid black;
+}
+
 .pink-theme {
   --background-color: #fff0f5;
   --logo-color: #fff0f5;
@@ -91,6 +115,12 @@ dialog[open]::backdrop {
   --box-shadow-color: rgba(0, 0, 0, 0.2);
 }
 
+#pink-theme {
+  background-color: white;
+  color: rgb(247, 114, 136);
+  border: 2px solid black;
+}
+
 .blueberry-theme {
   --background-color: #eaf4fc;
   --logo-color: #eaf4fc;
@@ -101,6 +131,12 @@ dialog[open]::backdrop {
   --test-background-color: eaf4fc;
   --test-font-color: #24578a;
   --box-shadow-color: rgba(59, 89, 152, 0.3);
+}
+
+#blueberry-theme {
+  background-color: #c0e2fe;
+  color: #3b5998;
+  border: 2px solid black;
 }
 
 .lavendar-theme {
@@ -116,6 +152,12 @@ dialog[open]::backdrop {
   --box-shadow-color: rgba(0, 0, 0, 0.2);
 }
 
+#lavendar-theme {
+  background-color: #d6d6fa;
+  color: black;
+  border: 2px solid black;
+}
+
 .forest-theme {
   --background-color: #35654d;
   --logo-color: #458565;
@@ -127,6 +169,12 @@ dialog[open]::backdrop {
   --test-background-color: #1f3a2e;
   --test-font-color: #FFFFFF;
   --box-shadow-color: rgba(112, 183, 126, 0.3);
+}
+
+#forest-theme {
+  background-color: darkgreen;
+  color: white;
+  border: 2px solid black;
 }
 
 .cartoon-theme {
@@ -142,6 +190,12 @@ dialog[open]::backdrop {
   --box-shadow-color: black;
 }
 
+#cartoon-theme {
+  background-color: #1f1f1f;
+  color: #ff00c8;
+  border: 2px solid black;
+}
+
 .discord-theme {
   --background-color: rgb(44, 47, 51);
   --logo-color: rgb(220, 221, 222);
@@ -152,6 +206,12 @@ dialog[open]::backdrop {
   --test-background-color: rgb(35, 39, 42);
   --test-font-color: rgb(220, 221, 222);
   --box-shadow-color: black;
+}
+
+#discord-theme {
+  background-color: rgb(36, 36, 36);
+  color: rgb(114, 137, 218);
+  border: 2px solid black;
 }
 
 .matrix-theme {
@@ -165,56 +225,6 @@ dialog[open]::backdrop {
   --test-background-color: black;
   --test-font-color: rgb(132, 132, 132);
   --box-shadow-color: gray;
-}
-
-
-/* Buttons for themes */
-#default-theme {
-  background-color: white;
-  color: rgb(41, 113, 201);
-  border: 2px solid black;
-}
-
-#dark-theme {
-  background-color: rgb(67, 67, 67);
-  color: white;
-  border: 2px solid black;
-}
-
-#pink-theme {
-  background-color: white;
-  color: rgb(247, 114, 136);
-  border: 2px solid black;
-}
-
-#blueberry-theme {
-  background-color: #c0e2fe;
-  color: #3b5998;
-  border: 2px solid black;
-}
-
-#lavendar-theme {
-  background-color: #d6d6fa;
-  color: black;
-  border: 2px solid black;
-}
-
-#forest-theme {
-  background-color: darkgreen;
-  color: white;
-  border: 2px solid black;
-}
-
-#cartoon-theme {
-  background-color: #1f1f1f;
-  color: #ff00c8;
-  border: 2px solid black;
-}
-
-#discord-theme {
-  background-color: rgb(36, 36, 36);
-  color: rgb(114, 137, 218);
-  border: 2px solid black;
 }
 
 #matrix-theme {
@@ -274,17 +284,8 @@ html {
   flex-direction: column;
 }
 
-#standard-click,
-#mechanical-click,
-#pop-click,
-#clacky-click,
-#cap-click {
-  background-color: var(--button-background-color);
-}
 
-.settings button {
-  margin-top: 20px;
-}
+
 
 button {
   background-color: var(--background-color);
@@ -384,6 +385,7 @@ nav a {
 
 nav a #logged-username {
   margin-right: 15px;
+  color: var(--icon-color);
 }
 
 i {
@@ -403,19 +405,6 @@ nav #nav-buttons .nav-button:hover {
     color: rgb(41, 113, 201);
   }
 }
-
-.test-textbox, .test-textbox * {
-  /* font-family: "Source Code Pro", "Roboto Mono", "Vazirmatn", monospace; */
-}
-
-/* .test-char-space {
-  white-space: pre;
-} */
-
-/* .test-char-space {
-  white-space: pre-wrap;
-  display: inline-block;
-} */
 
 .test-textbox {
   white-space: pre-wrap;

@@ -13,17 +13,10 @@ async function fetchUserDetails(): Promise<any> {
         throw new Error(`HTTP error! status: ${response.status}`);
     }
 
-    const users = await response.json()
-    console.log(users);
+    const users = await response.json();
+    console.log("USERS", users);
 
-    // Currently, the API does not have a way to get a single user by username. We will add that soon ( already added to issues )
-    for (const user of users) {
-        if (user.username === getUser()?.username) {
-            return user
-        }
-    }
-
-    return response.json();
+    return users;
 }
 
 

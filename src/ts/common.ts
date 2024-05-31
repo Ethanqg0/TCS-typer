@@ -52,6 +52,7 @@ function getSettings(): TcsTyperSettings {
                 window.localStorage.removeItem("theme")
             }
             if (oldStoredSound) {
+                oldStoredSound = oldStoredSound === "standard-click" ? "default-click" : oldStoredSound
                 newSettings = { ...newSettings, sound: oldStoredSound }
                 window.localStorage.removeItem("sound")
             }

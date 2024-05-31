@@ -31,6 +31,7 @@ exports.handler = async function (event, context) {
     if (!username || !password) {
       return {
         statusCode: 400,
+        headers,
         body: JSON.stringify({ error: "Username and password are required" }),
       };
     }
@@ -44,6 +45,7 @@ exports.handler = async function (event, context) {
     if (error) {
       return {
         statusCode: 500,
+        headers,
         body: JSON.stringify({
           error: `Failed to fetch users: ${error.message}`,
         }),
@@ -53,17 +55,20 @@ exports.handler = async function (event, context) {
     if (data.length > 0) {
       return {
         statusCode: 200,
+        headers,
         body: JSON.stringify(data),
       };
     } else {
       return {
         statusCode: 400,
+        headers,
         body: JSON.stringify({ error: "Invalid username or password" }),
       };
     }
   } catch (err) {
     return {
       statusCode: 500,
+      headers,
       body: JSON.stringify({ error: `Failed to fetch users: ${err.message}` }),
     };
   }

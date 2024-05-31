@@ -33,6 +33,7 @@ exports.handler = async function (event, context) {
     if (!username || !wpm || !accuracy) {
       return {
         statusCode: 400,
+        headers,
         body: JSON.stringify({
           error: "Username, wpm, and accuracy are required",
         }),
@@ -49,6 +50,7 @@ exports.handler = async function (event, context) {
     if (fetchError) {
       return {
         statusCode: 500,
+        headers,
         body: JSON.stringify({ error: "Failed to fetch user's tests" }),
       };
     }
@@ -64,17 +66,20 @@ exports.handler = async function (event, context) {
     if (error) {
       return {
         statusCode: 500,
+        headers,
         body: JSON.stringify({ error: "Failed to update user's tests" }),
       };
     }
 
     return {
       statusCode: 200,
+      headers,
       body: JSON.stringify({ message: "Tests updated successfully" }),
     };
   } catch (err) {
     return {
       statusCode: 500,
+      headers,
       body: JSON.stringify({
         error: `Failed to process request: ${err.message}`,
       }),

@@ -30,6 +30,7 @@ exports.handler = async function (event, context) {
     if (!username || !password) {
       return {
         statusCode: 400,
+        headers,
         body: JSON.stringify({ error: "Username and password are required" }),
       };
     }
@@ -39,6 +40,7 @@ exports.handler = async function (event, context) {
     if (userExists) {
       return {
         statusCode: 400,
+        headers,
         body: JSON.stringify({ error: "User already exists" }),
       };
     }
@@ -50,6 +52,7 @@ exports.handler = async function (event, context) {
     if (error) {
       return {
         statusCode: 500,
+        headers,
         body: JSON.stringify({
           error: `Failed to create user: ${error.message}`,
         }),
@@ -58,11 +61,13 @@ exports.handler = async function (event, context) {
 
     return {
       statusCode: 200,
+      headers,
       body: JSON.stringify(data),
     };
   } catch (err) {
     return {
       statusCode: 500,
+      headers,
       body: JSON.stringify({ error: `Failed to create user: ${err.message}` }),
     };
   }

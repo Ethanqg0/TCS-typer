@@ -3,14 +3,15 @@ let form: HTMLFormElement | null = null;
 function validateForm(
   username: HTMLInputElement,
   password: HTMLInputElement,
-  verifyPassword: HTMLInputElement
+  verifyPassword?: HTMLInputElement
 ): boolean {
+  if (!username.value || !password.value || (verifyPassword && !verifyPassword.value)) return false
   if (!username.value.includes("tcswc")) {
     alert("Username must contain 'tcswc', use your Scratch login!");
     return false;
   }
 
-  if (password.value !== verifyPassword.value) {
+  if (verifyPassword && password.value !== verifyPassword.value) {
     alert("Passwords do not match!");
     return false;
   }
@@ -40,8 +41,6 @@ function calculateAverageAccuracy(tests: Array<any>): number {
 document.addEventListener("DOMContentLoaded", async function () {
   const username = getUser()?.username;
 
-  console.log("init")
-
   //   --------------------------------  USERNAME DISPLAY --------------------------------
   const usernameDisplay = document.getElementById(
     "logged-username"
@@ -49,6 +48,10 @@ document.addEventListener("DOMContentLoaded", async function () {
   usernameDisplay.textContent = username || "";
 
   //   --------------------------------  ACCOUNT PAGE SECTIONS --------------------------------
+  const accountPage = document.querySelector("body#account") as HTMLElement;
+
+  if (!accountPage) return
+
   const loginSection = document.querySelector(".login-section") as HTMLElement;
   const userSection = document.querySelector(".user-section") as HTMLElement;
 
@@ -62,14 +65,10 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
   }
 
-  console.log("before user")
   let userDetails;
   if (username) {
     userDetails = await fetchUserDetails(username);
   }
-
-  console.log("user", userDetails)
-
 
   const usernamePageDisplay = document.getElementById("user-username") as HTMLElement;
   if (usernamePageDisplay && userDetails && userDetails.full_name) {
@@ -96,7 +95,6 @@ document.addEventListener("DOMContentLoaded", async function () {
   const logoutButton = document.getElementById(
     "logout-button"
   ) as HTMLButtonElement;
-  console.log("logout", logoutButton)
 
   logoutButton?.addEventListener("click", () => {
     setUser({ username: "" })
@@ -114,54 +112,52 @@ document.addEventListener("DOMContentLoaded", async function () {
       "verify-password"
     ) as HTMLInputElement;
 
-    if (signupForm) {
-      signupForm.addEventListener("submit", async function (event) {
-        event.preventDefault();
+    signupForm.addEventListener("submit", async function (event) {
+      event.preventDefault();
 
-        const formResponse = validateForm(signupUsername, signupPassword, verifyPassword);
+      const formResponse = validateForm(signupUsername, signupPassword, verifyPassword);
 
-        console.log(formResponse);
+      console.log(formResponse);
 
-        if (formResponse === false) {
-          return;
-        }
-
-        // Perform request to server here
-        try {
-          const response = await fetch(
-            "https://tcs-typer.netlify.app/api/register",
-            {
-              method: "POST",
-              mode: "cors",
-              cache: "no-cache",
-              credentials: "same-origin",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                username: signupUsername.value,
-                password: signupPassword.value,
-                full_name: fullName.value,
-                tests: [{ wpm: 0, accuracy: 0 }],
-              }),
-            }
-          );
-
-          if (response.ok) {
-            setUser({ username: signupUsername.value });
-            window.location.href = "/";
-          } else {
-            alert(
-              "An error occurred while registering the user. Does this user already exist?"
-            );
-          }
-        } catch (error) {
-          console.error("An error occurred:", error);
-        }
-
+      if (formResponse === false) {
         return;
-      });
-    }
+      }
+
+      // Perform request to server here
+      try {
+        const response = await fetch(
+          "https://tcs-typer.netlify.app/api/register",
+          {
+            method: "POST",
+            mode: "cors",
+            cache: "no-cache",
+            // credentials: "same-origin",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              username: signupUsername.value,
+              password: signupPassword.value,
+              full_name: fullName.value,
+              tests: [{ wpm: 0, accuracy: 0 }],
+            }),
+          }
+        );
+
+        if (response.ok) {
+          setUser({ username: signupUsername.value });
+          window.location.href = "/";
+        } else {
+          alert(
+            "An error occurred while registering the user. Does this user already exist?"
+          );
+        }
+      } catch (error) {
+        console.error("An error occurred:", error);
+      }
+
+      return;
+    });
   }
 
   //   --------------------------------  LOGIN FORM --------------------------------
@@ -173,14 +169,18 @@ document.addEventListener("DOMContentLoaded", async function () {
     const password = document.querySelector(
       "#login-password"
     ) as HTMLInputElement;
-    console.log("Logging in with:", username.value, password.value);
+    // console.log("Logging in with:", username.value, password.value);
 
-    if (!loginForm) {
-      return;
-    }
+
 
     loginForm.addEventListener("submit", async function (event) {
       event.preventDefault();
+
+      const formResponse = validateForm(username, password);
+
+      if (formResponse === false) {
+        return;
+      }
 
       try {
         const response = await fetch(
@@ -189,7 +189,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             method: "POST",
             mode: "cors",
             cache: "no-cache",
-            credentials: "same-origin",
+            // credentials: "same-origin",
             headers: {
               "Content-Type": "application/json",
             },

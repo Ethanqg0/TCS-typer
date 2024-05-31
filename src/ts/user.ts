@@ -18,6 +18,26 @@ function validateForm(
   return true;
 }
 
+function calculateAverageWpm(tests: Array<any>): number {
+  let totalWpm = 0;
+
+  for (let i = 0; i < tests.length; i++) {
+    totalWpm += tests[i].wpm;
+  }
+
+  return Math.round(totalWpm / tests.length);
+}
+
+function calculateAverageAccuracy(tests: Array<any>): number {
+  let totalAccuracy = 0;
+
+  for (let i = 0; i < tests.length; i++) {
+    totalAccuracy += tests[i].accuracy;
+  }
+
+  return Math.round(totalAccuracy / tests.length);
+}
+
 document.addEventListener("DOMContentLoaded", async function () {
   const username = getUser()?.username;
   console.log("USERNAME:", username);
@@ -40,23 +60,38 @@ document.addEventListener("DOMContentLoaded", async function () {
     userSection.style.display = "flex";
   }
 
+  const userDetails = await fetchUserDetails();
+
   const usernamePageDisplay = document.getElementById("user-username") as HTMLElement;
-  if (usernamePageDisplay && username) {
-    usernamePageDisplay.textContent = username;
+  if (usernamePageDisplay) {
+    usernamePageDisplay.textContent = `Hi, ${userDetails.full_name}👋`;
   }
 
-  console.log( await fetchUserDetails() );
+  const userTestCount = document.getElementById("user-test-count") as HTMLElement;
+  if (userTestCount) {
+    userTestCount.textContent = `Total tests completed: ${userDetails.tests.length}`;
+  }
+
+  const userAverageWpm = document.getElementById("user-wpm") as HTMLElement;
+  if (userAverageWpm) {
+    userAverageWpm.textContent = `Average WPM: ${calculateAverageWpm(userDetails.tests)}`;
+  }
+
+  const userAverageAccuracy = document.getElementById("user-accuracy") as HTMLElement;
+  if (userAverageAccuracy) {
+    userAverageAccuracy.textContent = `Average Accuracy: ${calculateAverageAccuracy(userDetails.tests)}%`;
+  }
 
 
   //   --------------------------------  LOGOUT BUTTON --------------------------------
-  // const logoutButton = document.getElementById(
-  //   "logout-button"
-  // ) as HTMLButtonElement;
+  const logoutButton = document.getElementById(
+    "logout-button"
+  ) as HTMLButtonElement;
 
-  // logoutButton?.addEventListener("click", () => {
-  //   setUser({ username: "" })
-  //   window.location.reload();
-  // });
+  logoutButton?.addEventListener("click", () => {
+    setUser({ username: "" })
+    window.location.reload();
+  });
 
   //   --------------------------------  SIGNUP FORM --------------------------------
   let signupForm = document.querySelector("#signup-form") as HTMLFormElement;

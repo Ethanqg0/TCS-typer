@@ -16,18 +16,21 @@ async function getUsername(): Promise<any> {
 async function fetchUserDetails(): Promise<any> {
     const response = await fetch("https://tcs-typer.netlify.app/api/user/");
     const users = await response.json();
+    const username = await getUsername();
+
+    console.log(users);
 
     if (!response.ok) {
         throw new Error("An error occurred while fetching the user details.");
     }
 
     for (const user of users) {
-        if (user.username === getUsername()) {
+        if (user.username === username) {
             return user;
         }
     }
 
-    return response.json();
+    return null;
 }
 
 

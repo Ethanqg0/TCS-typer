@@ -27,7 +27,8 @@ exports.handler = async function (event, context) {
     };
   }
 
-  let requestUsername = getUser();
+    let storedUser = localStorage.getItem("TcsTyper_SavedUser");
+    storedUser = JSON.parse(storedUser || "{}");
 
   if (!requestUsername) return {
     statusCode: 500,
@@ -36,7 +37,7 @@ exports.handler = async function (event, context) {
   };
 
   try {
-    const { data: usersData, error } = await supabase.from("users").select().eq("username", requestUsername);
+    const { data: usersData, error } = await supabase.from("users").select().eq("username", storedUser);
 
     if (error) {
       return {

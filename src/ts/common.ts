@@ -1,5 +1,5 @@
 type TcsTyperUser = {
-    username: string
+    username: any;
 }
 type TcsTyperSettings = {
     theme: string,
@@ -7,6 +7,9 @@ type TcsTyperSettings = {
 }
 
 async function fetchUserDetails(): Promise<any> {
+    let storedUser = localStorage.getItem("TcsTyper_SavedUser") as any;
+    storedUser = JSON.parse(storedUser || "{}") as any;
+    console.log("STORED USER", storedUser["username"] ) as any;
     const response = await fetch("https://tcs-typer.netlify.app/api/user/");
 
     if (!response.ok) {
@@ -14,18 +17,20 @@ async function fetchUserDetails(): Promise<any> {
     }
 
     const users = await response.json();
+
+    
     console.log("USERS", users);
 
     return users;
 }
 
 
-function getUser(): TcsTyperUser | null {
+function getUser() {
     try {
         let storedUser = localStorage.getItem("TcsTyper_SavedUser")
 
         if (storedUser) {
-            return JSON.parse(storedUser);
+            return JSON.parse(localStorage.getItem("TcsTyper_SavedUser") || "");
         } else {
             // OLD Storage fix:
             let oldStoredUser = localStorage.getItem("username")

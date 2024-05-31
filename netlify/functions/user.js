@@ -27,18 +27,7 @@ exports.handler = async function (event, context) {
     };
   }
 
-  let requestUsername;
-  if (event.body) {
-    try {
-      requestUsername = JSON.parse(event.body)?.TcsTyper_SavedUser["username"]
-    } catch {
-      return {
-        statusCode: 400,
-        headers,
-        body: JSON.stringify({ error: `Body cannot be parsed.` }),
-      };
-    }
-  }
+  let requestUsername = getUser();
 
   if (!requestUsername) return {
     statusCode: 500,

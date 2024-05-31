@@ -159,8 +159,4 @@ document.addEventListener("DOMContentLoaded", async function () {
           alert("An error occurred while logging in. Please try again.");
         }
       } catch (error) {
-        console.error("An error occurred:", error);
-      }
-    });
-  }
-});
+        console.error("An error occurred:", erro

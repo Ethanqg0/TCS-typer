@@ -71,6 +71,8 @@ document.addEventListener("DOMContentLoaded", async function () {
   }
 
   const usernamePageDisplay = document.getElementById("user-username") as HTMLElement;
+  usernamePageDisplay.style.fontSize = "3.0rem";
+  usernamePageDisplay.style.fontWeight = "bold";
   if (usernamePageDisplay && userDetails && userDetails.full_name) {
     usernamePageDisplay.textContent = `Hi, ${userDetails.full_name}👋`;
   }

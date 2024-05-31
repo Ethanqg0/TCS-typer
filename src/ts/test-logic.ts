@@ -523,6 +523,10 @@ window.addEventListener("DOMContentLoaded", () => {
   // Add event listener for keydown events
   document.addEventListener("keydown", function async(event) {
 
+    if (event.key === "Enter") {
+      currentTest.restartTest()
+      return
+    }
     if (currentTest.wordIndex >= currentTest.typingData.originalWords.length) {
       return
     }

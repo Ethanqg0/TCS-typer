@@ -18,8 +18,9 @@ function validateForm(
   return true;
 }
 
+
 document.addEventListener("DOMContentLoaded", function () {
-  const username = localStorage.getItem("username");
+  const username = getUser()?.username
   const usernameDisplay = document.getElementById(
     "logged-username"
   ) as HTMLParagraphElement;
@@ -43,7 +44,7 @@ document.addEventListener("DOMContentLoaded", function () {
   ) as HTMLButtonElement;
 
   logoutButton?.addEventListener("click", () => {
-    window.localStorage.setItem("username", "");
+    setUser({ username: "" })
     window.location.reload();
   });
 });
@@ -91,7 +92,7 @@ document.addEventListener("DOMContentLoaded", function () {
         );
 
         if (response.ok) {
-          localStorage.setItem("username", username.value);
+          setUser({ username: username.value })
           window.location.href = "/";
         } else {
           alert(
@@ -139,7 +140,7 @@ document.addEventListener("DOMContentLoaded", function () {
       });
 
       if (response.ok) {
-        localStorage.setItem("username", username.value);
+        setUser({ username: username.value })
         window.location.href = "/";
       } else {
         alert("An error occurred while logging in. Please try again.");

@@ -458,12 +458,7 @@ let soundPath: string = "/assets/sounds/standard-click.wav";
 let soundVolume: number = 1.0;
 
 function updateSoundPath() {
-  let currentSound: string | null = localStorage.getItem("sound");
-
-  if (!currentSound) {
-    localStorage.setItem("sound", "standard-click");
-    currentSound = "standard-click"
-  }
+  let currentSound = getSettings().sound;
 
   soundPath = `/assets/sounds/${currentSound}.wav`;
 }
@@ -472,10 +467,9 @@ window.addEventListener("DOMContentLoaded", () => {
   updateSoundPath();
 });
 
-let username: string | null = "";
 
 async function sendResultsToDatabase(test: TypingTest) {
-  username = localStorage.getItem("username");
+  let username = getUser()?.username
   let wpm: number = test.calculateWPM(test.stopwatch.elapsedTime);
   let accuracy: number = test.calculateAccuracy();
 
@@ -505,10 +499,6 @@ async function sendResultsToDatabase(test: TypingTest) {
     console.error("Failed to send test results to the database:", e);
   });
 }
-
-window.addEventListener("DOMContentLoaded", () => {
-  username = localStorage.getItem("username");
-});
 
 window.addEventListener("DOMContentLoaded", () => {
   // Get the test configuration based on the current pathname

@@ -28,7 +28,7 @@ exports.handler = async function (event, context) {
   }
 
   try {
-    const { data: usersData, error } = await supabase.from("users").select("full_name,tests,coach");
+    const { data: usersData, error } = await supabase.from("users").select("id,username,full_name,tests,coach");
 
     if (error) {
       return {

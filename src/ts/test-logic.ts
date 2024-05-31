@@ -501,6 +501,9 @@ async function sendResultsToDatabase(test: TypingTest) {
 }
 
 window.addEventListener("DOMContentLoaded", () => {
+  let testBody = document.querySelector("body#test")
+
+  if (!testBody) return
   // Get the test configuration based on the current pathname
   const currentTestConfig = pathToTestMap[window.location.pathname];
 

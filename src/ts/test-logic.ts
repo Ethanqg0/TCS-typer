@@ -422,12 +422,11 @@ class TypingTest implements Test {
     if (lastTypedRect) {
       this.testCaret.style.left = lastTypedRect.x - this.textBox.getBoundingClientRect().x + testContainerPaddingLeft + lastTypedRect.width + "px"
       this.testCaret.style.top = lastTypedRect.y - this.textBox.getBoundingClientRect().y + testContainerPaddingTop + "px"
-      this.testCaret.style.animationName = "none"
     } else {
       this.testCaret.style.left = testContainerPaddingLeft + "px"
       this.testCaret.style.top = testContainerPaddingTop + "px"
-      this.testCaret.style.animationName = "caretAnim"
     }
+    this.testCaret.style.animationName = this.wordIndex === 0 && this.charIndex === 0 ? "caretAnim" : "none"
     // console.log(lastTypedRect.x, this.textBox.getBoundingClientRect().x, testContainerPaddingLeft, lastTypedRect.width, lastTypedRect.x - this.textBox.getBoundingClientRect().x + testContainerPaddingLeft + lastTypedRect.width)
   }
 

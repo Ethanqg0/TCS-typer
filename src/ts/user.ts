@@ -107,8 +107,6 @@ document.addEventListener("DOMContentLoaded", async function () {
       "verify-password"
     ) as HTMLInputElement;
 
-    console.log("S", signupUsername, signupPassword, verifyPassword);
-
     if (signupForm) {
       signupForm.addEventListener("submit", async function (event) {
         event.preventDefault();
@@ -143,7 +141,7 @@ document.addEventListener("DOMContentLoaded", async function () {
           );
 
           if (response.ok) {
-            setUser({ username: username.value });
+            setUser({ username: signupUsername.value });
             window.location.href = "/";
           } else {
             alert(

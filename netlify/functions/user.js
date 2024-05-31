@@ -27,25 +27,6 @@ exports.handler = async function (event, context) {
     };
   }
 
-  let requestUsername;
-  if (event.body) {
-    try {
-      requestUsername = JSON.parse(event.body)?.username
-    } catch {
-      return {
-        statusCode: 400,
-        headers,
-        body: JSON.stringify({ error: `Body cannot be parsed.` }),
-      };
-    }
-  }
-
-  if (!requestUsername) return {
-    statusCode: 500,
-    headers,
-    body: JSON.stringify({ error: `No username provided.` }),
-  };
-
   try {
     const { data: usersData, error } = await supabase.from("users").select().eq("username", "tcswc_egutierrez");
 

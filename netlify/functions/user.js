@@ -30,14 +30,8 @@ exports.handler = async function (event, context) {
   // not working
   let storedUser = getUsername();
 
-  if (!requestUsername) return {
-    statusCode: 500,
-    headers,
-    body: JSON.stringify({ error: `No username provided.` }),
-  };
-
   try {
-    const { data: usersData, error } = await supabase.from("users").select().eq("username", "tcswc_egutierrez");
+    const { data: usersData, error } = await supabase.from("users").select().eq("username", storedUser);
 
     if (error) {
       return {

@@ -29,6 +29,7 @@ exports.handler = async function (event, context) {
 
     let storedUser = localStorage.getItem("TcsTyper_SavedUser");
     storedUser = JSON.parse(storedUser || "{}");
+    storedUser = storedUser["username"]
 
   if (!requestUsername) return {
     statusCode: 500,

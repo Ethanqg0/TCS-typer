@@ -40,7 +40,7 @@ exports.handler = async function (event, context) {
       };
     }
 
-    let filteredUsersData = usersData.map(({ full_name, tests, coach }) => {
+    let filteredUsersData = usersData.map(({ tests, ...userRest }) => {
       let best_test
       for (const test of tests) {
         if (test["wpm"] && test["accuracy"] && test["accuracy"] >= 90 && !(test["wpm"] >= 200) && !(test["accuracy"] > 100)) {
@@ -54,9 +54,8 @@ exports.handler = async function (event, context) {
       }
 
       return {
-        full_name,
         best_test,
-        coach
+        ...userRest
       }
     })
 

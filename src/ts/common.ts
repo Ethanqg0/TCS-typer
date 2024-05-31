@@ -6,18 +6,13 @@ type TcsTyperSettings = {
     sound: string
 }
 
-async function getUsername(): Promise<any> {
-    let storedUser = localStorage.getItem("TcsTyper_SavedUser") as any;
-    storedUser = JSON.parse(storedUser || "{}") as any;
-
-    return storedUser["username"];
-}
 
 async function fetchUserDetails(username: string): Promise<any> {
-    const response = await fetch("https://tcs-typer.netlify.app/api/user?username=" + username).then((resp) => resp.json());
-
-    if (!response.ok) {
-        throw new Error("An error occurred while fetching the user details.");
+    let response
+    try {
+        response = await fetch("https://tcs-typer.netlify.app/api/user?username=" + username).then((resp) => resp.json());
+    } catch (e) {
+        throw new Error("An error occurred while fetching the user details: " + e)
     }
 
     return response

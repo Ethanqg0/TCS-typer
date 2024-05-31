@@ -40,6 +40,8 @@ function calculateAverageAccuracy(tests: Array<any>): number {
 document.addEventListener("DOMContentLoaded", async function () {
   const username = getUser()?.username;
 
+  console.log("init")
+
   //   --------------------------------  USERNAME DISPLAY --------------------------------
   const usernameDisplay = document.getElementById(
     "logged-username"
@@ -60,10 +62,14 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
   }
 
+  console.log("before user")
   let userDetails;
   if (username) {
     userDetails = await fetchUserDetails(username);
   }
+
+  console.log("user", userDetails)
+
 
   const usernamePageDisplay = document.getElementById("user-username") as HTMLElement;
   if (usernamePageDisplay && userDetails && userDetails.full_name) {
@@ -90,6 +96,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   const logoutButton = document.getElementById(
     "logout-button"
   ) as HTMLButtonElement;
+  console.log("logout", logoutButton)
 
   logoutButton?.addEventListener("click", () => {
     setUser({ username: "" })

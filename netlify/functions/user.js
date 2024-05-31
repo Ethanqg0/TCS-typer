@@ -2,15 +2,10 @@ const { createClient } = require("@supabase/supabase-js");
 const dotenv = require("dotenv").config()
 
 exports.handler = async function (event, context) {
+
+
   // Define the allowed origins
   const allowedOrigins = ["*"];
-
-  // Create the Supabase client
-  const supabase = createClient(
-    process.env.SUPABASE_URL,
-    process.env.SUPABASE_KEY
-  );
-
   // Define the response headers with CORS headers
   const headers = {
     "Access-Control-Allow-Origin": allowedOrigins.join(","),
@@ -26,6 +21,11 @@ exports.handler = async function (event, context) {
       body: "",
     };
   }
+  // Create the Supabase client
+  const supabase = createClient(
+    process.env.SUPABASE_URL,
+    process.env.SUPABASE_KEY
+  );
 
   let requestUsername;
   requestUsername = new URLSearchParams(event.rawQuery)?.get("username")

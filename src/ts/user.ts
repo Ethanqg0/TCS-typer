@@ -5,7 +5,12 @@ function validateForm(
   password: HTMLInputElement,
   verifyPassword?: HTMLInputElement
 ): boolean {
-  if (!username.value || !password.value || (verifyPassword && !verifyPassword.value)) return false
+  if (
+    !username.value ||
+    !password.value ||
+    (verifyPassword && !verifyPassword.value)
+  )
+    return false;
   if (!username.value.includes("tcswc")) {
     alert("Username must contain 'tcswc', use your Scratch login!");
     return false;
@@ -50,7 +55,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   //   --------------------------------  ACCOUNT PAGE SECTIONS --------------------------------
   const accountPage = document.querySelector("body#account") as HTMLElement;
 
-  if (!accountPage) return
+  if (!accountPage) return;
 
   const loginSection = document.querySelector(".login-section") as HTMLElement;
   const userSection = document.querySelector(".user-section") as HTMLElement;
@@ -70,28 +75,44 @@ document.addEventListener("DOMContentLoaded", async function () {
     userDetails = await fetchUserDetails(username);
   }
 
-  const usernamePageDisplay = document.getElementById("user-username") as HTMLElement;
+  const usernamePageDisplay = document.getElementById(
+    "user-username"
+  ) as HTMLElement;
   usernamePageDisplay.style.fontSize = "3.0rem";
   usernamePageDisplay.style.fontWeight = "bold";
   if (usernamePageDisplay && userDetails && userDetails.full_name) {
     usernamePageDisplay.textContent = `Hi, ${userDetails.full_name}👋`;
   }
 
-  const userTestCount = document.getElementById("user-test-count") as HTMLElement;
+  const userTestCount = document.getElementById(
+    "user-test-count"
+  ) as HTMLElement;
   if (userTestCount && userDetails && userDetails.tests) {
     userTestCount.textContent = `Total tests completed: ${userDetails.tests.length}`;
   }
 
   const userAverageWpm = document.getElementById("user-wpm") as HTMLElement;
   if (userAverageWpm && userDetails && userDetails.tests) {
-    userAverageWpm.textContent = `Average WPM: ${calculateAverageWpm(userDetails.tests)}`;
+    userAverageWpm.textContent = `Average WPM: ${calculateAverageWpm(
+      userDetails.tests
+    )}`;
   }
 
-  const userAverageAccuracy = document.getElementById("user-accuracy") as HTMLElement;
+  const userAverageAccuracy = document.getElementById(
+    "user-accuracy"
+  ) as HTMLElement;
   if (userAverageAccuracy && userDetails && userDetails.tests) {
-    userAverageAccuracy.textContent = `Average Accuracy: ${calculateAverageAccuracy(userDetails.tests)}%`;
+    userAverageAccuracy.textContent = `Average Accuracy: ${calculateAverageAccuracy(
+      userDetails.tests
+    )}%`;
   }
 
+  const userBest = document.getElementById("user-best") as HTMLElement;
+  if (userBest && userDetails && userDetails.tests) {
+    userBest.textContent = `Best WPM: ${Math.max(
+      ...userDetails.tests.map((test: any) => test.wpm)
+    )}`;
+  }
 
   //   --------------------------------  LOGOUT BUTTON --------------------------------
   const logoutButton = document.getElementById(
@@ -99,15 +120,19 @@ document.addEventListener("DOMContentLoaded", async function () {
   ) as HTMLButtonElement;
 
   logoutButton?.addEventListener("click", () => {
-    setUser({ username: "" })
+    setUser({ username: "" });
     window.location.reload();
   });
 
   //   --------------------------------  SIGNUP FORM --------------------------------
   let signupForm = document.querySelector("#signup-form") as HTMLFormElement;
   if (signupForm) {
-    const signupUsername = document.getElementById("username") as HTMLInputElement;
-    const signupPassword = document.getElementById("password") as HTMLInputElement;
+    const signupUsername = document.getElementById(
+      "username"
+    ) as HTMLInputElement;
+    const signupPassword = document.getElementById(
+      "password"
+    ) as HTMLInputElement;
     const fullName = document.getElementById("full-name") as HTMLInputElement;
 
     const verifyPassword = document.getElementById(
@@ -117,7 +142,11 @@ document.addEventListener("DOMContentLoaded", async function () {
     signupForm.addEventListener("submit", async function (event) {
       event.preventDefault();
 
-      const formResponse = validateForm(signupUsername, signupPassword, verifyPassword);
+      const formResponse = validateForm(
+        signupUsername,
+        signupPassword,
+        verifyPassword
+      );
 
       console.log(formResponse);
 
@@ -172,8 +201,6 @@ document.addEventListener("DOMContentLoaded", async function () {
       "#login-password"
     ) as HTMLInputElement;
     // console.log("Logging in with:", username.value, password.value);
-
-
 
     loginForm.addEventListener("submit", async function (event) {
       event.preventDefault();

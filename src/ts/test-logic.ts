@@ -499,6 +499,13 @@ async function sendResultsToDatabase(test: TypingTest) {
   });
 }
 
+document.addEventListener("DOMContentLoaded", async function () {
+  let userDetails: any = null;
+  userDetails = await fetchUserDetails(getUser()?.username);
+  localStorage.setItem("userDetails", JSON.stringify(userDetails));
+});
+
+
 window.addEventListener("DOMContentLoaded", () => {
   let testBody = document.querySelector("body#test")
 

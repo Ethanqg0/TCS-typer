@@ -70,10 +70,12 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
   }
 
-  let userDetails;
-  if (username) {
-    userDetails = await fetchUserDetails(username);
+  let userDetails = localStorage.getItem("userDetails") as any;
+
+  if (userDetails) {
+    userDetails = JSON.parse(userDetails);
   }
+  console.log("USER DETAILS:", userDetails);
 
   const usernamePageDisplay = document.getElementById(
     "user-username"

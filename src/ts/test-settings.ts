@@ -1,3 +1,5 @@
+import { getSettings, setSettings, TcsTyperSettings } from "./common";
+
 let colorThemes = { "default-theme": "Light Theme", "dark-theme": "Dark Theme", "lavendar-theme": "Lavendar Theme", "forest-theme": "Forest Theme", "matrix-theme": "Matrix Theme", "pink-theme": "Pink Theme", "discord-theme": "Discord Theme", "blueberry-theme": "Blueberry Theme", "cartoon-theme": "Cartoon Theme" };
 let soundThemes = { "default-click": "Standard Click", "mechanical-click": "Mechanical Click", "pop-click": "Pop Click", "clacky-click": "Clacky Click", "cap-click": "Cap Click" };
 

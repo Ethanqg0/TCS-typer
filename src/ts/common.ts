@@ -1,12 +1,12 @@
 type TcsTyperUser = {
     username: any;
 }
-type TcsTyperSettings = {
+export type TcsTyperSettings = {
     theme: string,
     sound: string
 }
 
-async function fetchUserDetails(username: string): Promise<any> {
+export async function fetchUserDetails(username: string): Promise<any> {
     let response
     try {
         response = await fetch("https://tcs-typer.netlify.app/api/user?username=" + username).then((resp) => resp.json());
@@ -17,7 +17,7 @@ async function fetchUserDetails(username: string): Promise<any> {
     return response
 }
 
-function getUser() {
+export function getUser() {
     try {
         let storedUser = localStorage.getItem("TcsTyper_SavedUser")
 
@@ -40,11 +40,11 @@ function getUser() {
     }
 }
 
-function setUser(newUser: TcsTyperUser): void {
+export function setUser(newUser: TcsTyperUser): void {
     localStorage.setItem("TcsTyper_SavedUser", JSON.stringify(newUser));
 }
 
-function getSettings(): TcsTyperSettings {
+export function getSettings(): TcsTyperSettings {
     let storedSettings = localStorage.getItem("TcsTyper_SavedSettings")
 
     useSavedSettings: if (storedSettings) {
@@ -89,6 +89,6 @@ function getSettings(): TcsTyperSettings {
     }
 }
 
-function setSettings(newTheme: TcsTyperSettings): void {
+export function setSettings(newTheme: TcsTyperSettings): void {
     localStorage.setItem("TcsTyper_SavedSettings", JSON.stringify(newTheme));
 }

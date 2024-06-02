@@ -306,7 +306,7 @@ class TypingTest implements Test {
     this.resetStopwatch();
     this.charIndex = 0;
     this.wordIndex = 0;
-    await this.initializeTest()
+    this.initializeTest()
   }
 
   async updateTextBox(): Promise<void> {
@@ -497,7 +497,7 @@ async function storeUserDetails() {
 }
 
 // Not Fetch Request: Via localStorage, avoids unnecessary fetch requests
-function updateUserDetails(test: any) {
+async function updateUserDetails(test: any) {
   let userDetails: any = localStorage.getItem("userDetails");
   userDetails = userDetails ? JSON.parse(userDetails) : null;
   let wpm: number = test.calculateWPM(test.stopwatch.elapsedTime);
@@ -507,7 +507,7 @@ function updateUserDetails(test: any) {
   return;
 }
 
-window.addEventListener("DOMContentLoaded", async () => {
+window.addEventListener("DOMContentLoaded", () => {
   (async function() {
     await storeUserDetails();
   })
@@ -536,7 +536,7 @@ window.addEventListener("DOMContentLoaded", async () => {
   });
 
   // Add event listener for keydown events
-  document.addEventListener("keydown", function (event) {
+  document.addEventListener("keydown", function async(event) {
     if (event.key === "Enter") {
       currentTest.restartTest()
       return

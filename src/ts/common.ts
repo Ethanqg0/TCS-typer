@@ -6,7 +6,6 @@ type TcsTyperSettings = {
     sound: string
 }
 
-
 async function fetchUserDetails(username: string): Promise<any> {
     let response
     try {
@@ -17,7 +16,6 @@ async function fetchUserDetails(username: string): Promise<any> {
 
     return response
 }
-
 
 function getUser() {
     try {
@@ -45,8 +43,6 @@ function getUser() {
 function setUser(newUser: TcsTyperUser): void {
     localStorage.setItem("TcsTyper_SavedUser", JSON.stringify(newUser));
 }
-
-
 
 function getSettings(): TcsTyperSettings {
     let storedSettings = localStorage.getItem("TcsTyper_SavedSettings")

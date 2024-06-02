@@ -462,11 +462,6 @@ function updateSoundPath() {
   soundPath = `/assets/sounds/${currentSound}.wav`;
 }
 
-window.addEventListener("DOMContentLoaded", () => {
-  updateSoundPath();
-});
-
-
 async function sendResultsToDatabase(test: TypingTest) {
   let username = getUser()?.username
   let wpm: number = test.calculateWPM(test.stopwatch.elapsedTime);
@@ -499,14 +494,31 @@ async function sendResultsToDatabase(test: TypingTest) {
   });
 }
 
-document.addEventListener("DOMContentLoaded", async function () {
+// Fetch Request: Via database fetch; should only be used when the page is initially loaded
+async function storeUserDetails() {
+  console.log("Fetching user details from Supabase")
   let userDetails: any = null;
   userDetails = await fetchUserDetails(getUser()?.username);
   localStorage.setItem("userDetails", JSON.stringify(userDetails));
-});
+}
 
+// Not Fetch Request: Via localStorage, avoids unnecessary fetch requests
+async function updateUserDetails(test: any) {
+  let userDetails: any = localStorage.getItem("userDetails");
+  userDetails = userDetails ? JSON.parse(userDetails) : null;
+  let wpm: number = test.calculateWPM(test.stopwatch.elapsedTime);
+  let accuracy: number = test.calculateAccuracy();
+  userDetails?.tests.push({"wpm": wpm, "accuracy": accuracy});
+  localStorage.setItem("userDetails", JSON.stringify(userDetails));
+  return;
+}
 
 window.addEventListener("DOMContentLoaded", () => {
+  (async function() {
+    await storeUserDetails();
+  })
+
+  updateSoundPath();
   let testBody = document.querySelector("body#test")
 
   if (!testBody) return
@@ -531,7 +543,6 @@ window.addEventListener("DOMContentLoaded", () => {
 
   // Add event listener for keydown events
   document.addEventListener("keydown", function async(event) {
-
     if (event.key === "Enter") {
       currentTest.restartTest()
       return
@@ -600,6 +611,8 @@ window.addEventListener("DOMContentLoaded", () => {
       currentTest.textBox.innerHTML = currentTest.calculateWPM(currentTest.stopwatch.elapsedTime) + " words per minute with " + currentTest.calculateAccuracy() + "% accuracy!";
       currentTest.hideCaret()
       sendResultsToDatabase(currentTest);
+      // Update local storage with the new test results
+      updateUserDetails(currentTest);
     }
   });
 });

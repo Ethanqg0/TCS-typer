@@ -497,7 +497,7 @@ async function storeUserDetails() {
 }
 
 // Not Fetch Request: Via localStorage, avoids unnecessary fetch requests
-async function updateUserDetails(test: any) {
+function updateUserDetails(test: any) {
   let userDetails: any = localStorage.getItem("userDetails");
   userDetails = userDetails ? JSON.parse(userDetails) : null;
   let wpm: number = test.calculateWPM(test.stopwatch.elapsedTime);
@@ -507,10 +507,10 @@ async function updateUserDetails(test: any) {
   return;
 }
 
-window.addEventListener("DOMContentLoaded", () => {
+window.addEventListener("DOMContentLoaded", async () => {
   (async function() {
     await storeUserDetails();
-  })
+  })();
 
   updateSoundPath();
   let testBody = document.querySelector("body#test")
@@ -536,7 +536,7 @@ window.addEventListener("DOMContentLoaded", () => {
   });
 
   // Add event listener for keydown events
-  document.addEventListener("keydown", function async(event) {
+  document.addEventListener("keydown", function (event) {
     if (event.key === "Enter") {
       currentTest.restartTest()
       return
@@ -604,9 +604,8 @@ window.addEventListener("DOMContentLoaded", () => {
       currentTest.stopStopwatch();
       currentTest.textBox.innerHTML = currentTest.calculateWPM(currentTest.stopwatch.elapsedTime) + " words per minute with " + currentTest.calculateAccuracy() + "% accuracy!";
       currentTest.hideCaret()
-      sendResultsToDatabase(currentTest);
-      // Update local storage with the new test results
-      updateUserDetails(currentTest);
+      sendResultsToDatabase(currentTest); // async
+      updateUserDetails(currentTest); // sync, does not rely on sendResultsDatabase
     }
   });
 });

@@ -306,7 +306,7 @@ class TypingTest implements Test {
     this.resetStopwatch();
     this.charIndex = 0;
     this.wordIndex = 0;
-    this.initializeTest()
+    await this.initializeTest()
   }
 
   async updateTextBox(): Promise<void> {
@@ -406,12 +406,6 @@ class TypingTest implements Test {
     }
   }
 
-  async generateContent(): Promise<string> {
-    // TODO;
-
-    return "";
-  }
-
   moveCaret(): void {
     this.testCaret.style.display = "block"
     const lastTypedRect = (this.textBox.querySelector(`.test-char-${this.wordIndex}-${this.charIndex}`) as HTMLSpanElement)?.getBoundingClientRect()
@@ -503,7 +497,7 @@ async function storeUserDetails() {
 }
 
 // Not Fetch Request: Via localStorage, avoids unnecessary fetch requests
-async function updateUserDetails(test: any) {
+function updateUserDetails(test: any) {
   let userDetails: any = localStorage.getItem("userDetails");
   userDetails = userDetails ? JSON.parse(userDetails) : null;
   let wpm: number = test.calculateWPM(test.stopwatch.elapsedTime);
@@ -513,7 +507,7 @@ async function updateUserDetails(test: any) {
   return;
 }
 
-window.addEventListener("DOMContentLoaded", () => {
+window.addEventListener("DOMContentLoaded", async () => {
   (async function() {
     await storeUserDetails();
   })
@@ -542,7 +536,7 @@ window.addEventListener("DOMContentLoaded", () => {
   });
 
   // Add event listener for keydown events
-  document.addEventListener("keydown", function async(event) {
+  document.addEventListener("keydown", async function (event) {
     if (event.key === "Enter") {
       currentTest.restartTest()
       return
@@ -610,7 +604,7 @@ window.addEventListener("DOMContentLoaded", () => {
       currentTest.stopStopwatch();
       currentTest.textBox.innerHTML = currentTest.calculateWPM(currentTest.stopwatch.elapsedTime) + " words per minute with " + currentTest.calculateAccuracy() + "% accuracy!";
       currentTest.hideCaret()
-      sendResultsToDatabase(currentTest);
+      await sendResultsToDatabase(currentTest);
       // Update local storage with the new test results
       updateUserDetails(currentTest);
     }

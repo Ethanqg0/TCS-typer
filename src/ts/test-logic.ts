@@ -536,7 +536,7 @@ window.addEventListener("DOMContentLoaded", async () => {
   });
 
   // Add event listener for keydown events
-  document.addEventListener("keydown", async function (event) {
+  document.addEventListener("keydown", function (event) {
     if (event.key === "Enter") {
       currentTest.restartTest()
       return
@@ -604,7 +604,7 @@ window.addEventListener("DOMContentLoaded", async () => {
       currentTest.stopStopwatch();
       currentTest.textBox.innerHTML = currentTest.calculateWPM(currentTest.stopwatch.elapsedTime) + " words per minute with " + currentTest.calculateAccuracy() + "% accuracy!";
       currentTest.hideCaret()
-      await sendResultsToDatabase(currentTest);
+      sendResultsToDatabase(currentTest);
       // Update local storage with the new test results
       updateUserDetails(currentTest);
     }

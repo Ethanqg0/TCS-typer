@@ -75,6 +75,8 @@ dialog[open]::backdrop {
   --test-background-color: white;
   --test-font-color: black;
   --box-shadow-color: black;
+  --correct-char-color: green;
+  --incorrect-char-color: red;
 }
 
 #default-theme {
@@ -94,6 +96,8 @@ dialog[open]::backdrop {
   --test-background-color: #121212;
   --test-font-color: #D4D4D4;
   --box-shadow-color: rgba(0, 0, 0, 0.2);
+  --correct-char-color: rgb(73, 73, 73);
+  --incorrect-char-color: rgb(206, 111, 111);
 }
 
 #dark-theme {
@@ -113,6 +117,8 @@ dialog[open]::backdrop {
   --test-background-color: #fff;
   --test-font-color: #333;
   --box-shadow-color: rgba(0, 0, 0, 0.2);
+  --correct-char-color: #ff69b4;
+  --incorrect-char-color: rgb(161, 161, 161);
 }
 
 #pink-theme {
@@ -124,13 +130,15 @@ dialog[open]::backdrop {
 .blueberry-theme {
   --background-color: #eaf4fc;
   --logo-color: #eaf4fc;
-  --text-color: #24578a;
+  --text-color: #3f6790;
   --title-text-color: #0b4f6c;
   --subtitle-text-color: #4ca1af;
   --button-background-color: #93aad8;
-  --test-background-color: eaf4fc;
-  --test-font-color: #24578a;
+  --test-background-color: white;
+  --test-font-color: black;
   --box-shadow-color: rgba(59, 89, 152, 0.3);
+  --correct-char-color: #0b4f6c;
+  --incorrect-char-color: #908f8f;
 }
 
 #blueberry-theme {
@@ -150,6 +158,8 @@ dialog[open]::backdrop {
   --test-background-color: #FFF;
   --test-font-color: #333;
   --box-shadow-color: rgba(0, 0, 0, 0.2);
+  --correct-char-color: #967BB6;
+  --incorrect-char-color: #908f8f;
 }
 
 #lavendar-theme {
@@ -169,6 +179,8 @@ dialog[open]::backdrop {
   --test-background-color: #1f3a2e;
   --test-font-color: #FFFFFF;
   --box-shadow-color: rgba(112, 183, 126, 0.3);
+  --correct-char-color: #70b77e;
+  --incorrect-char-color: #908f8f;
 }
 
 #forest-theme {
@@ -188,6 +200,8 @@ dialog[open]::backdrop {
   --test-background-color: black;
   --test-font-color: black;
   --box-shadow-color: black;
+  --correct-char-color: #ff00c8;
+  --incorrect-char-color: #ff0000;
 }
 
 #cartoon-theme {
@@ -198,7 +212,7 @@ dialog[open]::backdrop {
 
 .discord-theme {
   --background-color: rgb(44, 47, 51);
-  --logo-color: rgb(220, 221, 222);
+  --logo-color: rgb(93, 122, 152);
   --text-color: rgb(220, 221, 222);
   --title-text-color: rgb(114, 137, 218);
   --subtitle-text-color: rgb(153, 170, 181);
@@ -206,6 +220,8 @@ dialog[open]::backdrop {
   --test-background-color: rgb(35, 39, 42);
   --test-font-color: rgb(220, 221, 222);
   --box-shadow-color: black;
+  --correct-char-color: rgb(114, 137, 218);
+  --incorrect-char-color: rgb(154, 154, 154);
 }
 
 #discord-theme {
@@ -217,7 +233,7 @@ dialog[open]::backdrop {
 .matrix-theme {
   --background-color: rgb(17, 17, 17);
   --logo-color: rgb(0, 86, 0);
-  --text-color: green;
+  --text-color: rgb(117, 155, 117);
   --title-text-color: darkgreen;
   --subtitle-text-color: green;
   --icon-color: green;
@@ -225,6 +241,8 @@ dialog[open]::backdrop {
   --test-background-color: black;
   --test-font-color: rgb(132, 132, 132);
   --box-shadow-color: gray;
+  --correct-char-color: green;
+  --incorrect-char-color: rgb(116, 116, 116);
 }
 
 #matrix-theme {
@@ -420,11 +438,11 @@ nav #nav-buttons .nav-button:hover {
 }
 
 .test-char-incorrect {
-  color: red
+  color: var(--incorrect-char-color);
 }
 
 .test-char-correct {
-  color: green
+  color: var(--correct-char-color);
 }
 
 #stats {

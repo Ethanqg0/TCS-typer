@@ -1,4 +1,5 @@
 import { getUser, setUser } from "./common";
+import { Chart } from "chart.js/auto";
 
 let form: HTMLFormElement | null = null;
 
@@ -116,6 +117,30 @@ document.addEventListener("DOMContentLoaded", async function () {
     userBest.textContent = `Best WPM: ${Math.max(
       ...userDetails.tests.map((test: any) => test.wpm)
     )}`;
+
+    const ctx = document.getElementById("user-graph") as HTMLCanvasElement;
+
+    const chart = new Chart(ctx, {
+      type: "line",
+      data: {
+        datasets: [
+          {
+            data: [0, 0],
+          },
+          {
+            data: [0, 1],
+          },
+          {
+            data: [1, 0],
+            showLine: true, // overrides the `line` dataset default
+          },
+          {
+            type: "scatter", // 'line' dataset default does not affect this dataset since it's a 'scatter'
+            data: [1, 1],
+          },
+        ],
+      },
+    });
   }
 
   //   --------------------------------  LOGOUT BUTTON --------------------------------

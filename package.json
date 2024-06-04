@@ -13,6 +13,7 @@
   "description": "",
   "devDependencies": {
     "@types/bad-words": "^3.0.3",
+    "@types/chart.js": "^2.9.41",
     "@types/jest": "^29.5.12",
     "@types/node": "^20.12.8",
     "@types/three": "^0.165.0",
@@ -28,6 +29,7 @@
     "@types/express": "^4.17.21",
     "bad-words": "^3.0.4",
     "chalk": "^5.3.0",
+    "chart.js": "^4.4.3",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",

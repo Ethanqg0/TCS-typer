@@ -546,7 +546,9 @@ window.addEventListener("DOMContentLoaded", async () => {
     if (currentTest.wordIndex >= currentTest.typingData.originalWords.length) {
       return
     }
-
+    if (event.getModifierState("CapsLock")) {
+      alert("Caps Lock is on. This may affect your typing accuracy.");
+    }
 
     if (event.key === "Backspace" || event.key === "Delete") {
       if (currentTest.wordIndex > 0 || currentTest.charIndex > 0) {
@@ -570,7 +572,6 @@ window.addEventListener("DOMContentLoaded", async () => {
     if (event.ctrlKey || event.altKey || event.metaKey || !/^[a-zA-Z.,' ]$/.test(event.key)) {
       return;
     }
-
 
     if (event.key === " ") {
       if (currentTest.charIndex > 0) {

@@ -8,10 +8,10 @@
 
 #container #logout-button {
     background-color: hsl(0, 0%, 98%);
-    margin-top: 20px;
+    margin-top: 10px;
     border-radius: 10px;
-    font-size: 20px;
-    padding: 10px 20px 10px 20px;
+    font-size: 14px;
+    padding: 6px 12px 6px 12px;
 }
 
 .login-section {

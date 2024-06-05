@@ -136,18 +136,15 @@ document.addEventListener("DOMContentLoaded", async function () {
       },
       options: {
         scales: {
-          x: {
+          y: {
             title: {
               display: true,
               text: "Words Per Minute",
             },
           },
-          y: {
-            title: {
-              display: true,
-              text: "Accuracy",
-            },
-          },
+          x: {
+            display: false
+          }
         },
         animation: {
           duration: 1000,

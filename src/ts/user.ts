@@ -117,40 +117,56 @@ document.addEventListener("DOMContentLoaded", async function () {
       ...userDetails.tests.map((test: any) => test.wpm)
     )}`;
 
-    const ctx = document.getElementById("user-graph") as HTMLCanvasElement;
+  const ctx = document.getElementById("user-graph") as HTMLCanvasElement;
+  const averageWpmData = Array(userDetails.tests.length).fill(
+    calculateAverageWpm(
+      userDetails.tests as Array<BestTest>
+    )
+  );
 
-    new Chart(ctx, {
-      type: "line",
-      data: {
-        labels: userDetails.tests.map((test: any, index: number) => index),
-        datasets: [
-          {
-            label: "Tests",
-            data: userDetails.tests.map((test: any) => test.wpm),
-            borderColor: "dodgerblue",
-            borderWidth: 1,
-            fill: true,
-          },
-        ],
-      },
-      options: {
-        scales: {
-          y: {
-            title: {
-              display: true,
-              text: "Words Per Minute",
-            },
-          },
-          x: {
-            display: false
-          }
+  console.log(averageWpmData);
+
+
+  new Chart(ctx, {
+    type: "line",
+    data: {
+      labels: userDetails.tests.map((test: any, index: number) => index),
+      datasets: [
+        {
+          label: "Tests",
+          data: userDetails.tests.map((test: any) => test.wpm),
+          borderColor: "dodgerblue",
+          borderWidth: 1,
+          fill: true,
         },
-        animation: {
-          duration: 1000,
-          easing: "easeInOutQuad",
+        {
+          label: "Average WPM",
+          data: averageWpmData, // replace 'secondData' with the actual property name
+          borderColor: "gray",
+          borderWidth: 0.4,
+          pointRadius: 1,
+          fill: false,
+        },
+      ],
+    },
+    options: {
+      scales: {
+        y: {
+          title: {
+            display: true,
+            text: "Words Per Minute",
+          },
+        },
+        x: {
+          display: false,
         },
       },
-    });
+      animation: {
+        duration: 1000,
+        easing: "easeInOutQuad",
+      },
+    },
+  });
   }
 
   //   --------------------------------  LOGOUT BUTTON --------------------------------

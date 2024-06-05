@@ -123,22 +123,36 @@ document.addEventListener("DOMContentLoaded", async function () {
     const chart = new Chart(ctx, {
       type: "line",
       data: {
+        labels: userDetails.tests.map((test: any, index: number) => index),
         datasets: [
           {
-            data: [0, 0],
-          },
-          {
-            data: [0, 1],
-          },
-          {
-            data: [1, 0],
-            showLine: true, // overrides the `line` dataset default
-          },
-          {
-            type: "scatter", // 'line' dataset default does not affect this dataset since it's a 'scatter'
-            data: [1, 1],
+            label: "Tests",
+            data: userDetails.tests.map((test: any) => test.wpm),
+            borderColor: "dodgerblue",
+            borderWidth: 1,
+            fill: true,
           },
         ],
+      },
+      options: {
+        scales: {
+          x: {
+            title: {
+              display: true,
+              text: "Words Per Minute",
+            },
+          },
+          y: {
+            title: {
+              display: true,
+              text: "Accuracy",
+            },
+          },
+        },
+        animation: {
+          duration: 1000,
+          easing: "easeInOutQuad",
+        },
       },
     });
   }

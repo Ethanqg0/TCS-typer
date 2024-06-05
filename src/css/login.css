@@ -66,11 +66,12 @@ button {
     gap: 10px;
 }
 
-.user-section div {
+.user-section {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 50px;
+    justify-content: space-around;
+    height: 70vh;
 }
 
 #user-stats {
@@ -81,12 +82,14 @@ button {
     gap: 15px;
     padding: 60px;
     border-radius: 20px;
+    height: 30vh;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
 #user-layout {
     display: flex;
     flex-direction: row;
-    width: 60vw;
-    justify-content: center;
+    width: 80vw;
+    justify-content: space-around;
+    align-items: center;
 }

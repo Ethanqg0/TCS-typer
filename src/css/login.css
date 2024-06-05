@@ -78,9 +78,9 @@ button {
     display: flex;
     flex-direction: column;
     align-items: start;
+    justify-content: space-around;
     font-size: 20px;
-    gap: 15px;
-    padding: 60px;
+    padding: 50px;
     border-radius: 20px;
     height: 30vh;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;

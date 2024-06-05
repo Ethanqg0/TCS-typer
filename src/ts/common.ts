@@ -1,19 +1,31 @@
 type TcsTyperUser = {
-    username: any;
+    username: string;
 }
+
 export type TcsTyperSettings = {
     theme: string,
     sound: string
 }
 
-export async function fetchUserDetails(username: string): Promise<any> {
-    let response
+export type UserDetails = {
+    coach: boolean,
+    created_at: string,
+    id: number,
+    full_name: string,
+    password: string,
+    tests: Array<object>,
+    username: string
+}
+
+export async function fetchUserDetails(username: string): Promise<UserDetails> {
+    let response: UserDetails
     try {
         response = await fetch("https://tcs-typer.netlify.app/api/user?username=" + username).then((resp) => resp.json());
     } catch (e) {
         throw new Error("An error occurred while fetching the user details: " + e)
     }
 
+    console.log("FETCHED USER DETAILS SHAPE: ", response)
     return response
 }
 

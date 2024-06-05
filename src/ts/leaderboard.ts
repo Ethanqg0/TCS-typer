@@ -10,8 +10,8 @@ interface TestRecord {
   accuracy: number;
 }
 
-interface BestTest {
-  full_name: string;
+export interface BestTest {
+  full_name?: string;
   wpm: number;
   accuracy: number;
 }
@@ -40,8 +40,7 @@ function filterTests(users: Array<User>) {
   return filteredTests;
 }
 
-(<any>window).fetchAndDisplayLeaderboard = async () => {
-  console.log("Fetching and displaying leaderboard...")
+(window as any).fetchAndDisplayLeaderboard = async () => {
   try {
     const response = await fetch(
       "https://tcs-typer.netlify.app/api/leaderboard"

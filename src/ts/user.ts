@@ -1,5 +1,7 @@
-import { getUser, setUser } from "./common";
+import { getUser, setUser, UserDetails } from "./common";
 import { Chart } from "chart.js/auto";
+import { BestTest } from "./leaderboard";
+
 
 function validateForm(
   username: HTMLInputElement,
@@ -24,7 +26,7 @@ function validateForm(
   return true;
 }
 
-function calculateAverageWpm(tests: Array<any>): number {
+function calculateAverageWpm(tests: Array<BestTest>): number {
   let totalWpm = 0;
 
   for (let i = 0; i < tests.length; i++) {
@@ -34,7 +36,7 @@ function calculateAverageWpm(tests: Array<any>): number {
   return Math.round(totalWpm / tests.length);
 }
 
-function calculateAverageAccuracy(tests: Array<any>): number {
+function calculateAverageAccuracy(tests: Array<BestTest>): number {
   let totalAccuracy = 0;
 
   for (let i = 0; i < tests.length; i++) {
@@ -71,12 +73,11 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
   }
 
-  let userDetails = localStorage.getItem("userDetails") as any;
-
-  if (userDetails) {
-    userDetails = JSON.parse(userDetails);
+  const localUserDetails: string | null = localStorage.getItem("userDetails");
+  let userDetails: UserDetails | null = null;
+  if (localUserDetails) {
+    userDetails = JSON.parse(localUserDetails);
   }
-  console.log("USER DETAILS:", userDetails);
 
   const usernamePageDisplay = document.getElementById(
     "user-username"
@@ -97,7 +98,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   const userAverageWpm = document.getElementById("user-wpm") as HTMLElement;
   if (userAverageWpm && userDetails && userDetails.tests) {
     userAverageWpm.textContent = `Average WPM: ${calculateAverageWpm(
-      userDetails.tests
+      userDetails.tests as Array<BestTest>
     )}`;
   }
 
@@ -106,7 +107,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   ) as HTMLElement;
   if (userAverageAccuracy && userDetails && userDetails.tests) {
     userAverageAccuracy.textContent = `Average Accuracy: ${calculateAverageAccuracy(
-      userDetails.tests
+      userDetails.tests as Array<BestTest>
     )}%`;
   }
 

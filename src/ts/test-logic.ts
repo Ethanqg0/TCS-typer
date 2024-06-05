@@ -1,6 +1,7 @@
 import { getSettings, getUser, fetchUserDetails } from "./common";
+import { UserDetails } from "./common";
 
-function shuffleArray(array: any[]): any[] {
+function shuffleArray(array: Array<string>): Array<string> {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [array[i], array[j]] = [array[j], array[i]];
@@ -30,6 +31,7 @@ type TypingDataChar = {
   space?: boolean,
   init?: boolean
 }
+
 type TypingData = TypingDataChar[][]
 
 interface TypedData {
@@ -38,7 +40,7 @@ interface TypedData {
   originalChars: string[];
 }
 
-interface Test {
+interface TestContent {
   stopwatch: Stopwatch;
   settings: Settings;
   typingData: TypedData;
@@ -66,7 +68,7 @@ interface Test {
  * - initializeTest(): Promise<void>
  * - generateQuote(): Promise<string>
  */
-class TypingTest implements Test {
+class TypingTest implements TestContent {
   /**
    * The HTML element representing the text input box where the quote is displayed.
    * @type {HTMLElement}
@@ -492,16 +494,18 @@ async function sendResultsToDatabase(test: TypingTest) {
 
 // Fetch Request: Via database fetch; should only be used when the page is initially loaded
 async function storeUserDetails() {
-  console.log("Fetching user details from Supabase")
-  let userDetails: any = null;
-  userDetails = await fetchUserDetails(getUser()?.username);
+  const userDetails: UserDetails = await fetchUserDetails(getUser()?.username);
   localStorage.setItem("userDetails", JSON.stringify(userDetails));
 }
 
 // Not Fetch Request: Via localStorage, avoids unnecessary fetch requests
-function updateUserDetails(test: any) {
-  let userDetails: any = localStorage.getItem("userDetails");
-  userDetails = userDetails ? JSON.parse(userDetails) : null;
+function updateUserDetails(test: TypingTest) {
+  const localUserDetails: string | null = localStorage.getItem("userDetails");
+  if ( !localUserDetails ) {
+    console.log("User details not found in localStorage");
+    return;
+  }
+  const userDetails: UserDetails = JSON.parse(localUserDetails);
   const wpm: number = test.calculateWPM(test.stopwatch.elapsedTime);
   const accuracy: number = test.calculateAccuracy();
   userDetails?.tests.push({"wpm": wpm, "accuracy": accuracy});
@@ -608,6 +612,7 @@ window.addEventListener("DOMContentLoaded", async () => {
       currentTest.textBox.innerHTML = currentTest.calculateWPM(currentTest.stopwatch.elapsedTime) + " words per minute with " + currentTest.calculateAccuracy() + "% accuracy!";
       currentTest.hideCaret()
       sendResultsToDatabase(currentTest); // async
+      console.log("CURRENT TEST SHAPE: ", currentTest);
       updateUserDetails(currentTest); // sync, does not rely on sendResultsDatabase
     }
   });

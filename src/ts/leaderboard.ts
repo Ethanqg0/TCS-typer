@@ -9,6 +9,7 @@ interface TestRecord {
   wpm: number;
   accuracy: number;
 }
+
 interface BestTest {
   full_name: string;
   wpm: number;
@@ -21,13 +22,13 @@ function rankByWPM(tests: Array<BestTest>) {
 }
 
 function filterTests(users: Array<User>) {
-  let filteredTests: Array<BestTest> = [];
+  const filteredTests: Array<BestTest> = [];
 
   for (const user of users) {
     if (user["coach"] === true) {
       continue
     }
-    let test: TestRecord = user["best_test"]
+    const test: TestRecord = user["best_test"]
     if (!test) continue
     filteredTests.push(({
       full_name: user["full_name"],
@@ -60,12 +61,12 @@ function filterTests(users: Array<User>) {
     ) as HTMLDivElement;
     leaderboard.innerHTML = ""
     for (let i: number = 0; i < tests.length; i++) {
-      let player = leaderboard.appendChild(
+      const player = leaderboard.appendChild(
         document.createElement("div") as HTMLDivElement
       );
       player.classList.add("leaderboard-player");
 
-      let name = player.appendChild(
+      const name = player.appendChild(
         document.createElement("h3") as HTMLHeadingElement
       );
 
@@ -79,15 +80,15 @@ function filterTests(users: Array<User>) {
         name.innerHTML += " 🥉";
       }
 
-      let div = player.appendChild(
+      const div = player.appendChild(
         document.createElement("div") as HTMLDivElement
       );
       div.classList.add("wpm-accuracy");
-      let wpm = div.appendChild(
+      const wpm = div.appendChild(
         document.createElement("h4") as HTMLParagraphElement
       );
       wpm.innerHTML = tests[i]["wpm"];
-      let accuracy = div.appendChild(
+      const accuracy = div.appendChild(
         document.createElement("h4") as HTMLParagraphElement
       );
       accuracy.innerHTML = tests[i]["accuracy"] + "%";

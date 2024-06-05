@@ -19,15 +19,15 @@ export async function fetchUserDetails(username: string): Promise<any> {
 
 export function getUser() {
     try {
-        let storedUser = localStorage.getItem("TcsTyper_SavedUser")
+        const storedUser = localStorage.getItem("TcsTyper_SavedUser")
 
         if (storedUser) {
             return JSON.parse(localStorage.getItem("TcsTyper_SavedUser") || "");
         } else {
             // OLD Storage fix:
-            let oldStoredUser = localStorage.getItem("username")
+            const oldStoredUser = localStorage.getItem("username")
             if (oldStoredUser) {
-                let newUser = { username: oldStoredUser }
+                const newUser = { username: oldStoredUser }
                 setUser(newUser)
                 window.localStorage.removeItem("username")
                 return newUser
@@ -45,7 +45,7 @@ export function setUser(newUser: TcsTyperUser): void {
 }
 
 export function getSettings(): TcsTyperSettings {
-    let storedSettings = localStorage.getItem("TcsTyper_SavedSettings")
+    const storedSettings = localStorage.getItem("TcsTyper_SavedSettings")
 
     useSavedSettings: if (storedSettings) {
         let returning
@@ -64,14 +64,14 @@ export function getSettings(): TcsTyperSettings {
         return returning
     }
 
-    let defualtSettings = { theme: "default-theme", sound: "default-click" }
+    const defaultSettings = { theme: "default-theme", sound: "default-click" }
 
 
     // OLD Storage fix:
-    let oldStoredTheme = localStorage.getItem("theme")
+    const oldStoredTheme = localStorage.getItem("theme")
     let oldStoredSound = localStorage.getItem("sound")
     if (oldStoredTheme || oldStoredSound) {
-        let newSettings = defualtSettings
+        let newSettings = defaultSettings
         if (oldStoredTheme) {
             newSettings = { ...newSettings, theme: oldStoredTheme }
             window.localStorage.removeItem("theme")
@@ -84,8 +84,8 @@ export function getSettings(): TcsTyperSettings {
         setSettings(newSettings)
         return newSettings
     } else {
-        setSettings(defualtSettings)
-        return defualtSettings
+        setSettings(defaultSettings)
+        return defaultSettings
     }
 }
 

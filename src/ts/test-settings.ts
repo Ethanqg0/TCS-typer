@@ -1,7 +1,7 @@
 import { getSettings, setSettings, TcsTyperSettings } from "./common";
 
-let colorThemes = { "default-theme": "Light Theme", "dark-theme": "Dark Theme", "lavendar-theme": "Lavendar Theme", "forest-theme": "Forest Theme", "matrix-theme": "Matrix Theme", "pink-theme": "Pink Theme", "discord-theme": "Discord Theme", "blueberry-theme": "Blueberry Theme", "cartoon-theme": "Cartoon Theme" };
-let soundThemes = { "default-click": "Standard Click", "mechanical-click": "Mechanical Click", "pop-click": "Pop Click", "clacky-click": "Clacky Click", "cap-click": "Cap Click" };
+const colorThemes = { "default-theme": "Light Theme", "dark-theme": "Dark Theme", "lavendar-theme": "Lavendar Theme", "forest-theme": "Forest Theme", "matrix-theme": "Matrix Theme", "pink-theme": "Pink Theme", "discord-theme": "Discord Theme", "blueberry-theme": "Blueberry Theme", "cartoon-theme": "Cartoon Theme" };
+const soundThemes = { "default-click": "Standard Click", "mechanical-click": "Mechanical Click", "pop-click": "Pop Click", "clacky-click": "Clacky Click", "cap-click": "Cap Click" };
 
 function changeTheme(theme: string) {
   const body = document.querySelector("body");
@@ -28,7 +28,7 @@ window.addEventListener("DOMContentLoaded", function () {
   const body: HTMLBodyElement | null = document.querySelector("body");
 
   //   --------------------------------  SAVED SETTINGS LOAD --------------------------------
-  let currentSettings: TcsTyperSettings = getSettings();
+  const currentSettings: TcsTyperSettings = getSettings();
 
   body?.classList.add(currentSettings.theme);
   body?.classList.add(currentSettings.sound);
@@ -36,9 +36,9 @@ window.addEventListener("DOMContentLoaded", function () {
   if (!document.querySelector("body#settings")) return
 
   //   --------------------------------  THEME BUTTONS --------------------------------
-  let themeButtonsSection = document.getElementById("theme-buttons") as HTMLDivElement
+  const themeButtonsSection = document.getElementById("theme-buttons") as HTMLDivElement
   if (themeButtonsSection) {
-    for (let [theme, themeName] of Object.entries(colorThemes)) {
+    for (const [theme, themeName] of Object.entries(colorThemes)) {
       const themeButton = document.createElement("button") as HTMLButtonElement;
       themeButton.textContent = themeName
       themeButton.id = theme
@@ -50,16 +50,16 @@ window.addEventListener("DOMContentLoaded", function () {
   }
 
   //   --------------------------------  SOUND BUTTONS --------------------------------
-  let soundButtonsSection = document.getElementById("sound-buttons") as HTMLDivElement
+  const soundButtonsSection = document.getElementById("sound-buttons") as HTMLDivElement
   if (soundButtonsSection) {
-    for (let [sound, soundName] of Object.entries(soundThemes)) {
+    for (const [sound, soundName] of Object.entries(soundThemes)) {
       const soundButton = document.createElement("button") as HTMLButtonElement;
       soundButton.textContent = soundName
       soundButton.id = sound
       soundButtonsSection.appendChild(soundButton)
       soundButton?.addEventListener("click", function () {
         changeClick(sound);
-        let audio = new Audio(`/assets/sounds/${sound}.wav`);
+        const audio = new Audio(`/assets/sounds/${sound}.wav`);
         audio.volume = 0.8;
         audio.play();
       });

@@ -5,7 +5,8 @@
   "scripts": {
     "build": "esbuild src/ts/*.ts --bundle --minify --target=es2016 --outdir=src/dist",
     "dev": "concurrently \"esbuild src/ts/*.ts --bundle --minify --sourcemap --target=es2016 --outdir=src/dist --watch\" \"serve ./src\"",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint src/ts/*.ts"
   },
   "keywords": [],
   "author": "",

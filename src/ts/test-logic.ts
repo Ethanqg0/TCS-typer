@@ -165,7 +165,7 @@ class TypingTest implements Test {
   playClick(): void {
     updateSoundPath();
 
-    let audio = new Audio(soundPath);
+    const audio = new Audio(soundPath);
     audio.volume = soundVolume;
     audio.play().catch((error) => console.log(error));
   }
@@ -259,7 +259,7 @@ class TypingTest implements Test {
       }
     }
 
-    const totalErrors = totalTypedChars + missingChars - correctChars;
+    // const totalErrors = totalTypedChars + missingChars - correctChars;
     const totalChars = totalTypedChars + missingChars;
 
     return totalChars === 0 ? 0 : Math.round((correctChars / totalChars) * 100);
@@ -289,7 +289,7 @@ class TypingTest implements Test {
    * @returns {Promise<void>} A Promise that resolves when the test is initialized.
    */
   async initializeTest(): Promise<void> {
-    let quotes = await this.generateWords();
+    const quotes = await this.generateWords();
     this.typingData.originalChars = quotes.split("");
     this.typingData.originalWords = (quotes.split(" ").map((word: string, wordInd: number) => {
       let out: TypingDataChar[] = word.split("").map((character: string) => { return { char: character } })
@@ -297,7 +297,7 @@ class TypingTest implements Test {
       return out
     }) as TypingData);
     this.typingData.words = new Array(this.typingData.originalWords.length);
-    for (var i = 0; i < this.typingData.originalWords.length; this.typingData.words[i++] = []);
+    for (let i = 0; i < this.typingData.originalWords.length; this.typingData.words[i++] = []);
     this.typingData.words[0][0] = { char: "", init: true }
     this.updateTextBox()
     this.moveCaret()
@@ -387,7 +387,7 @@ class TypingTest implements Test {
     const response = await fetch("/assets/data/words.txt");
 
     try {
-      let data = await response.text();
+      const data = await response.text();
 
       // Split the data into an array of words (assuming words are separated by spaces or new lines)
       let wordsArray = data.split(/\s+/);
@@ -396,10 +396,10 @@ class TypingTest implements Test {
       wordsArray = shuffleArray(wordsArray);
 
       // Take the first 20 words from the shuffled array
-      let first10Words = wordsArray.slice(0, 10);
+      const first10Words = wordsArray.slice(0, 10);
 
       // Join the first 20 shuffled words back into a string
-      let shuffledQuote = first10Words.join(" ");
+      const shuffledQuote = first10Words.join(" ");
 
       return shuffledQuote;
     } catch (error) {
@@ -450,25 +450,25 @@ const pathToTestMap: Record<string, TestConfig> = {
 };
 
 let soundPath: string = "/assets/sounds/standard-click.wav";
-let soundVolume: number = 1.0;
+const soundVolume: number = 1.0;
 
 function updateSoundPath() {
-  let currentSound = getSettings().sound;
+  const currentSound = getSettings().sound;
 
   soundPath = `/assets/sounds/${currentSound}.wav`;
 }
 
 async function sendResultsToDatabase(test: TypingTest) {
-  let username = getUser()?.username
-  let wpm: number = test.calculateWPM(test.stopwatch.elapsedTime);
-  let accuracy: number = test.calculateAccuracy();
+  const username = getUser()?.username
+  const wpm: number = test.calculateWPM(test.stopwatch.elapsedTime);
+  const accuracy: number = test.calculateAccuracy();
 
   if (!username || username === "") {
     console.log("User is not logged in, skipping sending test results to the database.");
     return;
   }
 
-  const response = await fetch(
+  await fetch(
     "https://tcs-typer.netlify.app/api/test",
     {
       method: "POST",
@@ -502,8 +502,8 @@ async function storeUserDetails() {
 function updateUserDetails(test: any) {
   let userDetails: any = localStorage.getItem("userDetails");
   userDetails = userDetails ? JSON.parse(userDetails) : null;
-  let wpm: number = test.calculateWPM(test.stopwatch.elapsedTime);
-  let accuracy: number = test.calculateAccuracy();
+  const wpm: number = test.calculateWPM(test.stopwatch.elapsedTime);
+  const accuracy: number = test.calculateAccuracy();
   userDetails?.tests.push({"wpm": wpm, "accuracy": accuracy});
   localStorage.setItem("userDetails", JSON.stringify(userDetails));
   return;
@@ -515,7 +515,7 @@ window.addEventListener("DOMContentLoaded", async () => {
   })();
 
   updateSoundPath();
-  let testBody = document.querySelector("body#test")
+  const testBody = document.querySelector("body#test")
 
   if (!testBody) return
   // Get the test configuration based on the current pathname
@@ -527,7 +527,7 @@ window.addEventListener("DOMContentLoaded", async () => {
   }
 
   // Destructure the test configuration
-  const { id, elementId, stopwatchId, restartButtonId } = currentTestConfig;
+  const { elementId, stopwatchId, restartButtonId } = currentTestConfig;
 
   // Create a TypingTest instance for the current test
   const currentTest = new TypingTest(elementId, stopwatchId, restartButtonId);

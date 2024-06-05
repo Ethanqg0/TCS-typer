@@ -1,8 +1,6 @@
 import { getUser, setUser } from "./common";
 import { Chart } from "chart.js/auto";
 
-let form: HTMLFormElement | null = null;
-
 function validateForm(
   username: HTMLInputElement,
   password: HTMLInputElement,
@@ -120,7 +118,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     const ctx = document.getElementById("user-graph") as HTMLCanvasElement;
 
-    const chart = new Chart(ctx, {
+    new Chart(ctx, {
       type: "line",
       data: {
         labels: userDetails.tests.map((test: any, index: number) => index),
@@ -165,7 +163,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   });
 
   //   --------------------------------  SIGNUP FORM --------------------------------
-  let signupForm = document.querySelector("#signup-form") as HTMLFormElement;
+  const signupForm = document.querySelector("#signup-form") as HTMLFormElement;
   if (signupForm) {
     const signupUsername = document.getElementById(
       "username"

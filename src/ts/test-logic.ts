@@ -515,8 +515,10 @@ function updateUserDetails(test: TypingTest) {
 
 window.addEventListener("DOMContentLoaded", async () => {
   (async function() {
-    await storeUserDetails();
+    storeUserDetails();
   })();
+
+  console.log("Why are you in the console? Are you trying to cheat?")
 
   updateSoundPath();
   const testBody = document.querySelector("body#test")

@@ -169,7 +169,7 @@ class TypingTest implements TestContent {
 
     const audio = new Audio(soundPath);
     audio.volume = soundVolume;
-    audio.play().catch((error) => console.log(error));
+    audio.play().catch((error) => console.error(error));
   }
 
   /**
@@ -502,7 +502,7 @@ async function storeUserDetails() {
 function updateUserDetails(test: TypingTest) {
   const localUserDetails: string | null = localStorage.getItem("userDetails");
   if ( !localUserDetails ) {
-    console.log("User details not found in localStorage");
+    console.error("User details not found in localStorage");
     return;
   }
   const userDetails: UserDetails = JSON.parse(localUserDetails);
@@ -612,7 +612,6 @@ window.addEventListener("DOMContentLoaded", async () => {
       currentTest.textBox.innerHTML = currentTest.calculateWPM(currentTest.stopwatch.elapsedTime) + " words per minute with " + currentTest.calculateAccuracy() + "% accuracy!";
       currentTest.hideCaret()
       sendResultsToDatabase(currentTest); // async
-      console.log("CURRENT TEST SHAPE: ", currentTest);
       updateUserDetails(currentTest); // sync, does not rely on sendResultsDatabase
     }
   });

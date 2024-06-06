@@ -124,9 +124,6 @@ document.addEventListener("DOMContentLoaded", async function () {
     )
   );
 
-  console.log(averageWpmData);
-
-
   new Chart(ctx, {
     type: "line",
     data: {
@@ -202,8 +199,6 @@ document.addEventListener("DOMContentLoaded", async function () {
         signupPassword,
         verifyPassword
       );
-
-      console.log(formResponse);
 
       if (formResponse === false) {
         return;

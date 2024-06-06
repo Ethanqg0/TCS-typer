@@ -25,7 +25,6 @@ export async function fetchUserDetails(username: string): Promise<UserDetails> {
         throw new Error("An error occurred while fetching the user details: " + e)
     }
 
-    console.log("FETCHED USER DETAILS SHAPE: ", response)
     return response
 }
 

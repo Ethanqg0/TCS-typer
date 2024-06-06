@@ -14,6 +14,10 @@
     padding: 6px 12px 6px 12px;
 }
 
+#container #logout-button:hover {
+    background-color: hsl(0, 93%, 78%);
+}
+
 .login-section {
     display: flex;
     width: 80vw;

@@ -80,3 +80,15 @@
 .toast-success {
   background-color: green;
 }
+
+@keyframes confetti {
+  0% { transform: translateY(0) rotateZ(0); }
+  100% { transform: translateY(100vh) rotateZ(720deg); }
+}
+
+.confetti {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  animation: confetti 3s ease-out;
+}

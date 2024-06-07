@@ -1,3 +1,4 @@
+import { start } from "repl";
 import { getSettings, getUser, fetchUserDetails } from "./common";
 import { UserDetails } from "./common";
 
@@ -84,26 +85,28 @@ function isLoggedIn() {
   }
 }
 
-const closeToastSuccess = document.querySelector("#close-toast-success") as HTMLElement;
-closeToastSuccess.addEventListener("click", () => {
-  const toast_success = document.querySelector(".toast-success") as HTMLElement;
-  toast_success.classList.remove("show");
-  toast_success.classList.add("hide");
-  setTimeout(() => {
-    toast_success.classList.remove("hide");
-  }, 250);
-});
-
-const closeToastWarning = document.querySelector(
-  "#close-toast-warning"
-) as HTMLElement;
-closeToastWarning.addEventListener("click", () => {
-  const toast_success = document.querySelector(".toast-warning") as HTMLElement;
-  toast_success.classList.remove("show");
-  toast_success.classList.add("hide");
-  setTimeout(() => {
-    toast_success.classList.remove("hide");
-  }, 250);
+document.addEventListener("DOMContentLoaded", async function () {
+  const closeToastSuccess = document.querySelector("#close-toast-success") as HTMLElement;
+  closeToastSuccess.addEventListener("click", () => {
+    const toast_success = document.querySelector(".toast-success") as HTMLElement;
+    toast_success.classList.remove("show");
+    toast_success.classList.add("hide");
+    setTimeout(() => {
+      toast_success.classList.remove("hide");
+    }, 250);
+  });
+  
+  const closeToastWarning = document.querySelector(
+    "#close-toast-warning"
+  ) as HTMLElement;
+  closeToastWarning.addEventListener("click", () => {
+    const toast_success = document.querySelector(".toast-warning") as HTMLElement;
+    toast_success.classList.remove("show");
+    toast_success.classList.add("hide");
+    setTimeout(() => {
+      toast_success.classList.remove("hide");
+    }, 250);
+  });
 });
 
 /**
@@ -572,6 +575,26 @@ function updateUserDetails(test: TypingTest) {
   localStorage.setItem("userDetails", JSON.stringify(userDetails));
   return;
 }
+
+window.addEventListener("DOMContentLoaded", () => {
+  const justRegistered = localStorage.getItem("justRegistered");
+  const introductionModal = document.querySelector("#introduction-modal") as HTMLDialogElement;
+  const closeModal = document.querySelector("#close-modal-introduction") as HTMLButtonElement;
+  const startTyping = document.querySelector("#start-typing") as HTMLButtonElement;
+
+  if (justRegistered) {
+    introductionModal.showModal();
+    // localStorage.removeItem("justRegistered");
+  }
+
+  closeModal.addEventListener("click", () => {
+    introductionModal.close();
+  });
+
+  startTyping.addEventListener("click", () => {
+    introductionModal.close();
+  });
+});
 
 window.addEventListener("DOMContentLoaded", async () => {
   (async function() {

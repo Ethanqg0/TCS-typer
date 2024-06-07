@@ -12,25 +12,25 @@ i {
   color: var(--icon-color)
 }
 
-dialog {
+#leaderboard-modal {
   /* translate: -50% -50% !important; */
   transform: translate(-50%, calc(-50% + (1 - var(--open)) * -20%));
 }
 
-dialog,
-dialog::backdrop {
+#leaderboard-modal,
+#leaderboard-modal::backdrop {
   --open: 0;
   --duration: calc(0.2s + (var(--open) * 0.20s));
   transition: all var(--duration) ease allow-discrete;
   opacity: var(--open);
 }
 
-dialog::backdrop {
+#leaderboard-modal::backdrop {
   background-color: rgba(0, 0, 0, 0.2);
 }
 
-dialog[open],
-dialog[open]::backdrop {
+#leaderboard-modal[open],
+#leaderboard-modal[open]::backdrop {
   --open: 1
 }
 
@@ -483,7 +483,6 @@ a {
 }
 
 @keyframes caretAnim {
-
   0%,
   100% {
     opacity: 0.1;
@@ -492,4 +491,66 @@ a {
   50% {
     opacity: 1;
   }
+}
+
+.modal-container-introduction {
+    width: 40vw;
+    border-radius: 25px;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--background-color);
+    padding: 30px 30px 30px 40px;
+}
+
+ul, li {
+    padding: 0;
+  margin: 0;
+}
+
+.modal-container-introduction li {
+  list-style-type: none;
+}
+
+.modal-container-introduction section {
+  display: flex;
+  justify-content: space-between;
+}
+
+.modal-feature {
+  display: flex;
+  justify-content: flex-start;
+  gap: 20px;
+}
+
+.features-section {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.modal-features-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.section-features, .section-start {
+  margin-top: 30px;
+}
+
+.section-start {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.section-start button {
+  width: 20%;
+}
+
+#start-typing:hover {
+  background-color: rgb(60, 139, 60);
+  transition: 0.5s;
 }

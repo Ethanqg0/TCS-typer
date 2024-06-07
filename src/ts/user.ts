@@ -233,6 +233,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
         if (response.ok) {
           setUser({ username: signupUsername.value });
+          // localStorage.setItem("justRegistered", "true")
           window.location.href = "/";
         } else {
           alert(

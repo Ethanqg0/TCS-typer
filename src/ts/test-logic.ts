@@ -54,6 +54,10 @@ function isBestTest(wpm: any, accuracy: any) {
   let userTests: any = localStorage.getItem("userDetails")
   let tests = JSON.parse(userTests).tests;
 
+  if (tests.length === 0) {
+    return false;
+  }
+
   for ( const test of tests ) {
     if (test.wpm > wpm && test.accuracy >= accuracy) {
       return false;
@@ -70,19 +74,31 @@ function isLoggedIn() {
   let user: any = localStorage.getItem("TcsTyper_SavedUser");
   user = JSON.parse(user);
   if (user["username"] === '') {
-    const toast_success = document.querySelector(
+    const toast_warning = document.querySelector(
       ".toast-warning"
     ) as HTMLElement;
-    toast_success.classList.add("show");
+    toast_warning.classList.add("show");
     return true;
   } else {
     return false;
   }
 }
 
-const closeToast = document.querySelector("#close-toast-success") as HTMLElement;
-closeToast.addEventListener("click", () => {
+const closeToastSuccess = document.querySelector("#close-toast-success") as HTMLElement;
+closeToastSuccess.addEventListener("click", () => {
   const toast_success = document.querySelector(".toast-success") as HTMLElement;
+  toast_success.classList.remove("show");
+  toast_success.classList.add("hide");
+  setTimeout(() => {
+    toast_success.classList.remove("hide");
+  }, 250);
+});
+
+const closeToastWarning = document.querySelector(
+  "#close-toast-warning"
+) as HTMLElement;
+closeToastWarning.addEventListener("click", () => {
+  const toast_success = document.querySelector(".toast-warning") as HTMLElement;
   toast_success.classList.remove("show");
   toast_success.classList.add("hide");
   setTimeout(() => {

@@ -46,6 +46,36 @@ interface TestContent {
   typingData: TypedData;
 }
 
+function isBestTest(wpm: any, accuracy: any) {
+  if (accuracy < 90) {
+    return false;
+  }
+
+  let userTests: any = localStorage.getItem("userDetails")
+  let tests = JSON.parse(userTests).tests;
+
+  for ( const test of tests ) {
+    if (test.wpm > wpm && test.accuracy >= accuracy) {
+      return false;
+    }
+  }
+
+  const toast_success = document.querySelector(".toast-success") as HTMLElement;
+  toast_success.classList.add("show");
+
+  return true;
+}
+
+const closeToast = document.querySelector("#close-toast-success") as HTMLElement;
+closeToast.addEventListener("click", () => {
+  const toast_success = document.querySelector(".toast-success") as HTMLElement;
+  toast_success.classList.remove("show");
+  toast_success.classList.add("hide");
+  setTimeout(() => {
+    toast_success.classList.remove("hide");
+  }, 250);
+});
+
 /**
  * Represents a typing test implementation.
  * @implements {Test}
@@ -611,10 +641,13 @@ window.addEventListener("DOMContentLoaded", async () => {
     if (currentTest.wordIndex > currentTest.typingData.originalWords.length - 1 || (currentTest.wordIndex === currentTest.typingData.originalWords.length - 1 && currentTest.charIndex >= currentTest.typingData.originalWords[currentTest.wordIndex].length - 1)) {
       currentTest.wordIndex++;
       currentTest.stopStopwatch();
-      currentTest.textBox.innerHTML = currentTest.calculateWPM(currentTest.stopwatch.elapsedTime) + " words per minute with " + currentTest.calculateAccuracy() + "% accuracy!";
+      let wpm = currentTest.calculateWPM(currentTest.stopwatch.elapsedTime);
+      let accuracy = currentTest.calculateAccuracy();
+      currentTest.textBox.innerHTML = wpm + " words per minute with " + accuracy + "% accuracy!";
       currentTest.hideCaret()
       sendResultsToDatabase(currentTest); // async
       updateUserDetails(currentTest); // sync, does not rely on sendResultsDatabase
+      isBestTest(wpm, accuracy);
     }
   });
 });

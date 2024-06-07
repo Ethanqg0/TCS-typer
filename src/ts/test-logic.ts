@@ -584,7 +584,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
   if (justRegistered) {
     introductionModal.showModal();
-    // localStorage.removeItem("justRegistered");
+    localStorage.removeItem("justRegistered");
   }
 
   closeModal.addEventListener("click", () => {

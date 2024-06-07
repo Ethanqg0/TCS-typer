@@ -124,14 +124,20 @@ document.addEventListener("DOMContentLoaded", async function () {
     )
   );
 
+  console.log("USERDETAILS", userDetails.tests)
+  const filteredTests = userDetails.tests.filter(
+    (test: any) => test.wpm !== 0 && test.accuracy >= 90
+  )
+  console.log("FILTERED", filteredTests)
+
   new Chart(ctx, {
     type: "line",
     data: {
-      labels: userDetails.tests.map((test: any, index: number) => index),
+      labels: filteredTests.map((test: any, index: number) => index),
       datasets: [
         {
           label: "Tests",
-          data: userDetails.tests.map((test: any) => test.wpm),
+          data: filteredTests.map((test: any) => test.wpm),
           borderColor: "dodgerblue",
           borderWidth: 1,
           fill: true,

@@ -92,13 +92,16 @@ document.addEventListener("DOMContentLoaded", async function () {
     "user-test-count"
   ) as HTMLElement;
   if (userTestCount && userDetails && userDetails.tests) {
-    userTestCount.textContent = `Total tests completed: ${userDetails.tests.length}`;
+    const filteredTests = userDetails.tests.filter(
+      (test: any) => test.wpm > 0
+    );
+    userTestCount.textContent = `Total tests completed: ${filteredTests.length}`;
   }
 
   const userAverageWpm = document.getElementById("user-wpm") as HTMLElement;
   if (userAverageWpm && userDetails && userDetails.tests) {
     userAverageWpm.textContent = `Average WPM: ${calculateAverageWpm(
-      userDetails.tests as Array<BestTest>
+      (userDetails.tests as Array<BestTest>).filter((test) => test.accuracy > 90)
     )}`;
   }
 
@@ -113,9 +116,11 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   const userBest = document.getElementById("user-best") as HTMLElement;
   if (userBest && userDetails && userDetails.tests) {
-    userBest.textContent = `Best WPM: ${Math.max(
-      ...userDetails.tests.map((test: any) => test.wpm)
-    )}`;
+  userBest.textContent = `Best WPM: ${Math.max(
+    ...userDetails.tests
+      .filter((test: any) => test.accuracy > 90)
+      .map((test: any) => test.wpm)
+  )}`;
 
   const ctx = document.getElementById("user-graph") as HTMLCanvasElement;
   const averageWpmData = Array(userDetails.tests.length).fill(

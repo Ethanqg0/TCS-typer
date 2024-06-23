@@ -302,9 +302,6 @@ html {
   flex-direction: column;
 }
 
-
-
-
 button {
   background-color: var(--background-color);
   border: 2px solid black;
@@ -348,7 +345,6 @@ nav div button {
   padding-bottom: 15px;
   padding-right: 20px;
   padding-left: 20px;
-  border: 0px;
   background-color: var(--button-background-color);
   color: white;
   cursor: pointer;
@@ -413,6 +409,10 @@ i {
 
 #restart-button-1:hover {
   color: rgb(41, 113, 201);
+}
+
+i:focus {
+  outline: 2px solid black;
 }
 
 nav #nav-buttons .nav-button:hover {

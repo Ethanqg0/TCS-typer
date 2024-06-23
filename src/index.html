@@ -22,16 +22,36 @@
 <body id="test">
   <nav>
     <div id="logo">
-      <a href="/"><img src="/assets/images/tcs-logo.png" height=50></a>
+      <a href="/"><img src="/assets/images/tcs-logo.png" height=50 tabindex="-1"></a>
     </div>
     <div id="nav-buttons">
-      <a class="nav-button" href="/pages/account">
-        <p id="logged-username"></p><i class="fa-solid fa-user"></i>
+      <a class="nav-button" href="/pages/account" tabindex="-1">
+        <p id="logged-username"></p><i class="fa-solid fa-user" tabindex="2"></i>
       </a>
-      <i class="nav-button fa-solid fa-crown" id="leaderboard-toggle"></i>
-      <a class="nav-button" href="/pages/settings"><i class="fa-solid fa-gear"></i></a>
+      <i class="nav-button fa-solid fa-crown" id="leaderboard-toggle" tabindex="3"></i>
+      <a class="nav-button" href="/pages/settings" tabindex="-1"><i class="fa-solid fa-gear" tabindex="4"></i></a>
     </div>
   </nav>
+
+  <main id="container">
+    <header id="section1">
+      <p id="title">theCoderSchool Typing Test</p>
+      <p id="subtitle">Type, customize, earn coins! <i class="fa-solid fa-coins" tabindex="-1"></i></p>
+    </header>
+
+    <section id="section2">
+      <i id="restart-button-1" class="fa-solid fa-rotate-right" tabindex="1"></i>
+      <div id="stats">
+        <i class="fa-solid fa-clock"></i>
+        <div id="stopwatch-1">00:00:00</div>
+      </div>
+    </section>
+
+    <section id="section3">
+      <div id="test-1"></div>
+    </section>
+  </main>
+
 
   <div class="toast-warning">
     <i class="fa-solid fa-circle-exclamation"></i>
@@ -103,25 +123,6 @@
       </div>
     </div>
   </dialog>
-
-  <main id="container">
-    <header id="section1">
-      <p id="title">theCoderSchool Typing Test</p>
-      <p id="subtitle">Type, customize, earn coins! <i class="fa-solid fa-coins"></i></p>
-    </header>
-
-    <section id="section2">
-      <i id="restart-button-1" class="fa-solid fa-rotate-right"></i>
-      <div id="stats">
-        <i class="fa-solid fa-clock"></i>
-        <div id="stopwatch-1">00:00:00</div>
-      </div>
-    </section>
-
-    <section id="section3">
-      <div id="test-1"></div>
-    </section>
-  </main>
 </body>
 
 </html>

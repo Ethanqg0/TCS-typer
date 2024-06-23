@@ -1,4 +1,3 @@
-import { start } from "repl";
 import { getSettings, getUser, fetchUserDetails } from "./common";
 import { UserDetails } from "./common";
 
@@ -414,12 +413,25 @@ class TypingTest implements TestContent {
    * @returns {Promise<string>} A Promise that resolves with the fetched quote text.
    */
   async generateQuote(): Promise<string> {
+    const cacheName = "quote-cache";
+    const url = "/assets/data/quotes.json";
+
     try {
-      const response = await fetch("/assets/data/quotes.json");
-      if (!response.ok) {
-        throw new Error(
-          `Failed to fetch quotes. HTTP status: ${response.status}`
-        );
+      let response;
+      const cache = await caches.open(cacheName);
+      const cachedResponse = await cache.match(url);
+
+      if (cachedResponse) {
+        console.log("FETCHED FROM CACHE");
+        response = cachedResponse;
+      } else {
+        console.log("FETCHED FROM SERVER");
+        response = await fetch(url);
+        if (response.ok) {
+          cache.put(url, response.clone());
+        } else {
+          throw new Error("Failed to fetch quote data. HTTP Status: " + response.status);
+        }
       }
 
       const data = await response.json();
@@ -449,9 +461,28 @@ class TypingTest implements TestContent {
    * @throws An error if there is an issue fetching or processing the word data.
    */
   async generateWords(): Promise<string> {
-    const response = await fetch("/assets/data/words.txt");
+    const cacheName = "words-cache";
+    const url = "/assets/data/words.txt";
 
     try {
+      let response;
+      const cache = await caches.open(cacheName);
+      const cachedResponse = await cache.match(url);
+
+      if (cachedResponse) {
+        console.log("FETCHED FROM CACHE");
+        response = cachedResponse;
+      } else {
+        console.log("FETCHED FROM SERVER");
+        response = await fetch(url);
+        if (response.ok) {
+          cache.put(url, response.clone());
+        } else {
+          throw new Error(
+            "Failed to fetch quote data. HTTP Status: " + response.status
+          );
+        }
+      }
       const data = await response.text();
 
       // Split the data into an array of words (assuming words are separated by spaces or new lines)

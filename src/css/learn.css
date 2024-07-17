@@ -41,7 +41,7 @@ main {
     display: flex;
     flex-direction: column;
     gap: 30px;
-    padding: 100px;
+    padding: 50px;
     margin-top: 50px;
 }
 

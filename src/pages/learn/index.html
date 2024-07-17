@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TCS Typer - Learn</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/leaderboard.css">
+    <link rel="stylesheet" href="/css/toast.css">
+    <link rel="stylesheet" href="/css/learn.css">
+    <script src="/dist/common.js"></script>
+    <script src="/dist/test-settings.js"></script>
+    <script src="/dist/leaderboard.js"></script>
+    <script src="/dist/user.js"></script>
+    <script src="https://kit.fontawesome.com/3ba21a02a7.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <nav>
+        <div id="logo">
+            <a href="/"><img src="/assets/images/tcs-logo.png" height=50 tabindex="-1"></a>
+        </div>
+        <div id="nav-buttons">
+            <a class="nav-button" href="/pages/account" tabindex="-1">
+                <p id="logged-username"></p><i class="fa-solid fa-user" tabindex="2"></i>
+            </a>
+            <a class="nav-button" href="/pages/learn" tabindex="-1">
+                <i class="fa-solid fa-book" tabindex="1"></i>
+            </a>
+            <i class="nav-button fa-solid fa-crown" id="leaderboard-toggle" tabindex="3"></i>
+            <a class="nav-button" href="/pages/settings" tabindex="-1"><i class="fa-solid fa-gear" tabindex="4"></i></a>
+        </div>
+    </nav>
+
+    <main>
+        <h1 class="header">Learning Modules</h1>
+        
+        <div class="grid-container">
+            <div class="module" id="module-1">
+                <div>
+                    <h2>Lesson #1: Home Row</h2>
+                    <p>Learn the home row keys.</p>
+                </div>
+                <button onclick="window.location.href='/pages/learn/lesson1'" class="module-button">Start Lesson</button>
+            </div>
+            <div class="module" id="module-2">
+                <div>
+                    <h2>Lesson #2: Top Row</h2>
+                    <p>Learn the top row keys.</p>
+                </div>
+                <button onclick="window.location.href='/pages/learn/lesson1'" class="module-button">Start Lesson</button>
+            </div>
+            <div class="module" id="module-3">
+                <div>
+                    <h2>Lesson #3: Bottom Row</h2>
+                    <p>Learn the bottom row keys.</p>
+                </div>
+                <button onclick="window.location.href='/pages/learn/lesson1'" class="module-button">Start Lesson</button>
+            </div>
+            <div class="module" id="module-4">
+                <div>
+                    <h2>Lesson #4: Pointer & Pinky</h2>
+                    <p>Practice typing with pointer and pinky fingers.</p>
+                </div>
+                <button onclick="window.location.href='/pages/learn/lesson1'" class="module-button">Start Lesson</button>
+            </div>
+            <div class="module" id="module-5">
+                <div>
+                    <h2>Lesson #5: Middle & Ring</h2>
+                    <p>Practice typing with middle and ring fingers.</p>
+                </div>
+                <button onclick="window.location.href='/pages/learn/lesson1'" class="module-button">Start Lesson</button>
+            </div>
+            <div class="module" id="module-6">
+                <div>
+                    <h2>Lesson 6: Intangibles</h2>
+                    <p>Learn additional tips and tricks.</p>
+                </div>
+                <button onclick="window.location.href='/pages/learn/lesson1'" class="module-button">Start Lesson</button>
+            </div>
+        </div>
+
+    </main>
+</body>
+</html>

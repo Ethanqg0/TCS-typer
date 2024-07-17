@@ -1,0 +1,56 @@
+.header {
+    font-size: 2.75rem;
+    font-weight: 700;
+    border-bottom: 1px solid lightgrey;
+    padding-bottom: 5px;
+}
+
+.module {
+    border-radius: 10px;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.module h2 {
+    font-size: 1.75rem;
+    font-weight: 700;
+}
+
+button {
+    width: 40%;
+    background-color: black;
+    color: white;
+}
+
+button:hover {
+    color: dodgerblue;
+    transition: 0.25s;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Creates 3 columns */
+  grid-template-rows: repeat(2, 1fr); /* Creates 2 rows */
+  gap: 30px; /* Optional: Adds space between grid items */
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    padding: 100px;
+    margin-top: 50px;
+}
+
+body {
+    padding: 25px 0;
+}
+
+.module {
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}

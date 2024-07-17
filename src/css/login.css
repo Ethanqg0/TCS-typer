@@ -34,10 +34,11 @@
 .register, .login {
     padding: 30px;
     width: 40%;
+    height: 60vh;
     display: flex;
     border: 0px solid black;
     border-radius: 25px;
-    box-shadow: 3px 15px 50px -12px rgb(0 0 0 / 0.25);
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
 }
 
 .register h3, .login h3 {

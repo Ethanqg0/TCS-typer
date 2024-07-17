@@ -1,8 +1,9 @@
 .header {
-    font-size: 2.75rem;
+    font-size: 3.25rem;
     font-weight: 700;
     border-bottom: 1px solid lightgrey;
     padding-bottom: 5px;
+    margin-top: 15px;
 }
 
 .module {

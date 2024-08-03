@@ -39,7 +39,7 @@ function filterTests(users: Array<User>) {
   return filteredTests;
 }
 
-// Make a coach leaderboard and student leaderboard that can be toggled
+// Make coach, student, and all leaderboards that can be toggled
 (window as any).fetchAndDisplayLeaderboard = async () => {
   try {
     const response = await fetch(
@@ -54,6 +54,7 @@ function filterTests(users: Array<User>) {
 
     const studentTests = rankByWPM(tests.filter((test) => !test.isCoach));
     const coachTests = rankByWPM(tests.filter((test) => test.isCoach));
+    const allTests = rankByWPM(tests);
 
     const leaderboard = document.querySelector(
       ".flex-column"
@@ -63,6 +64,9 @@ function filterTests(users: Array<User>) {
     ) as HTMLButtonElement;
     const coachesLeaderboard = document.getElementById(
       "leaderboard-toggle-coaches"
+    ) as HTMLButtonElement;
+    const allLeaderboard = document.getElementById(
+      "leaderboard-toggle-all"
     ) as HTMLButtonElement;
 
     function displayLeaderboard(tests: Array<BestTest>) {
@@ -100,13 +104,17 @@ function filterTests(users: Array<User>) {
     coachesLeaderboard.addEventListener("click", () =>
       displayLeaderboard(coachTests)
     );
+    allLeaderboard.addEventListener("click", () =>
+      displayLeaderboard(allTests)
+    );
 
-    // Display the student leaderboard by default
+    // Display the all leaderboard by default
     displayLeaderboard(studentTests);
   } catch (error) {
     console.error("An error occurred while fetching the leaderboard: ", error);
   }
 };
+
 
 
 window.addEventListener("DOMContentLoaded", async () => {

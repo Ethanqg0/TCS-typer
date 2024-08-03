@@ -12,13 +12,15 @@ i {
   color: var(--icon-color)
 }
 
-#leaderboard-modal {
+#leaderboard-modal, #stats-modal {
   /* translate: -50% -50% !important; */
   transform: translate(-50%, calc(-50% + (1 - var(--open)) * -20%));
 }
 
 #leaderboard-modal,
-#leaderboard-modal::backdrop {
+#leaderboard-modal::backdrop,
+#stats-modal,
+#stats-modal::backdrop {
   --open: 0;
   --duration: calc(0.2s + (var(--open) * 0.20s));
   transition: all var(--duration) ease allow-discrete;
@@ -29,8 +31,15 @@ i {
   background-color: rgba(0, 0, 0, 0.2);
 }
 
+#stats-modal::backdrop {
+  background-image: linear-gradient(grey, white);
+  opacity: 0.5
+}
+
 #leaderboard-modal[open],
-#leaderboard-modal[open]::backdrop {
+#leaderboard-modal[open]::backdrop,
+#stats-modal[open],
+#stats-modal[open]::backdrop {
   --open: 1
 }
 
@@ -49,6 +58,10 @@ i {
 #logo {
   background-color: var(--logo-color);
   border-radius: 25px;
+}
+
+#stats-modal {
+  visibility: none;
 }
 
 #theme-buttons,
@@ -494,6 +507,22 @@ a {
   }
 }
 
+.modal-container-stats {
+    width: 60vw;
+    height: 60vh;
+    border-radius: 25px;
+    justify-content: space-around;
+    display: flex;
+    flex-direction: column;
+    padding: 30px 30px 30px 40px;
+}
+
+.gap-10 {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
 .modal-container-introduction {
     width: 40vw;
     border-radius: 25px;
@@ -554,4 +583,14 @@ ul, li {
 #start-typing:hover {
   background-color: rgb(60, 139, 60);
   transition: 0.5s;
+}
+
+.stats-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.stats-chart {
+  display: flex;
+  justify-content: center;
 }

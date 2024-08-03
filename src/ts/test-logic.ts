@@ -611,6 +611,7 @@ window.addEventListener("DOMContentLoaded", () => {
   const justRegistered = localStorage.getItem("justRegistered");
   const introductionModal = document.querySelector("#introduction-modal") as HTMLDialogElement;
   const closeModal = document.querySelector("#close-modal-introduction") as HTMLButtonElement;
+  const statsModal = document.querySelector("#stats-modal") as HTMLDialogElement;
   const startTyping = document.querySelector("#start-typing") as HTMLButtonElement;
 
   if (justRegistered) {
@@ -625,6 +626,11 @@ window.addEventListener("DOMContentLoaded", () => {
   startTyping.addEventListener("click", () => {
     introductionModal.close();
   });
+
+  statsModal.showModal();
+  statsModal.addEventListener("click", () => {
+    statsModal.close();
+  })
 });
 
 window.addEventListener("DOMContentLoaded", async () => {
@@ -721,7 +727,7 @@ window.addEventListener("DOMContentLoaded", async () => {
 
     currentTest.playClick()
 
-
+    // End of test
     if (currentTest.wordIndex > currentTest.typingData.originalWords.length - 1 || (currentTest.wordIndex === currentTest.typingData.originalWords.length - 1 && currentTest.charIndex >= currentTest.typingData.originalWords[currentTest.wordIndex].length - 1)) {
       currentTest.wordIndex++;
       currentTest.stopStopwatch();

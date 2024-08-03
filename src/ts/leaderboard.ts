@@ -1,3 +1,5 @@
+import { Chart } from "chart.js/auto";
+
 interface User {
   full_name: string;
   coach?: boolean;
@@ -26,15 +28,15 @@ function filterTests(users: Array<User>) {
 
   for (const user of users) {
     if (user["coach"] === true) {
-      continue
+      continue;
     }
-    const test: TestRecord = user["best_test"]
-    if (!test) continue
-    filteredTests.push(({
+    const test: TestRecord = user["best_test"];
+    if (!test) continue;
+    filteredTests.push({
       full_name: user["full_name"],
       wpm: test["wpm"],
       accuracy: test["accuracy"],
-    } as BestTest))
+    } as BestTest);
   }
 
   return filteredTests;
@@ -58,7 +60,7 @@ function filterTests(users: Array<User>) {
     const leaderboard = document.querySelector(
       ".flex-column"
     ) as HTMLDivElement;
-    leaderboard.innerHTML = ""
+    leaderboard.innerHTML = "";
     for (let i: number = 0; i < tests.length; i++) {
       const player = leaderboard.appendChild(
         document.createElement("div") as HTMLDivElement
@@ -95,7 +97,7 @@ function filterTests(users: Array<User>) {
   } catch (error) {
     console.error("An error occurred while fetching the leaderboard: ", error);
   }
-}
+};
 
 window.addEventListener("DOMContentLoaded", async () => {
   // When the page is loaded, fetch and display the leaderboard
@@ -113,10 +115,38 @@ window.addEventListener("DOMContentLoaded", async () => {
     leaderboardModal.showModal();
   });
   leaderboardModal?.addEventListener("click", (e) => {
-    if (e.target !== leaderboardModal) return
-    leaderboardModal.close()
-  })
+    if (e.target !== leaderboardModal) return;
+    leaderboardModal.close();
+  });
   closeModal?.addEventListener("click", () => {
     leaderboardModal.close();
+  });
+});
+
+window.addEventListener("DOMContentLoaded", function () {
+  const ctx = document.getElementById("user-graph") as HTMLCanvasElement;
+  if (!ctx) return;
+
+  new Chart(ctx, {
+    type: "line", // Define chart type
+    data: {
+      labels: ["January", "February", "March", "April", "May", "June", "July"], // X-axis labels
+      datasets: [
+        {
+          label: "Demo Data", // Dataset label
+          data: [65, 59, 80, 81, 56, 55, 40], // Data points
+          fill: false,
+          borderColor: "rgb(75, 192, 192)",
+          tension: 0.1,
+        },
+      ],
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true, // Y-axis begins at 0
+        },
+      },
+    },
   });
 });

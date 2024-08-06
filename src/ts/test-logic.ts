@@ -611,73 +611,93 @@ function updateUserDetails(test: TypingTest) {
 async function displayStats(test: TypingTest) {
   const graph = document.getElementById("stats-modal") as HTMLDialogElement;
   const wpm = document.getElementById("stats-wpm") as HTMLParagraphElement;
-  const accuracy = document.getElementById("stats-accuracy") as HTMLParagraphElement;
-  const wpm_last_ten = document.getElementById("stats-wpm-last-ten") as HTMLParagraphElement;
-  const accuracy_last_ten = document.getElementById("stats-accuracy-last-ten") as HTMLParagraphElement;
+  const accuracy = document.getElementById(
+    "stats-accuracy"
+  ) as HTMLParagraphElement;
+  const wpm_last_ten = document.getElementById(
+    "stats-wpm-last-ten"
+  ) as HTMLParagraphElement;
+  const accuracy_last_ten = document.getElementById(
+    "stats-accuracy-last-ten"
+  ) as HTMLParagraphElement;
 
   // TODO: Move this to test initialization
-  const user = getUser()
-  let tests = await(await fetchUserDetails(user.username)).tests as unknown as Array<{wpm: number, accuracy: number}>
-  
+  const user = getUser();
+  let tests = await(await fetchUserDetails(user.username))
+    .tests as unknown as Array<{ wpm: number; accuracy: number }>;
+
   tests = tests.filter((test) => test.accuracy > 90);
 
-  const last_10_tests = tests.slice(-10)
+  const last_10_tests = tests.slice(-10);
 
   let sum_words: number = 0;
   let sum_accuracy: number = 0;
 
   for (const test of last_10_tests) {
-    sum_words += test.wpm / 10
-    sum_accuracy += test.accuracy / 10
+    sum_words += test.wpm / 10;
+    sum_accuracy += test.accuracy / 10;
   }
 
   let all_sum_words: number = 0;
   let all_sum_accuracy: number = 0;
 
   for (const test of tests) {
-    all_sum_words += test.wpm / tests.length
-    all_sum_accuracy += test.accuracy / tests.length
+    all_sum_words += test.wpm / tests.length;
+    all_sum_accuracy += test.accuracy / tests.length;
   }
 
-  sum_words = Math.round(sum_words)
-  sum_accuracy = Math.round(sum_accuracy)
+  sum_words = Math.round(sum_words);
+  sum_accuracy = Math.round(sum_accuracy);
 
-  wpm_last_ten.innerText = sum_words.toString()
-  accuracy_last_ten.innerText = sum_accuracy.toString() + "%"
+  wpm_last_ten.innerText = sum_words.toString();
+  accuracy_last_ten.innerText = sum_accuracy.toString() + "%";
 
-  const ctx = document.getElementById("user-graph") as HTMLCanvasElement;
-  if (!ctx) return;
+  // Declare a variable to hold the chart instance outside your update function
+  let myChart: any = null;
 
-  new Chart(ctx, {
-    type: "bar",
-    data: {
+  function updateChart() {
+    const ctx = document.getElementById("user-graph") as HTMLCanvasElement;
+    if (!ctx) return;
+
+    const chartData = {
       labels: ["Current WPM", "Last 10 WPM", "All-Time WPM"],
       datasets: [
         {
           label: "Words Per Minute",
-          data: [test.calculateWPM(test.stopwatch.elapsedTime).toString(), sum_words, all_sum_words],
-          backgroundColor: [
-            "skyblue",
-            "dodgerblue",
-            "blue",
+          data: [
+            test.calculateWPM(test.stopwatch.elapsedTime).toString(),
+            sum_words,
+            all_sum_words,
           ],
+          backgroundColor: ["skyblue", "dodgerblue", "blue"],
         },
       ],
-    },
-    options: {
-      scales: {
-        y: {
-          beginAtZero: true,
-        },
-      },
-    },
-  });
+    };
 
+    if (myChart) {
+      // If the chart exists, update its data
+      myChart.data = chartData;
+      myChart.update();
+    } else {
+      // If the chart does not exist, create it
+      myChart = new Chart(ctx, {
+        type: "bar",
+        data: chartData,
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true,
+            },
+          },
+        },
+      });
+    }
+  }
 
   if (graph) {
     graph.showModal();
     wpm.innerText = test.calculateWPM(test.stopwatch.elapsedTime).toString();
-    accuracy.innerText = test.calculateAccuracy().toString() + "%"
+    accuracy.innerText = test.calculateAccuracy().toString() + "%";
   }
 
   // use test here

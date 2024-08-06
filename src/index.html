@@ -129,6 +129,47 @@
       </div>
     </div>
   </dialog>
+
+  <dialog class="modal" id="stats-modal">
+    <div class="modal-container-stats">
+      <section>
+        <header>
+          <h1 style="margin-top: 15px;">Stats</h1>
+          <!-- description of this modal-->
+          <h4>Showcasing your recent progress</h4>
+        </header>
+        <i class="fa-solid fa-x" id="close-modal"></i>
+      </section>
+
+      <div class="stats-container">
+          <div class="gap-10">
+            <div class="stats">
+              <h2>Words Per Minute</h2>
+              <div style="display: flex; align-items: center; gap: 5px;">
+                <p id="stats-wpm">100</p>
+              </div>
+            </div>
+            <div class="stats">
+              <h2>Accuracy</h2>
+              <div style="display: flex; align-items: center; gap: 5px">
+                <p id="stats-accuracy">90%</p>
+              </div>
+            </div>
+            <div class="stats">
+              <h2>Words Per Minute Last Ten</h2>
+              <p id="stats-wpm-last-ten">85</p>
+            </div>
+            <div class="stats">
+              <h2>Accuracy Last Ten</h2>
+              <p id="stats-accuracy-last-ten">90%</p>
+            </div>
+          </div>
+          <!-- Insert chartJS bar chart here-->
+          <canvas id="user-graph"></canvas>
+    </div>
+  </dialog>
+
+
 </body>
 
 </html>

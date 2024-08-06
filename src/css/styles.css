@@ -32,7 +32,7 @@ i {
 }
 
 #stats-modal::backdrop {
-  background-image: linear-gradient(grey, white);
+  background-image: linear-gradient(grey, transparent);
   opacity: 0.5
 }
 

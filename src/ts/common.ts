@@ -18,12 +18,14 @@ export type UserDetails = {
 }
 
 export async function fetchUserDetails(username: string): Promise<UserDetails> {
+    console.log(username)
     let response: UserDetails
     try {
         response = await fetch("https://tcs-typer.netlify.app/api/user?username=" + username).then((resp) => resp.json());
     } catch (e) {
         throw new Error("An error occurred while fetching the user details: " + e)
     }
+
 
     return response
 }

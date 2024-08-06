@@ -1,5 +1,3 @@
-import { Chart } from "chart.js/auto";
-
 interface User {
   full_name: string;
   coach?: boolean;
@@ -115,8 +113,6 @@ function filterTests(users: Array<User>) {
   }
 };
 
-
-
 window.addEventListener("DOMContentLoaded", async () => {
   // When the page is loaded, fetch and display the leaderboard
   if ((<any>window).fetchAndDisplayLeaderboard) {
@@ -138,33 +134,5 @@ window.addEventListener("DOMContentLoaded", async () => {
   });
   closeModal?.addEventListener("click", () => {
     leaderboardModal.close();
-  });
-});
-
-window.addEventListener("DOMContentLoaded", function () {
-  const ctx = document.getElementById("user-graph") as HTMLCanvasElement;
-  if (!ctx) return;
-
-  new Chart(ctx, {
-    type: "line", // Define chart type
-    data: {
-      labels: ["January", "February", "March", "April", "May", "June", "July"], // X-axis labels
-      datasets: [
-        {
-          label: "Demo Data", // Dataset label
-          data: [65, 59, 80, 81, 56, 55, 40], // Data points
-          fill: false,
-          borderColor: "rgb(75, 192, 192)",
-          tension: 0.1,
-        },
-      ],
-    },
-    options: {
-      scales: {
-        y: {
-          beginAtZero: true, // Y-axis begins at 0
-        },
-      },
-    },
   });
 });

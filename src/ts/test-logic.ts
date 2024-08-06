@@ -1,5 +1,6 @@
 import { getSettings, getUser, fetchUserDetails } from "./common";
 import { UserDetails } from "./common";
+import { Chart } from "chart.js/auto";
 
 function shuffleArray(array: Array<string>): Array<string> {
   for (let i = array.length - 1; i > 0; i--) {
@@ -607,11 +608,89 @@ function updateUserDetails(test: TypingTest) {
   return;
 }
 
+async function displayStats(test: TypingTest) {
+  const graph = document.getElementById("stats-modal") as HTMLDialogElement;
+  const wpm = document.getElementById("stats-wpm") as HTMLParagraphElement;
+  const accuracy = document.getElementById("stats-accuracy") as HTMLParagraphElement;
+  const wpm_last_ten = document.getElementById("stats-wpm-last-ten") as HTMLParagraphElement;
+  const accuracy_last_ten = document.getElementById("stats-accuracy-last-ten") as HTMLParagraphElement;
+
+  // TODO: Move this to test initialization
+  const user = getUser()
+  let tests = await(await fetchUserDetails(user.username)).tests as unknown as Array<{wpm: number, accuracy: number}>
+  
+  tests = tests.filter((test) => test.accuracy > 90);
+
+  const last_10_tests = tests.slice(-10)
+
+  let sum_words: number = 0;
+  let sum_accuracy: number = 0;
+
+  for (const test of last_10_tests) {
+    sum_words += test.wpm / 10
+    sum_accuracy += test.accuracy / 10
+  }
+
+  let all_sum_words: number = 0;
+  let all_sum_accuracy: number = 0;
+
+  for (const test of tests) {
+    all_sum_words += test.wpm / tests.length
+    all_sum_accuracy += test.accuracy / tests.length
+  }
+
+  sum_words = Math.round(sum_words)
+  sum_accuracy = Math.round(sum_accuracy)
+
+  wpm_last_ten.innerText = sum_words.toString()
+  accuracy_last_ten.innerText = sum_accuracy.toString() + "%"
+
+  const ctx = document.getElementById("user-graph") as HTMLCanvasElement;
+  if (!ctx) return;
+
+  new Chart(ctx, {
+    type: "bar",
+    data: {
+      labels: ["Current WPM", "Last 10 WPM", "All-Time WPM"],
+      datasets: [
+        {
+          label: "Words Per Minute",
+          data: [test.calculateWPM(test.stopwatch.elapsedTime).toString(), sum_words, all_sum_words],
+          backgroundColor: [
+            "skyblue",
+            "dodgerblue",
+            "blue",
+          ],
+        },
+      ],
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true,
+        },
+      },
+    },
+  });
+
+
+  if (graph) {
+    graph.showModal();
+    wpm.innerText = test.calculateWPM(test.stopwatch.elapsedTime).toString();
+    accuracy.innerText = test.calculateAccuracy().toString() + "%"
+  }
+
+  // use test here
+
+  graph.addEventListener("click", () => {
+    graph.close();
+  });
+}
+
 window.addEventListener("DOMContentLoaded", () => {
   const justRegistered = localStorage.getItem("justRegistered");
   const introductionModal = document.querySelector("#introduction-modal") as HTMLDialogElement;
   const closeModal = document.querySelector("#close-modal-introduction") as HTMLButtonElement;
-  const statsModal = document.querySelector("#stats-modal") as HTMLDialogElement;
   const startTyping = document.querySelector("#start-typing") as HTMLButtonElement;
 
   if (justRegistered) {
@@ -626,11 +705,6 @@ window.addEventListener("DOMContentLoaded", () => {
   startTyping.addEventListener("click", () => {
     introductionModal.close();
   });
-
-  statsModal.showModal();
-  statsModal.addEventListener("click", () => {
-    statsModal.close();
-  })
 });
 
 window.addEventListener("DOMContentLoaded", async () => {
@@ -733,6 +807,7 @@ window.addEventListener("DOMContentLoaded", async () => {
       currentTest.stopStopwatch();
       let wpm = currentTest.calculateWPM(currentTest.stopwatch.elapsedTime);
       let accuracy = currentTest.calculateAccuracy();
+      displayStats(currentTest);
       currentTest.textBox.innerHTML = wpm + " words per minute with " + accuracy + "% accuracy!";
       currentTest.hideCaret()
       isLoggedIn();

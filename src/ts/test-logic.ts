@@ -1,39 +1,12 @@
 import { getSettings, getUser, fetchUserDetails } from "./common";
 import { UserDetails } from "./common";
 import { Chart } from "chart.js/auto";
+import { shuffleArray, pad2, Stopwatch, Settings, TypingDataChar, isBestTest, isLoggedIn } from "./utils/util-test-logic";
 
-function shuffleArray(array: Array<string>): Array<string> {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-  return array;
-}
-
-function pad2(number: number): string {
-  return (number < 10 ? "0" : "") + number;
-}
-
-interface Stopwatch {
-  timer: NodeJS.Timeout | null;
-  isRunning: boolean;
-  startTime: number;
-  elapsedTime: number;
-  wordsPerMinute: number;
-}
-
-interface Settings {
-  mode: string;
-}
-
-type TypingDataChar = {
-  char: string,
-  correct?: boolean,
-  space?: boolean,
-  init?: boolean
-}
-
+let userGraphChart: any | null = null;
 type TypingData = TypingDataChar[][]
+let soundPath: string = "/assets/sounds/standard-click.wav";
+const soundVolume: number = 1.0;
 
 interface TypedData {
   words: TypingData;
@@ -46,68 +19,6 @@ interface TestContent {
   settings: Settings;
   typingData: TypedData;
 }
-
-function isBestTest(wpm: any, accuracy: any) {
-  if (accuracy < 90) {
-    return false;
-  }
-
-  let userTests: any = localStorage.getItem("userDetails")
-  let tests = JSON.parse(userTests).tests;
-
-  if (tests.length === 0) {
-    return false;
-  }
-
-  for ( const test of tests ) {
-    if (test.wpm > wpm && test.accuracy >= accuracy) {
-      return false;
-    }
-  }
-
-  const toast_success = document.querySelector(".toast-success") as HTMLElement;
-  toast_success.classList.add("show");
-
-  return true;
-}
-
-function isLoggedIn() {
-  let user: any = localStorage.getItem("TcsTyper_SavedUser");
-  user = JSON.parse(user);
-  if (user["username"] === '') {
-    const toast_warning = document.querySelector(
-      ".toast-warning"
-    ) as HTMLElement;
-    toast_warning.classList.add("show");
-    return true;
-  } else {
-    return false;
-  }
-}
-
-document.addEventListener("DOMContentLoaded", async function () {
-  const closeToastSuccess = document.querySelector("#close-toast-success") as HTMLElement;
-  closeToastSuccess.addEventListener("click", () => {
-    const toast_success = document.querySelector(".toast-success") as HTMLElement;
-    toast_success.classList.remove("show");
-    toast_success.classList.add("hide");
-    setTimeout(() => {
-      toast_success.classList.remove("hide");
-    }, 250);
-  });
-  
-  const closeToastWarning = document.querySelector(
-    "#close-toast-warning"
-  ) as HTMLElement;
-  closeToastWarning.addEventListener("click", () => {
-    const toast_success = document.querySelector(".toast-warning") as HTMLElement;
-    toast_success.classList.remove("show");
-    toast_success.classList.add("hide");
-    setTimeout(() => {
-      toast_success.classList.remove("hide");
-    }, 250);
-  });
-});
 
 /**
  * Represents a typing test implementation.
@@ -546,9 +457,6 @@ const pathToTestMap: Record<string, TestConfig> = {
   }
 };
 
-let soundPath: string = "/assets/sounds/standard-click.wav";
-const soundVolume: number = 1.0;
-
 function updateSoundPath() {
   const currentSound = getSettings().sound;
 
@@ -607,8 +515,6 @@ function updateUserDetails(test: TypingTest) {
   localStorage.setItem("userDetails", JSON.stringify(userDetails));
   return;
 }
-
-let userGraphChart: any | null = null;
 
 async function displayStats(test: TypingTest) {
   const graph = document.getElementById("stats-modal") as HTMLDialogElement;
@@ -691,26 +597,6 @@ async function displayStats(test: TypingTest) {
     graph.close();
   });
 }
-
-window.addEventListener("DOMContentLoaded", () => {
-  const justRegistered = localStorage.getItem("justRegistered");
-  const introductionModal = document.querySelector("#introduction-modal") as HTMLDialogElement;
-  const closeModal = document.querySelector("#close-modal-introduction") as HTMLButtonElement;
-  const startTyping = document.querySelector("#start-typing") as HTMLButtonElement;
-
-  if (justRegistered) {
-    introductionModal.showModal();
-    localStorage.removeItem("justRegistered");
-  }
-
-  closeModal.addEventListener("click", () => {
-    introductionModal.close();
-  });
-
-  startTyping.addEventListener("click", () => {
-    introductionModal.close();
-  });
-});
 
 window.addEventListener("DOMContentLoaded", async () => {
   (async function() {

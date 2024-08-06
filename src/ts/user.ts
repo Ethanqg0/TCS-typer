@@ -129,11 +129,9 @@ document.addEventListener("DOMContentLoaded", async function () {
     )
   );
 
-  console.log("USERDETAILS", userDetails.tests)
   const filteredTests = userDetails.tests.filter(
     (test: any) => test.wpm !== 0 && test.accuracy >= 90
   )
-  console.log("FILTERED", filteredTests)
 
   new Chart(ctx, {
     type: "line",

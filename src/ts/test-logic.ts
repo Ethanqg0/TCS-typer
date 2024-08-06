@@ -334,10 +334,8 @@ class TypingTest implements TestContent {
       const cachedResponse = await cache.match(url);
 
       if (cachedResponse) {
-        console.log("FETCHED FROM CACHE");
         response = cachedResponse;
       } else {
-        console.log("FETCHED FROM SERVER");
         response = await fetch(url);
         if (response.ok) {
           cache.put(url, response.clone());
@@ -382,10 +380,8 @@ class TypingTest implements TestContent {
       const cachedResponse = await cache.match(url);
 
       if (cachedResponse) {
-        console.log("FETCHED FROM CACHE");
         response = cachedResponse;
       } else {
-        console.log("FETCHED FROM SERVER");
         response = await fetch(url);
         if (response.ok) {
           cache.put(url, response.clone());

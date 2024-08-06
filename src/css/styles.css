@@ -184,13 +184,13 @@ i {
 .forest-theme {
   --background-color: #35654d;
   --logo-color: #458565;
-  --text-color: #FFFFFF;
+  --text-color: lightgreen;
   --title-text-color: #70b77e;
   --subtitle-text-color: #a9cfb8;
   --icon-color: #70b77e;
   --button-background-color: #70b77e;
   --test-background-color: #1f3a2e;
-  --test-font-color: #FFFFFF;
+  --test-font-color: lightgreen;
   --box-shadow-color: rgba(112, 183, 126, 0.3);
   --correct-char-color: #70b77e;
   --incorrect-char-color: #908f8f;
@@ -198,7 +198,7 @@ i {
 
 #forest-theme {
   background-color: darkgreen;
-  color: white;
+  color: lightgreen;
   border: 2px solid black;
 }
 

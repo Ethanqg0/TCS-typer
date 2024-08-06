@@ -2,7 +2,6 @@ import { getUser, setUser, UserDetails } from "./common";
 import { Chart } from "chart.js/auto";
 import { BestTest } from "./leaderboard";
 
-
 function validateForm(
   username: HTMLInputElement,
   password: HTMLInputElement,

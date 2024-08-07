@@ -443,7 +443,7 @@ type TestConfig = {
   restartButtonId: string;
 };
 
-// Define a mapping of pathname to test configuration
+// Define a mapping of pathname to test configuration, Note: Used for the future when we scale the project to have multiple tests
 const pathToTestMap: Record<string, TestConfig> = {
   "/": {
     id: "test1",
@@ -512,39 +512,12 @@ function updateUserDetails(test: TypingTest) {
   return;
 }
 
-async function displayStats(test: TypingTest) {
+async function displayStats(test: TypingTest, sum_words: number, sum_accuracy: number, all_sum_words: number, all_sum_accuracy: number) {
   const graph = document.getElementById("stats-modal") as HTMLDialogElement;
   const wpm = document.getElementById("stats-wpm") as HTMLParagraphElement;
   const accuracy = document.getElementById("stats-accuracy") as HTMLParagraphElement;
   const wpm_last_ten = document.getElementById("stats-wpm-last-ten") as HTMLParagraphElement;
   const accuracy_last_ten = document.getElementById("stats-accuracy-last-ten") as HTMLParagraphElement;
-
-  // TODO: Move this to test initialization
-  const user = getUser()
-  let tests = await(await fetchUserDetails(user.username)).tests as unknown as Array<{wpm: number, accuracy: number}>
-  
-  tests = tests.filter((test) => test.accuracy > 90);
-
-  const last_10_tests = tests.slice(-10)
-
-  let sum_words: number = 0;
-  let sum_accuracy: number = 0;
-
-  for (const test of last_10_tests) {
-    sum_words += test.wpm / 10
-    sum_accuracy += test.accuracy / 10
-  }
-
-  let all_sum_words: number = 0;
-  let all_sum_accuracy: number = 0;
-
-  for (const test of tests) {
-    all_sum_words += test.wpm / tests.length
-    all_sum_accuracy += test.accuracy / tests.length
-  }
-
-  sum_words = Math.round(sum_words)
-  sum_accuracy = Math.round(sum_accuracy)
 
   wpm_last_ten.innerText = sum_words.toString()
   accuracy_last_ten.innerText = sum_accuracy.toString() + "%"
@@ -595,8 +568,40 @@ async function displayStats(test: TypingTest) {
 }
 
 window.addEventListener("DOMContentLoaded", async () => {
+  let sum_words: number = 0;
+  let sum_accuracy: number = 0;
+  let all_sum_words: number = 0;
+  let all_sum_accuracy: number = 0;
+
   (async function() {
     storeUserDetails();
+    // TODO: Move this to test initialization
+    const user = getUser();
+    let tests = await(await fetchUserDetails(user.username))
+      .tests as unknown as Array<{ wpm: number; accuracy: number }>;
+
+    tests = tests.filter((test) => test.accuracy > 90);
+
+    const last_10_tests = tests.slice(-10);
+
+    sum_words = 0;
+    sum_accuracy = 0;
+
+    for (const test of last_10_tests) {
+      sum_words += test.wpm / 10;
+      sum_accuracy += test.accuracy / 10;
+    }
+
+    all_sum_words = 0;
+    all_sum_accuracy = 0;
+
+    for (const test of tests) {
+      all_sum_words += test.wpm / tests.length;
+      all_sum_accuracy += test.accuracy / tests.length;
+    }
+
+    sum_words = Math.round(sum_words);
+    sum_accuracy = Math.round(sum_accuracy);
   })();
 
   console.log("Why are you in the console? Are you trying to cheat?")
@@ -694,7 +699,7 @@ window.addEventListener("DOMContentLoaded", async () => {
       currentTest.stopStopwatch();
       let wpm = currentTest.calculateWPM(currentTest.stopwatch.elapsedTime);
       let accuracy = currentTest.calculateAccuracy();
-      displayStats(currentTest);
+      displayStats(currentTest, sum_words, sum_accuracy, all_sum_words, all_sum_accuracy);
       currentTest.textBox.innerHTML = wpm + " words per minute with " + accuracy + "% accuracy!";
       currentTest.hideCaret()
       isLoggedIn();

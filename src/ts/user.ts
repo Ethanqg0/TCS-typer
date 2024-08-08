@@ -13,8 +13,8 @@ function validateForm(
     (verifyPassword && !verifyPassword.value)
   )
     return false;
-  if (!username.value.includes("tcswc")) {
-    alert("Username must contain 'tcswc', use your Scratch login!");
+  if (!username.value.startsWith("tcswc_")) {
+    alert("Username must start with 'tcswc_', use your Scratch login!");
     return false;
   }
 
@@ -56,11 +56,11 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   //   --------------------------------  ACCOUNT PAGE SECTIONS --------------------------------
   const accountPage = document.querySelector("body#account") as HTMLElement;
-
   if (!accountPage) return;
 
   const loginSection = document.querySelector(".login-section") as HTMLElement;
   const userSection = document.querySelector(".user-section") as HTMLElement;
+
 
   if (loginSection && userSection) {
     if (!username || username === "" || username === "null") {
@@ -115,63 +115,63 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   const userBest = document.getElementById("user-best") as HTMLElement;
   if (userBest && userDetails && userDetails.tests) {
-  userBest.textContent = `Best WPM: ${Math.max(
-    ...userDetails.tests
-      .filter((test: any) => test.accuracy > 90)
-      .map((test: any) => test.wpm)
-  )}`;
+    userBest.textContent = `Best WPM: ${Math.max(
+      ...userDetails.tests
+        .filter((test: any) => test.accuracy > 90)
+        .map((test: any) => test.wpm)
+    )}`;
 
-  const ctx = document.getElementById("user-graph") as HTMLCanvasElement;
-  const averageWpmData = Array(userDetails.tests.length).fill(
-    calculateAverageWpm(
-      userDetails.tests as Array<BestTest>
+    const ctx = document.getElementById("user-graph") as HTMLCanvasElement;
+    const averageWpmData = Array(userDetails.tests.length).fill(
+      calculateAverageWpm(
+        userDetails.tests as Array<BestTest>
+      )
+    );
+
+    const filteredTests = userDetails.tests.filter(
+      (test: any) => test.wpm !== 0 && test.accuracy >= 90
     )
-  );
 
-  const filteredTests = userDetails.tests.filter(
-    (test: any) => test.wpm !== 0 && test.accuracy >= 90
-  )
-
-  new Chart(ctx, {
-    type: "line",
-    data: {
-      labels: filteredTests.map((test: any, index: number) => index),
-      datasets: [
-        {
-          label: "Tests",
-          data: filteredTests.map((test: any) => test.wpm),
-          borderColor: "dodgerblue",
-          borderWidth: 1,
-          fill: true,
-        },
-        {
-          label: "Average WPM",
-          data: averageWpmData, // replace 'secondData' with the actual property name
-          borderColor: "gray",
-          borderWidth: 0.4,
-          pointRadius: 1,
-          fill: false,
-        },
-      ],
-    },
-    options: {
-      scales: {
-        y: {
-          title: {
-            display: true,
-            text: "Words Per Minute",
+    new Chart(ctx, {
+      type: "line",
+      data: {
+        labels: filteredTests.map((test: any, index: number) => index),
+        datasets: [
+          {
+            label: "Tests",
+            data: filteredTests.map((test: any) => test.wpm),
+            borderColor: "dodgerblue",
+            borderWidth: 1,
+            fill: true,
+          },
+          {
+            label: "Average WPM",
+            data: averageWpmData, // replace 'secondData' with the actual property name
+            borderColor: "gray",
+            borderWidth: 0.4,
+            pointRadius: 1,
+            fill: false,
+          },
+        ],
+      },
+      options: {
+        scales: {
+          y: {
+            title: {
+              display: true,
+              text: "Words Per Minute",
+            },
+          },
+          x: {
+            display: false,
           },
         },
-        x: {
-          display: false,
+        animation: {
+          duration: 1000,
+          easing: "easeInOutQuad",
         },
       },
-      animation: {
-        duration: 1000,
-        easing: "easeInOutQuad",
-      },
-    },
-  });
+    });
   }
 
   //   --------------------------------  LOGOUT BUTTON --------------------------------
@@ -198,6 +198,19 @@ document.addEventListener("DOMContentLoaded", async function () {
     const verifyPassword = document.getElementById(
       "verify-password"
     ) as HTMLInputElement;
+
+    signupUsername.value = "tcswc_"
+    let lastSignupUsername = signupUsername.value
+    signupUsername.oninput = (e) => {
+      if (!(e.target as HTMLInputElement)?.value.startsWith("tcswc_")) {
+        console.log("edit", signupUsername.value)
+        signupUsername.value = lastSignupUsername
+        e.preventDefault();
+        return false;
+      } else {
+        lastSignupUsername = signupUsername.value
+      }
+    }
 
     signupForm.addEventListener("submit", async function (event) {
       event.preventDefault();
@@ -253,18 +266,31 @@ document.addEventListener("DOMContentLoaded", async function () {
   //   --------------------------------  LOGIN FORM --------------------------------
   const loginForm = document.querySelector("#login-form") as HTMLFormElement;
   if (loginForm) {
-    const username = document.querySelector(
+    const loginUsername = document.querySelector(
       "#login-username"
     ) as HTMLInputElement;
-    const password = document.querySelector(
+    const loginPassword = document.querySelector(
       "#login-password"
     ) as HTMLInputElement;
     // console.log("Logging in with:", username.value, password.value);
 
+    loginUsername.value = "tcswc_"
+    let lastLoginUsername = loginUsername.value
+    loginUsername.oninput = (e) => {
+      if (!(e.target as HTMLInputElement)?.value.startsWith("tcswc_")) {
+        console.log("edit", loginUsername.value)
+        loginUsername.value = lastLoginUsername
+        e.preventDefault();
+        return false;
+      } else {
+        lastLoginUsername = loginUsername.value
+      }
+    }
+
     loginForm.addEventListener("submit", async function (event) {
       event.preventDefault();
 
-      const formResponse = validateForm(username, password);
+      const formResponse = validateForm(loginUsername, loginPassword);
 
       if (formResponse === false) {
         return;
@@ -282,14 +308,14 @@ document.addEventListener("DOMContentLoaded", async function () {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              username: username.value,
-              password: password.value,
+              username: loginUsername.value,
+              password: loginPassword.value,
             }),
           }
         );
 
         if (response.ok) {
-          setUser({ username: username.value });
+          setUser({ username: loginUsername.value });
           window.location.href = "/";
         } else {
           alert("An error occurred while logging in. Please try again.");

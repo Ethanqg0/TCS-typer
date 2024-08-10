@@ -4,9 +4,10 @@ import { Chart } from "chart.js/auto";
 import { shuffleArray, pad2, Stopwatch, Settings, TypingDataChar, isBestTest, isLoggedIn } from "./utils/util-test-logic";
 
 let userGraphChart: any | null = null;
-type TypingData = TypingDataChar[][]
 let soundPath: string = "/assets/sounds/standard-click.wav";
 const soundVolume: number = 1.0;
+
+type TypingData = TypingDataChar[][];
 
 interface TypedData {
   words: TypingData;

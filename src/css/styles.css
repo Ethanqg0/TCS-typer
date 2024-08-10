@@ -288,7 +288,7 @@ html {
 }
 
 #title {
-  font-size: 70px;
+  font-size: 5rem;
   font-weight: 700;
   color: var(--title-text-color);
 }
@@ -401,10 +401,9 @@ nav img {
   background-color: var(--test-background-color);
   color: var(--test-font-color);
   border-radius: 20px;
-  font-size: 1.75rem;
+  font-size: 2rem;
   position: relative;
 }
-
 
 nav a {
   display: flex;

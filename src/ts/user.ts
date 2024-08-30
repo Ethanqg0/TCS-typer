@@ -84,7 +84,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   usernamePageDisplay.style.fontSize = "3.0rem";
   usernamePageDisplay.style.fontWeight = "bold";
   if (usernamePageDisplay && userDetails && userDetails.full_name) {
-    usernamePageDisplay.textContent = `Hi, ${userDetails.full_name}👋`;
+    usernamePageDisplay.textContent = `Hi, ${userDetails.full_name} 👋`;
   }
 
   const userTestCount = document.getElementById(
@@ -121,7 +121,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         .map((test: any) => test.wpm)
     )}`;
 
-    const ctx = document.getElementById("user-graph") as HTMLCanvasElement;
+    const ctx = (document.getElementById("user-graph") as HTMLCanvasElement).getContext("2d") as CanvasRenderingContext2D;
     const averageWpmData = Array(userDetails.tests.length).fill(
       calculateAverageWpm(
         userDetails.tests as Array<BestTest>
@@ -132,46 +132,92 @@ document.addEventListener("DOMContentLoaded", async function () {
       (test: any) => test.wpm !== 0 && test.accuracy >= 90
     )
 
-    new Chart(ctx, {
-      type: "line",
-      data: {
-        labels: filteredTests.map((test: any, index: number) => index),
-        datasets: [
-          {
-            label: "Tests",
-            data: filteredTests.map((test: any) => test.wpm),
-            borderColor: "dodgerblue",
-            borderWidth: 1,
-            fill: true,
-          },
-          {
-            label: "Average WPM",
-            data: averageWpmData, // replace 'secondData' with the actual property name
-            borderColor: "gray",
-            borderWidth: 0.4,
-            pointRadius: 1,
-            fill: false,
-          },
-        ],
+    const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+    gradient.addColorStop(0, "rgba(30,144,255,0.5)"); // Light dodgerblue
+    gradient.addColorStop(1, "rgba(30,144,255,0)");  
+    
+new Chart(ctx, {
+  type: "line",
+  data: {
+    labels: filteredTests.map((test: any, index: number) => index),
+    datasets: [
+      {
+        label: "Tests",
+        data: filteredTests.map((test: any) => test.wpm),
+        borderColor: "dodgerblue",
+        borderWidth: 2,
+        backgroundColor: gradient,
+        pointRadius: 3,
+        fill: true,
       },
-      options: {
-        scales: {
-          y: {
-            title: {
-              display: true,
-              text: "Words Per Minute",
-            },
-          },
-          x: {
-            display: false,
+      {
+        label: "Average WPM",
+        data: averageWpmData,
+        borderColor: "gray",
+        borderWidth: 1,
+        pointRadius: 0,
+        borderDash: [5, 5],
+        fill: false,
+      },
+    ],
+  },
+  options: {
+    scales: {
+      y: {
+        title: {
+          display: true,
+          text: "Words Per Minute",
+          font: {
+            size: 14,
+            weight: "bold",
           },
         },
-        animation: {
-          duration: 1000,
-          easing: "easeInOutQuad",
+        grid: {
+          color: "rgba(200, 200, 200, 0.2)",
         },
       },
-    });
+      x: {
+        display: true,
+        title: {
+          display: true,
+          text: "Test Number",
+          font: {
+            size: 14,
+            weight: "bold",
+          },
+        },
+        grid: {
+          display: false,
+        },
+      },
+    },
+    plugins: {
+      legend: {
+        display: true,
+        position: "top",
+        labels: {
+          font: {
+            size: 12,
+          },
+        },
+      },
+      tooltip: {
+        enabled: true,
+        mode: "nearest",
+        intersect: false,
+        callbacks: {
+          label: function (tooltipItem) {
+            return `WPM: ${tooltipItem.raw}`;
+          },
+        },
+      },
+    },
+    animation: {
+      duration: 1000,
+      easing: "easeInOutQuad",
+    },
+  },
+});
   }
 
   //   --------------------------------  LOGOUT BUTTON --------------------------------

@@ -530,6 +530,8 @@ async function displayStats(test: TypingTest, sum_words: number, sum_accuracy: n
     userGraphChart = null
   }
 
+  const currentWPM = test.calculateWPM(test.stopwatch.elapsedTime).toString();
+
   userGraphChart = new Chart(ctx, {
     type: "bar",
     data: {
@@ -537,7 +539,7 @@ async function displayStats(test: TypingTest, sum_words: number, sum_accuracy: n
       datasets: [
         {
           label: "Words Per Minute",
-          data: [test.calculateWPM(test.stopwatch.elapsedTime).toString(), sum_words, all_sum_words],
+          data: [currentWPM, sum_words, all_sum_words],
           backgroundColor: [
             "skyblue",
             "dodgerblue",
@@ -561,7 +563,23 @@ async function displayStats(test: TypingTest, sum_words: number, sum_accuracy: n
     accuracy.innerText = test.calculateAccuracy().toString() + "%"
   }
 
-  // use test here
+  const image = document.getElementById(
+    "stats-wpm-image"
+  ) as HTMLImageElement;
+  if (Number(currentWPM) > sum_words) {
+    image.src = "/assets/images/up-arrow.png";
+  } else {
+    image.src = "/assets/images/down-arrow.png";
+  }
+
+  const image_accuracy = document.getElementById(
+    "stats-accuracy-image"
+  ) as HTMLImageElement;
+  if (test.calculateAccuracy() > sum_accuracy) {
+    image_accuracy.src = "/assets/images/up-arrow.png";
+  } else {
+    image_accuracy.src = "/assets/images/down-arrow.png";
+  }
 
   graph.addEventListener("click", () => {
     graph.close();

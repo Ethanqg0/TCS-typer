@@ -10,6 +10,9 @@ exports.handler = async function (event, context) {
     "Access-Control-Allow-Origin": allowedOrigins.join(","),
     "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
     "Access-Control-Allow-Headers": "Content-Type, Authorization",
+    "X-Content-Type-Options": "nosniff",
+    "X-Frame-Options": "DENY",
+    "X-XSS-Protection": "1; mode=block",
   };
 
   // Handle preflight requests
@@ -26,7 +29,6 @@ exports.handler = async function (event, context) {
     process.env.SUPABASE_URL,
     process.env.SUPABASE_KEY
   );
-
 
   try {
     const { data: usersData, error } = await supabase.from("users").select("id,username,full_name,tests,coach");

@@ -2,7 +2,7 @@ const { createClient } = require("@supabase/supabase-js");
 
 exports.handler = async function (event, context) {
   // Define the allowed origins
-  const allowedOrigins = ["https://tcstyper.com"];
+  const allowedOrigins = ["*"];
   // Define the response headers with CORS headers
   const headers = {
     "Access-Control-Allow-Origin": allowedOrigins.join(","),

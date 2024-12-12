@@ -2,7 +2,6 @@ const { createClient } = require("@supabase/supabase-js");
 const dotenv = require("dotenv").config()
 
 exports.handler = async function (event, context) {
-
   // Define the allowed origins
   const allowedOrigins = ["*"];
   // Define the response headers with CORS headers

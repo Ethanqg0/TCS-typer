@@ -16,6 +16,10 @@ export interface BestTest {
   isCoach: boolean;
 }
 
+export interface Typo {
+  test: number;
+}
+
 function rankByWPM(tests: Array<BestTest>) {
   return tests.sort((a, b) => b.wpm - a.wpm);
 }

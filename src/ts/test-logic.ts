@@ -149,7 +149,7 @@ class TypingTest implements TestContent {
       this.clickAudio = new Audio(soundPath);
     }
     this.clickAudio.volume = soundVolume - (Math.random() * soundVolumeVariation);
-    console.log(this.clickAudio.volume)
+    // console.log(this.clickAudio.volume)
     this.clickAudio.playbackRate = 1.0 + (Math.random() * 2 - 1) * soundPitchVariation;
 
     this.clickAudio.currentTime = 0;

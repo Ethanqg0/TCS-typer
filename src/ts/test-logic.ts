@@ -6,6 +6,8 @@ import { shuffleArray, pad2, Stopwatch, Settings, TypingDataChar, isBestTest, is
 let userGraphChart: any | null = null;
 let soundPath: string = "/assets/sounds/standard-click.wav";
 const soundVolume: number = 1.0;
+const soundVolumeVariation: number = 0.8;
+const soundPitchVariation: number = 0.2;
 
 type TypingData = TypingDataChar[][];
 
@@ -139,12 +141,19 @@ class TypingTest implements TestContent {
     };
   }
 
+  clickAudio = new Audio(soundPath);
+
   playClick(): void {
     updateSoundPath();
+    if (soundPath !== this.clickAudio.src) {
+      this.clickAudio = new Audio(soundPath);
+    }
+    this.clickAudio.volume = soundVolume - (Math.random() * soundVolumeVariation);
+    console.log(this.clickAudio.volume)
+    this.clickAudio.playbackRate = 1.0 + (Math.random() * 2 - 1) * soundPitchVariation;
 
-    const audio = new Audio(soundPath);
-    audio.volume = soundVolume;
-    audio.play().catch((error) => console.error(error));
+    this.clickAudio.currentTime = 0;
+    this.clickAudio.play().catch((error) => console.error(error));
   }
 
   /**
@@ -501,14 +510,14 @@ async function storeUserDetails() {
 // Not Fetch Request: Via localStorage, avoids unnecessary fetch requests
 function updateUserDetails(test: TypingTest) {
   const localUserDetails: string | null = localStorage.getItem("userDetails");
-  if ( !localUserDetails ) {
+  if (!localUserDetails) {
     console.error("User details not found in localStorage");
     return;
   }
   const userDetails: UserDetails = JSON.parse(localUserDetails);
   const wpm: number = test.calculateWPM(test.stopwatch.elapsedTime);
   const accuracy: number = test.calculateAccuracy();
-  userDetails?.tests.push({"wpm": wpm, "accuracy": accuracy});
+  userDetails?.tests.push({ "wpm": wpm, "accuracy": accuracy });
   localStorage.setItem("userDetails", JSON.stringify(userDetails));
   return;
 }
@@ -592,11 +601,11 @@ window.addEventListener("DOMContentLoaded", async () => {
   let all_sum_words: number = 0;
   let all_sum_accuracy: number = 0;
 
-  (async function() {
+  (async function () {
     storeUserDetails();
     // TODO: Move this to test initialization
     const user = getUser();
-    let tests = await(await fetchUserDetails(user.username))
+    let tests = await (await fetchUserDetails(user.username))
       .tests as unknown as Array<{ wpm: number; accuracy: number }>;
 
     tests = tests.filter((test) => test.accuracy > 90);
